@@ -1,1 +1,1 @@
-/usr/bin/c++    -rdynamic CMakeFiles/ShortestPathPlanning.dir/ShortestPathPlanning.cpp.o  -o ../bin/ShortestPathPlanning  -lpthread 
+/usr/bin/c++    -rdynamic CMakeFiles/ShortestPathPlanning.dir/example/ShortestPathPlanning.cpp.o CMakeFiles/ShortestPathPlanning.dir/src/unidirectionalMap.cpp.o  -o ../bin/ShortestPathPlanning 

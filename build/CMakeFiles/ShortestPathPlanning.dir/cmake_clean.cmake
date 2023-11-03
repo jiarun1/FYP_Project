@@ -1,7 +1,8 @@
 file(REMOVE_RECURSE
   "../bin/ShortestPathPlanning"
   "../bin/ShortestPathPlanning.pdb"
-  "CMakeFiles/ShortestPathPlanning.dir/ShortestPathPlanning.cpp.o"
+  "CMakeFiles/ShortestPathPlanning.dir/example/ShortestPathPlanning.cpp.o"
+  "CMakeFiles/ShortestPathPlanning.dir/src/unidirectionalMap.cpp.o"
 )
 
 # Per-language clean rules from dependency scanning.
