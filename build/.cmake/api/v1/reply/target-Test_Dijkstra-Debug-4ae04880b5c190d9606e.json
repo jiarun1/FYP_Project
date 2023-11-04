@@ -2,7 +2,7 @@
 	"artifacts" : 
 	[
 		{
-			"path" : "/home/jiarun/FYP_Project/code/bin/Test_CostMap"
+			"path" : "/home/jiarun/FYP_Project/code/bin/Test_Dijkstra"
 		}
 	],
 	"backtrace" : 1,
@@ -25,7 +25,7 @@
 			{
 				"command" : 0,
 				"file" : 0,
-				"line" : 26,
+				"line" : 29,
 				"parent" : 0
 			},
 			{
@@ -65,7 +65,7 @@
 			]
 		}
 	],
-	"id" : "Test_CostMap::@6890427a1f51a3e7e1df",
+	"id" : "Test_Dijkstra::@6890427a1f51a3e7e1df",
 	"link" : 
 	{
 		"commandFragments" : 
@@ -81,8 +81,8 @@
 		],
 		"language" : "CXX"
 	},
-	"name" : "Test_CostMap",
-	"nameOnDisk" : "Test_CostMap",
+	"name" : "Test_Dijkstra",
+	"nameOnDisk" : "Test_Dijkstra",
 	"paths" : 
 	{
 		"build" : ".",
@@ -106,7 +106,7 @@
 		{
 			"backtrace" : 1,
 			"compileGroupIndex" : 0,
-			"path" : "example/test_costMap.cpp",
+			"path" : "example/test_Dijkstra.cpp",
 			"sourceGroupIndex" : 0
 		},
 		{
