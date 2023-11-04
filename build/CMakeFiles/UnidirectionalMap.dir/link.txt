@@ -1,1 +1,0 @@
-/usr/bin/c++    -rdynamic CMakeFiles/UnidirectionalMap.dir/example/uniMap.cpp.o CMakeFiles/UnidirectionalMap.dir/src/unidirectionalMap.cpp.o  -o ../bin/UnidirectionalMap 

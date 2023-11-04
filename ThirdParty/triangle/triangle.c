@@ -3015,7 +3015,7 @@ void info()
   printf("    you can hardly expect to triangulate them.\n\n");
   printf("  `Triangle doesn't terminate, or just crashes.'\n\n");
   printf(
-"    Bad things can happen when triangles get so small that the distance\n");
+"    Bad things can happen when triangles get so small that the cost\n");
   printf(
 "    between their vertices isn't much larger than the precision of your\n");
   printf(
@@ -3064,7 +3064,7 @@ void info()
   printf(
 "    Zoom in closely, as such segments might look like a single segment from\n"
 );
-  printf("    a distance.\n\n");
+  printf("    a cost.\n\n");
   printf(
 "    If some of the input values are too large, Triangle may suffer a\n");
   printf(
@@ -7350,7 +7350,7 @@ struct otri *testtri;
           joinvertex = org1;
         }
         if (joinvertex != (vertex) NULL) {
-          /* Compute the distance from the common endpoint (of the two  */
+          /* Compute the cost from the common endpoint (of the two  */
           /*   segments) to each of the endpoints of the shortest edge. */
           dist1 = ((base1[0] - joinvertex[0]) * (base1[0] - joinvertex[0]) +
                    (base1[1] - joinvertex[1]) * (base1[1] - joinvertex[1]));
@@ -7660,7 +7660,7 @@ struct otri *searchtri;
     printf("  Randomly sampling for a triangle near point (%.12g, %.12g).\n",
            searchpoint[0], searchpoint[1]);
   }
-  /* Record the distance from the suggested starting triangle to the */
+  /* Record the cost from the suggested starting triangle to the */
   /*   point we seek.                                                */
   org(*searchtri, torg);
   searchdist = (searchpoint[0] - torg[0]) * (searchpoint[0] - torg[0]) +

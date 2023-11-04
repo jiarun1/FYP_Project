@@ -23,7 +23,8 @@ FILE(GLOB_RECURSE CURRENT_SOURCES src/*.cpp)
 add_executable(ShortestPathPlanning ./example/ShortestPathPlanning.cpp ${CURRENT_INCLUDE} ${CURRENT_SOURCES})
 
 # generate the example execution files
-add_executable(UnidirectionalMap ./example/uniMap.cpp ${CURRENT_INCLUDE} ${CURRENT_SOURCES})
+add_executable(Test_CostMap ./example/test_costMap.cpp ${CURRENT_INCLUDE} ${CURRENT_SOURCES})
+add_executable(Test_Dijkstra ./example/test_Dijkstra.cpp ${CURRENT_INCLUDE} ${CURRENT_SOURCES})
 
 
 # Link librarys

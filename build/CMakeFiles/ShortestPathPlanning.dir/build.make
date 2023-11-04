@@ -60,42 +60,72 @@ include CMakeFiles/ShortestPathPlanning.dir/flags.make
 CMakeFiles/ShortestPathPlanning.dir/example/ShortestPathPlanning.cpp.o: CMakeFiles/ShortestPathPlanning.dir/flags.make
 CMakeFiles/ShortestPathPlanning.dir/example/ShortestPathPlanning.cpp.o: ../example/ShortestPathPlanning.cpp
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/jiarun/FYP_Project/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/ShortestPathPlanning.dir/example/ShortestPathPlanning.cpp.o"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/ShortestPathPlanning.dir/example/ShortestPathPlanning.cpp.o -c /home/jiarun/FYP_Project/code/example/ShortestPathPlanning.cpp
+	/usr/bin/g++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/ShortestPathPlanning.dir/example/ShortestPathPlanning.cpp.o -c /home/jiarun/FYP_Project/code/example/ShortestPathPlanning.cpp
 
 CMakeFiles/ShortestPathPlanning.dir/example/ShortestPathPlanning.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/ShortestPathPlanning.dir/example/ShortestPathPlanning.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/jiarun/FYP_Project/code/example/ShortestPathPlanning.cpp > CMakeFiles/ShortestPathPlanning.dir/example/ShortestPathPlanning.cpp.i
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/jiarun/FYP_Project/code/example/ShortestPathPlanning.cpp > CMakeFiles/ShortestPathPlanning.dir/example/ShortestPathPlanning.cpp.i
 
 CMakeFiles/ShortestPathPlanning.dir/example/ShortestPathPlanning.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/ShortestPathPlanning.dir/example/ShortestPathPlanning.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/jiarun/FYP_Project/code/example/ShortestPathPlanning.cpp -o CMakeFiles/ShortestPathPlanning.dir/example/ShortestPathPlanning.cpp.s
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/jiarun/FYP_Project/code/example/ShortestPathPlanning.cpp -o CMakeFiles/ShortestPathPlanning.dir/example/ShortestPathPlanning.cpp.s
 
-CMakeFiles/ShortestPathPlanning.dir/src/unidirectionalMap.cpp.o: CMakeFiles/ShortestPathPlanning.dir/flags.make
-CMakeFiles/ShortestPathPlanning.dir/src/unidirectionalMap.cpp.o: ../src/unidirectionalMap.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/jiarun/FYP_Project/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/ShortestPathPlanning.dir/src/unidirectionalMap.cpp.o"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/ShortestPathPlanning.dir/src/unidirectionalMap.cpp.o -c /home/jiarun/FYP_Project/code/src/unidirectionalMap.cpp
+CMakeFiles/ShortestPathPlanning.dir/src/Dijkstra.cpp.o: CMakeFiles/ShortestPathPlanning.dir/flags.make
+CMakeFiles/ShortestPathPlanning.dir/src/Dijkstra.cpp.o: ../src/Dijkstra.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/jiarun/FYP_Project/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/ShortestPathPlanning.dir/src/Dijkstra.cpp.o"
+	/usr/bin/g++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/ShortestPathPlanning.dir/src/Dijkstra.cpp.o -c /home/jiarun/FYP_Project/code/src/Dijkstra.cpp
 
-CMakeFiles/ShortestPathPlanning.dir/src/unidirectionalMap.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/ShortestPathPlanning.dir/src/unidirectionalMap.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/jiarun/FYP_Project/code/src/unidirectionalMap.cpp > CMakeFiles/ShortestPathPlanning.dir/src/unidirectionalMap.cpp.i
+CMakeFiles/ShortestPathPlanning.dir/src/Dijkstra.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/ShortestPathPlanning.dir/src/Dijkstra.cpp.i"
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/jiarun/FYP_Project/code/src/Dijkstra.cpp > CMakeFiles/ShortestPathPlanning.dir/src/Dijkstra.cpp.i
 
-CMakeFiles/ShortestPathPlanning.dir/src/unidirectionalMap.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/ShortestPathPlanning.dir/src/unidirectionalMap.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/jiarun/FYP_Project/code/src/unidirectionalMap.cpp -o CMakeFiles/ShortestPathPlanning.dir/src/unidirectionalMap.cpp.s
+CMakeFiles/ShortestPathPlanning.dir/src/Dijkstra.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/ShortestPathPlanning.dir/src/Dijkstra.cpp.s"
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/jiarun/FYP_Project/code/src/Dijkstra.cpp -o CMakeFiles/ShortestPathPlanning.dir/src/Dijkstra.cpp.s
+
+CMakeFiles/ShortestPathPlanning.dir/src/costMap.cpp.o: CMakeFiles/ShortestPathPlanning.dir/flags.make
+CMakeFiles/ShortestPathPlanning.dir/src/costMap.cpp.o: ../src/costMap.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/jiarun/FYP_Project/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/ShortestPathPlanning.dir/src/costMap.cpp.o"
+	/usr/bin/g++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/ShortestPathPlanning.dir/src/costMap.cpp.o -c /home/jiarun/FYP_Project/code/src/costMap.cpp
+
+CMakeFiles/ShortestPathPlanning.dir/src/costMap.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/ShortestPathPlanning.dir/src/costMap.cpp.i"
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/jiarun/FYP_Project/code/src/costMap.cpp > CMakeFiles/ShortestPathPlanning.dir/src/costMap.cpp.i
+
+CMakeFiles/ShortestPathPlanning.dir/src/costMap.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/ShortestPathPlanning.dir/src/costMap.cpp.s"
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/jiarun/FYP_Project/code/src/costMap.cpp -o CMakeFiles/ShortestPathPlanning.dir/src/costMap.cpp.s
+
+CMakeFiles/ShortestPathPlanning.dir/src/shortestPathAlgorithm.cpp.o: CMakeFiles/ShortestPathPlanning.dir/flags.make
+CMakeFiles/ShortestPathPlanning.dir/src/shortestPathAlgorithm.cpp.o: ../src/shortestPathAlgorithm.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/jiarun/FYP_Project/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/ShortestPathPlanning.dir/src/shortestPathAlgorithm.cpp.o"
+	/usr/bin/g++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/ShortestPathPlanning.dir/src/shortestPathAlgorithm.cpp.o -c /home/jiarun/FYP_Project/code/src/shortestPathAlgorithm.cpp
+
+CMakeFiles/ShortestPathPlanning.dir/src/shortestPathAlgorithm.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/ShortestPathPlanning.dir/src/shortestPathAlgorithm.cpp.i"
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/jiarun/FYP_Project/code/src/shortestPathAlgorithm.cpp > CMakeFiles/ShortestPathPlanning.dir/src/shortestPathAlgorithm.cpp.i
+
+CMakeFiles/ShortestPathPlanning.dir/src/shortestPathAlgorithm.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/ShortestPathPlanning.dir/src/shortestPathAlgorithm.cpp.s"
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/jiarun/FYP_Project/code/src/shortestPathAlgorithm.cpp -o CMakeFiles/ShortestPathPlanning.dir/src/shortestPathAlgorithm.cpp.s
 
 # Object files for target ShortestPathPlanning
 ShortestPathPlanning_OBJECTS = \
 "CMakeFiles/ShortestPathPlanning.dir/example/ShortestPathPlanning.cpp.o" \
-"CMakeFiles/ShortestPathPlanning.dir/src/unidirectionalMap.cpp.o"
+"CMakeFiles/ShortestPathPlanning.dir/src/Dijkstra.cpp.o" \
+"CMakeFiles/ShortestPathPlanning.dir/src/costMap.cpp.o" \
+"CMakeFiles/ShortestPathPlanning.dir/src/shortestPathAlgorithm.cpp.o"
 
 # External object files for target ShortestPathPlanning
 ShortestPathPlanning_EXTERNAL_OBJECTS =
 
 ../bin/ShortestPathPlanning: CMakeFiles/ShortestPathPlanning.dir/example/ShortestPathPlanning.cpp.o
-../bin/ShortestPathPlanning: CMakeFiles/ShortestPathPlanning.dir/src/unidirectionalMap.cpp.o
+../bin/ShortestPathPlanning: CMakeFiles/ShortestPathPlanning.dir/src/Dijkstra.cpp.o
+../bin/ShortestPathPlanning: CMakeFiles/ShortestPathPlanning.dir/src/costMap.cpp.o
+../bin/ShortestPathPlanning: CMakeFiles/ShortestPathPlanning.dir/src/shortestPathAlgorithm.cpp.o
 ../bin/ShortestPathPlanning: CMakeFiles/ShortestPathPlanning.dir/build.make
 ../bin/ShortestPathPlanning: CMakeFiles/ShortestPathPlanning.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/jiarun/FYP_Project/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Linking CXX executable ../bin/ShortestPathPlanning"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/jiarun/FYP_Project/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Linking CXX executable ../bin/ShortestPathPlanning"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/ShortestPathPlanning.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.

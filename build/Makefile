@@ -111,17 +111,30 @@ depend:
 .PHONY : depend
 
 #=============================================================================
-# Target rules for targets named UnidirectionalMap
+# Target rules for targets named Test_Dijkstra
 
 # Build rule for target.
-UnidirectionalMap: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 UnidirectionalMap
-.PHONY : UnidirectionalMap
+Test_Dijkstra: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 Test_Dijkstra
+.PHONY : Test_Dijkstra
 
 # fast build rule for target.
-UnidirectionalMap/fast:
-	$(MAKE) -f CMakeFiles/UnidirectionalMap.dir/build.make CMakeFiles/UnidirectionalMap.dir/build
-.PHONY : UnidirectionalMap/fast
+Test_Dijkstra/fast:
+	$(MAKE) -f CMakeFiles/Test_Dijkstra.dir/build.make CMakeFiles/Test_Dijkstra.dir/build
+.PHONY : Test_Dijkstra/fast
+
+#=============================================================================
+# Target rules for targets named Test_CostMap
+
+# Build rule for target.
+Test_CostMap: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 Test_CostMap
+.PHONY : Test_CostMap
+
+# fast build rule for target.
+Test_CostMap/fast:
+	$(MAKE) -f CMakeFiles/Test_CostMap.dir/build.make CMakeFiles/Test_CostMap.dir/build
+.PHONY : Test_CostMap/fast
 
 #=============================================================================
 # Target rules for targets named ShortestPathPlanning
@@ -163,62 +176,158 @@ example/ShortestPathPlanning.cpp.s:
 	$(MAKE) -f CMakeFiles/ShortestPathPlanning.dir/build.make CMakeFiles/ShortestPathPlanning.dir/example/ShortestPathPlanning.cpp.s
 .PHONY : example/ShortestPathPlanning.cpp.s
 
-example/uniMap.o: example/uniMap.cpp.o
+example/test_Dijkstra.o: example/test_Dijkstra.cpp.o
 
-.PHONY : example/uniMap.o
-
-# target to build an object file
-example/uniMap.cpp.o:
-	$(MAKE) -f CMakeFiles/UnidirectionalMap.dir/build.make CMakeFiles/UnidirectionalMap.dir/example/uniMap.cpp.o
-.PHONY : example/uniMap.cpp.o
-
-example/uniMap.i: example/uniMap.cpp.i
-
-.PHONY : example/uniMap.i
-
-# target to preprocess a source file
-example/uniMap.cpp.i:
-	$(MAKE) -f CMakeFiles/UnidirectionalMap.dir/build.make CMakeFiles/UnidirectionalMap.dir/example/uniMap.cpp.i
-.PHONY : example/uniMap.cpp.i
-
-example/uniMap.s: example/uniMap.cpp.s
-
-.PHONY : example/uniMap.s
-
-# target to generate assembly for a file
-example/uniMap.cpp.s:
-	$(MAKE) -f CMakeFiles/UnidirectionalMap.dir/build.make CMakeFiles/UnidirectionalMap.dir/example/uniMap.cpp.s
-.PHONY : example/uniMap.cpp.s
-
-src/unidirectionalMap.o: src/unidirectionalMap.cpp.o
-
-.PHONY : src/unidirectionalMap.o
+.PHONY : example/test_Dijkstra.o
 
 # target to build an object file
-src/unidirectionalMap.cpp.o:
-	$(MAKE) -f CMakeFiles/UnidirectionalMap.dir/build.make CMakeFiles/UnidirectionalMap.dir/src/unidirectionalMap.cpp.o
-	$(MAKE) -f CMakeFiles/ShortestPathPlanning.dir/build.make CMakeFiles/ShortestPathPlanning.dir/src/unidirectionalMap.cpp.o
-.PHONY : src/unidirectionalMap.cpp.o
+example/test_Dijkstra.cpp.o:
+	$(MAKE) -f CMakeFiles/Test_Dijkstra.dir/build.make CMakeFiles/Test_Dijkstra.dir/example/test_Dijkstra.cpp.o
+.PHONY : example/test_Dijkstra.cpp.o
 
-src/unidirectionalMap.i: src/unidirectionalMap.cpp.i
+example/test_Dijkstra.i: example/test_Dijkstra.cpp.i
 
-.PHONY : src/unidirectionalMap.i
+.PHONY : example/test_Dijkstra.i
 
 # target to preprocess a source file
-src/unidirectionalMap.cpp.i:
-	$(MAKE) -f CMakeFiles/UnidirectionalMap.dir/build.make CMakeFiles/UnidirectionalMap.dir/src/unidirectionalMap.cpp.i
-	$(MAKE) -f CMakeFiles/ShortestPathPlanning.dir/build.make CMakeFiles/ShortestPathPlanning.dir/src/unidirectionalMap.cpp.i
-.PHONY : src/unidirectionalMap.cpp.i
+example/test_Dijkstra.cpp.i:
+	$(MAKE) -f CMakeFiles/Test_Dijkstra.dir/build.make CMakeFiles/Test_Dijkstra.dir/example/test_Dijkstra.cpp.i
+.PHONY : example/test_Dijkstra.cpp.i
 
-src/unidirectionalMap.s: src/unidirectionalMap.cpp.s
+example/test_Dijkstra.s: example/test_Dijkstra.cpp.s
 
-.PHONY : src/unidirectionalMap.s
+.PHONY : example/test_Dijkstra.s
 
 # target to generate assembly for a file
-src/unidirectionalMap.cpp.s:
-	$(MAKE) -f CMakeFiles/UnidirectionalMap.dir/build.make CMakeFiles/UnidirectionalMap.dir/src/unidirectionalMap.cpp.s
-	$(MAKE) -f CMakeFiles/ShortestPathPlanning.dir/build.make CMakeFiles/ShortestPathPlanning.dir/src/unidirectionalMap.cpp.s
-.PHONY : src/unidirectionalMap.cpp.s
+example/test_Dijkstra.cpp.s:
+	$(MAKE) -f CMakeFiles/Test_Dijkstra.dir/build.make CMakeFiles/Test_Dijkstra.dir/example/test_Dijkstra.cpp.s
+.PHONY : example/test_Dijkstra.cpp.s
+
+example/test_costMap.o: example/test_costMap.cpp.o
+
+.PHONY : example/test_costMap.o
+
+# target to build an object file
+example/test_costMap.cpp.o:
+	$(MAKE) -f CMakeFiles/Test_CostMap.dir/build.make CMakeFiles/Test_CostMap.dir/example/test_costMap.cpp.o
+.PHONY : example/test_costMap.cpp.o
+
+example/test_costMap.i: example/test_costMap.cpp.i
+
+.PHONY : example/test_costMap.i
+
+# target to preprocess a source file
+example/test_costMap.cpp.i:
+	$(MAKE) -f CMakeFiles/Test_CostMap.dir/build.make CMakeFiles/Test_CostMap.dir/example/test_costMap.cpp.i
+.PHONY : example/test_costMap.cpp.i
+
+example/test_costMap.s: example/test_costMap.cpp.s
+
+.PHONY : example/test_costMap.s
+
+# target to generate assembly for a file
+example/test_costMap.cpp.s:
+	$(MAKE) -f CMakeFiles/Test_CostMap.dir/build.make CMakeFiles/Test_CostMap.dir/example/test_costMap.cpp.s
+.PHONY : example/test_costMap.cpp.s
+
+src/Dijkstra.o: src/Dijkstra.cpp.o
+
+.PHONY : src/Dijkstra.o
+
+# target to build an object file
+src/Dijkstra.cpp.o:
+	$(MAKE) -f CMakeFiles/Test_Dijkstra.dir/build.make CMakeFiles/Test_Dijkstra.dir/src/Dijkstra.cpp.o
+	$(MAKE) -f CMakeFiles/Test_CostMap.dir/build.make CMakeFiles/Test_CostMap.dir/src/Dijkstra.cpp.o
+	$(MAKE) -f CMakeFiles/ShortestPathPlanning.dir/build.make CMakeFiles/ShortestPathPlanning.dir/src/Dijkstra.cpp.o
+.PHONY : src/Dijkstra.cpp.o
+
+src/Dijkstra.i: src/Dijkstra.cpp.i
+
+.PHONY : src/Dijkstra.i
+
+# target to preprocess a source file
+src/Dijkstra.cpp.i:
+	$(MAKE) -f CMakeFiles/Test_Dijkstra.dir/build.make CMakeFiles/Test_Dijkstra.dir/src/Dijkstra.cpp.i
+	$(MAKE) -f CMakeFiles/Test_CostMap.dir/build.make CMakeFiles/Test_CostMap.dir/src/Dijkstra.cpp.i
+	$(MAKE) -f CMakeFiles/ShortestPathPlanning.dir/build.make CMakeFiles/ShortestPathPlanning.dir/src/Dijkstra.cpp.i
+.PHONY : src/Dijkstra.cpp.i
+
+src/Dijkstra.s: src/Dijkstra.cpp.s
+
+.PHONY : src/Dijkstra.s
+
+# target to generate assembly for a file
+src/Dijkstra.cpp.s:
+	$(MAKE) -f CMakeFiles/Test_Dijkstra.dir/build.make CMakeFiles/Test_Dijkstra.dir/src/Dijkstra.cpp.s
+	$(MAKE) -f CMakeFiles/Test_CostMap.dir/build.make CMakeFiles/Test_CostMap.dir/src/Dijkstra.cpp.s
+	$(MAKE) -f CMakeFiles/ShortestPathPlanning.dir/build.make CMakeFiles/ShortestPathPlanning.dir/src/Dijkstra.cpp.s
+.PHONY : src/Dijkstra.cpp.s
+
+src/costMap.o: src/costMap.cpp.o
+
+.PHONY : src/costMap.o
+
+# target to build an object file
+src/costMap.cpp.o:
+	$(MAKE) -f CMakeFiles/Test_Dijkstra.dir/build.make CMakeFiles/Test_Dijkstra.dir/src/costMap.cpp.o
+	$(MAKE) -f CMakeFiles/Test_CostMap.dir/build.make CMakeFiles/Test_CostMap.dir/src/costMap.cpp.o
+	$(MAKE) -f CMakeFiles/ShortestPathPlanning.dir/build.make CMakeFiles/ShortestPathPlanning.dir/src/costMap.cpp.o
+.PHONY : src/costMap.cpp.o
+
+src/costMap.i: src/costMap.cpp.i
+
+.PHONY : src/costMap.i
+
+# target to preprocess a source file
+src/costMap.cpp.i:
+	$(MAKE) -f CMakeFiles/Test_Dijkstra.dir/build.make CMakeFiles/Test_Dijkstra.dir/src/costMap.cpp.i
+	$(MAKE) -f CMakeFiles/Test_CostMap.dir/build.make CMakeFiles/Test_CostMap.dir/src/costMap.cpp.i
+	$(MAKE) -f CMakeFiles/ShortestPathPlanning.dir/build.make CMakeFiles/ShortestPathPlanning.dir/src/costMap.cpp.i
+.PHONY : src/costMap.cpp.i
+
+src/costMap.s: src/costMap.cpp.s
+
+.PHONY : src/costMap.s
+
+# target to generate assembly for a file
+src/costMap.cpp.s:
+	$(MAKE) -f CMakeFiles/Test_Dijkstra.dir/build.make CMakeFiles/Test_Dijkstra.dir/src/costMap.cpp.s
+	$(MAKE) -f CMakeFiles/Test_CostMap.dir/build.make CMakeFiles/Test_CostMap.dir/src/costMap.cpp.s
+	$(MAKE) -f CMakeFiles/ShortestPathPlanning.dir/build.make CMakeFiles/ShortestPathPlanning.dir/src/costMap.cpp.s
+.PHONY : src/costMap.cpp.s
+
+src/shortestPathAlgorithm.o: src/shortestPathAlgorithm.cpp.o
+
+.PHONY : src/shortestPathAlgorithm.o
+
+# target to build an object file
+src/shortestPathAlgorithm.cpp.o:
+	$(MAKE) -f CMakeFiles/Test_Dijkstra.dir/build.make CMakeFiles/Test_Dijkstra.dir/src/shortestPathAlgorithm.cpp.o
+	$(MAKE) -f CMakeFiles/Test_CostMap.dir/build.make CMakeFiles/Test_CostMap.dir/src/shortestPathAlgorithm.cpp.o
+	$(MAKE) -f CMakeFiles/ShortestPathPlanning.dir/build.make CMakeFiles/ShortestPathPlanning.dir/src/shortestPathAlgorithm.cpp.o
+.PHONY : src/shortestPathAlgorithm.cpp.o
+
+src/shortestPathAlgorithm.i: src/shortestPathAlgorithm.cpp.i
+
+.PHONY : src/shortestPathAlgorithm.i
+
+# target to preprocess a source file
+src/shortestPathAlgorithm.cpp.i:
+	$(MAKE) -f CMakeFiles/Test_Dijkstra.dir/build.make CMakeFiles/Test_Dijkstra.dir/src/shortestPathAlgorithm.cpp.i
+	$(MAKE) -f CMakeFiles/Test_CostMap.dir/build.make CMakeFiles/Test_CostMap.dir/src/shortestPathAlgorithm.cpp.i
+	$(MAKE) -f CMakeFiles/ShortestPathPlanning.dir/build.make CMakeFiles/ShortestPathPlanning.dir/src/shortestPathAlgorithm.cpp.i
+.PHONY : src/shortestPathAlgorithm.cpp.i
+
+src/shortestPathAlgorithm.s: src/shortestPathAlgorithm.cpp.s
+
+.PHONY : src/shortestPathAlgorithm.s
+
+# target to generate assembly for a file
+src/shortestPathAlgorithm.cpp.s:
+	$(MAKE) -f CMakeFiles/Test_Dijkstra.dir/build.make CMakeFiles/Test_Dijkstra.dir/src/shortestPathAlgorithm.cpp.s
+	$(MAKE) -f CMakeFiles/Test_CostMap.dir/build.make CMakeFiles/Test_CostMap.dir/src/shortestPathAlgorithm.cpp.s
+	$(MAKE) -f CMakeFiles/ShortestPathPlanning.dir/build.make CMakeFiles/ShortestPathPlanning.dir/src/shortestPathAlgorithm.cpp.s
+.PHONY : src/shortestPathAlgorithm.cpp.s
 
 # Help Target
 help:
@@ -228,17 +337,27 @@ help:
 	@echo "... depend"
 	@echo "... rebuild_cache"
 	@echo "... edit_cache"
-	@echo "... UnidirectionalMap"
+	@echo "... Test_Dijkstra"
+	@echo "... Test_CostMap"
 	@echo "... ShortestPathPlanning"
 	@echo "... example/ShortestPathPlanning.o"
 	@echo "... example/ShortestPathPlanning.i"
 	@echo "... example/ShortestPathPlanning.s"
-	@echo "... example/uniMap.o"
-	@echo "... example/uniMap.i"
-	@echo "... example/uniMap.s"
-	@echo "... src/unidirectionalMap.o"
-	@echo "... src/unidirectionalMap.i"
-	@echo "... src/unidirectionalMap.s"
+	@echo "... example/test_Dijkstra.o"
+	@echo "... example/test_Dijkstra.i"
+	@echo "... example/test_Dijkstra.s"
+	@echo "... example/test_costMap.o"
+	@echo "... example/test_costMap.i"
+	@echo "... example/test_costMap.s"
+	@echo "... src/Dijkstra.o"
+	@echo "... src/Dijkstra.i"
+	@echo "... src/Dijkstra.s"
+	@echo "... src/costMap.o"
+	@echo "... src/costMap.i"
+	@echo "... src/costMap.s"
+	@echo "... src/shortestPathAlgorithm.o"
+	@echo "... src/shortestPathAlgorithm.i"
+	@echo "... src/shortestPathAlgorithm.s"
 .PHONY : help
 
 

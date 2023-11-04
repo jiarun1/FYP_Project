@@ -1,5 +1,5 @@
 #include <iostream>
-#include "unidirectionalMap.h"
+#include "costMap.h"
 
 int main(int argv, char** argc)
 {
