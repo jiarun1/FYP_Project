@@ -1,5 +1,0 @@
-/home/jiarun/FYP_Project/code/build/CMakeFiles/rebuild_cache.dir
-/home/jiarun/FYP_Project/code/build/CMakeFiles/edit_cache.dir
-/home/jiarun/FYP_Project/code/build/CMakeFiles/Test_Dijkstra.dir
-/home/jiarun/FYP_Project/code/build/CMakeFiles/Test_CostMap.dir
-/home/jiarun/FYP_Project/code/build/CMakeFiles/ShortestPathPlanning.dir
