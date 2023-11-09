@@ -159,8 +159,18 @@ void triangleData::readEles(std::string ele_file)
 	fin.close();
 }
 
-void toAdjacencyMap(adjacencyMap *map)
+void triangleData::toAdjacencyMap(adjacencyMap *map)
 {
-    
-
+    map->setPointNum(nodeNum);
+    for(int i = 0; i < shapeNum; i++)
+    {
+        shape_c shape_tmp = shapeList[i];
+        for(int j = 0; j < shape_tmp.nodes_num - 1; j++)
+        {
+            map->setCost(shape_tmp.node[j]->num - 1, shape_tmp.node[j+1]->num - 1, getPointDistance(*shape_tmp.node[j], *shape_tmp.node[j+1]));
+            map->setCost(shape_tmp.node[j+1]->num - 1, shape_tmp.node[j]->num - 1, getPointDistance(*shape_tmp.node[j], *shape_tmp.node[j+1]));
+        }
+        map->setCost(shape_tmp.node[0]->num - 1, shape_tmp.node[shape_tmp.nodes_num - 1]->num - 1, getPointDistance(*shape_tmp.node[0], *shape_tmp.node[shape_tmp.nodes_num-1]));
+        map->setCost(shape_tmp.node[shape_tmp.nodes_num - 1]->num - 1, shape_tmp.node[0]->num - 1, getPointDistance(*shape_tmp.node[0], *shape_tmp.node[shape_tmp.nodes_num-1]));
+    }
 }

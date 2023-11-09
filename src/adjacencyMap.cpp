@@ -11,6 +11,8 @@
 ***********************************************************/
 #include "adjacencyMap.h"
 
+#include <iomanip>  
+
 /**
  * @brief: constructure the map
 */
@@ -106,7 +108,7 @@ std::ostream& operator<< (std::ostream & out,const adjacencyMap &out_map)
     {
         for(int j = 0; j < out_map.pointNum; j++)
         {
-            out << out_map.cost[i][j] << '\t';
+            out << std::setprecision(3) << out_map.cost[i][j] << "\t";
         }
 
         if (i == out_map.pointNum - 1){

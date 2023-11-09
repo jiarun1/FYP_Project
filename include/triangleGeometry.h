@@ -34,4 +34,6 @@ public:
     node_c** node;
 };
 
+float getPointDistance(node_c & node_x, node_c & node_y);
+
 #endif
