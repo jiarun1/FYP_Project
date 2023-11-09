@@ -68,7 +68,7 @@ void triangleData::readNodes(std::string node_file)
                 delete[] nodeList;
             }
             str >> nodeNum;
-            nodeList = new node_t[nodeNum];
+            nodeList = new node_c[nodeNum];
         } else if (count_lines > nodeNum){
             break;
         } else {
@@ -124,19 +124,19 @@ void triangleData::readEles(std::string ele_file)
             }
             str >> shapeNum;
             str >> node_per_shape;
-            shapeList = new shape_t[shapeNum];
+            shapeList = new shape_c[shapeNum];
         } else if (count_lines > shapeNum){
             break;
         } else {
             shapeList[count_lines-1].nodes_num = node_per_shape;
-            shapeList[count_lines-1].node = new node_t*[node_per_shape];
+            shapeList[count_lines-1].node = new node_c*[node_per_shape];
 
             str >> shapeList[count_lines-1].num;
             for(int i  = 0; i < node_per_shape; i++)
             {
                 uint16_t node_code;
                 str >> node_code;
-                node_t* node_addr = &(nodeList[node_code-1]);
+                node_c* node_addr = &(nodeList[node_code-1]);
 
                 if(node_code == node_addr->num)
                 {
@@ -159,3 +159,8 @@ void triangleData::readEles(std::string ele_file)
 	fin.close();
 }
 
+void toAdjacencyMap(adjacencyMap *map)
+{
+    
+
+}

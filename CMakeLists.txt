@@ -24,12 +24,12 @@ FILE(GLOB_RECURSE CURRENT_SOURCES src/*.cpp)
 # Execution Files ###################################
 # note: commont all the other execution files when debugging one of it
     # Generate the execution files
-    #add_executable(ShortestPathPlanning ./example/ShortestPathPlanning.cpp ${CURRENT_INCLUDE} ${CURRENT_SOURCES})
+    # add_executable(ShortestPathPlanning ./example/ShortestPathPlanning.cpp ${CURRENT_INCLUDE} ${CURRENT_SOURCES})
 
     # generate the example execution files
-    #add_executable(Test_CostMap ./example/test_costMap.cpp ${CURRENT_INCLUDE} ${CURRENT_SOURCES})
-    #add_executable(Test_Dijkstra ./example/test_Dijkstra.cpp ${CURRENT_INCLUDE} ${CURRENT_SOURCES})
-    add_executable(Test_Triangle ./example/test_Triangle.cpp ${CURRENT_INCLUDE} ${CURRENT_SOURCES})
+    add_executable(Test_AdjacencyMap ./example/test_adjacencyMap.cpp ${CURRENT_INCLUDE} ${CURRENT_SOURCES})
+    add_executable(Test_Dijkstra ./example/test_Dijkstra.cpp ${CURRENT_INCLUDE} ${CURRENT_SOURCES})
+    # add_executable(Test_Triangle ./example/test_Triangle.cpp ${CURRENT_INCLUDE} ${CURRENT_SOURCES})
 ###########################################################
 
 # Link librarys

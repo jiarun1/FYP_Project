@@ -1,5 +1,5 @@
 /***********************************************************
- * @file      : costMap.h
+ * @file      : adjacencyMap.h
  * @brief     : This file is used to represent a unidirecti-
  *              onal map that is used to store the data for 
  *              the shortest path algorithm, it contains a 
@@ -15,7 +15,7 @@
 #include <stdint.h>
 #include <iostream>
 
-class costMap
+class adjacencyMap
 {
 public:
     // Change this if want to use double type accuracy
@@ -27,14 +27,18 @@ public:
 
 
 
-    costMap();
-    costMap(uint32_t point_num);
-    costMap(costMap& copy);
-    ~costMap();
+    adjacencyMap();
+    adjacencyMap(uint32_t point_num);
+    adjacencyMap(adjacencyMap& copy);
+    ~adjacencyMap();
+
+
+    void clear();
 
     void setCost(int start_point, int end_point, DISTANCE_ACCURACY dis, WEIGHT_ACCURACY weight = 1.);
     DISTANCE_ACCURACY getCost(int start_point, int end_point);
 
+    void setPointNum(uint32_t point_num);
     uint32_t getPointNum(void);
 
 
@@ -42,7 +46,7 @@ public:
 
 
 
-    friend std::ostream& operator<< (std::ostream & out,const costMap &out_map);
+    friend std::ostream& operator<< (std::ostream & out,const adjacencyMap &out_map);
     //TODO: add the code for cin
 
 
@@ -53,10 +57,10 @@ private:
     /// @brief this parameter used to store the cost(distance*weight) between 2 point, in matrix format
     ///
     /// @note  the -1 is represent the line is not connected
-    DISTANCE_ACCURACY** cost; ///< size: point_num*point_num
+    DISTANCE_ACCURACY** cost; ///< size: pointNum*pointNum
 
     /// @brief this parameter used to store the number of points in this map
-    uint32_t point_num;
+    uint32_t pointNum;
     
 
 };

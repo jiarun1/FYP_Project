@@ -1,5 +1,5 @@
 #include "Dijkstra.h"
-#include "costMap.h"
+#include "adjacencyMap.h"
 #include <iostream>
 
 using namespace std;
@@ -7,7 +7,7 @@ using namespace std;
 
 int main(int argc, char** argv)
 {
-    costMap map(13);
+    adjacencyMap map(13);
 
 ////////////////////////////////////////////////////////////////
     /// initialize the map
@@ -77,7 +77,7 @@ int main(int argc, char** argv)
 
     Dijkstra dijkstra;
 
-    dijkstra.setCostMap(&map);
+    dijkstra.setAdjacencyMap(&map);
 
     dijkstra.calculateShortestPath(1,12);
 

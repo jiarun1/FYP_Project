@@ -1,5 +1,5 @@
 #include <iostream>
-#include "costMap.h"
+#include "adjacencyMap.h"
 
 int main(int argv, char** argc)
 {

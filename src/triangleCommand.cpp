@@ -110,5 +110,5 @@ void triangleCommand::call(std::string poly_path)
 
     std::cout << "Command: " << command << std::endl;
 
-    // system(command.c_str());
+    system(command.c_str());
 }

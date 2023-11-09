@@ -24,7 +24,7 @@ void Dijkstra::calculateShortestPath()
 
     // this parameter used to stored the minimin distance to the point
     //  - if the value is -1 means the point is not reached yet
-    costMap::DISTANCE_ACCURACY points_info[point_num];
+    adjacencyMap::DISTANCE_ACCURACY points_info[point_num];
     std::fill_n(points_info,point_num,-1); //< initialize as -1
     
     // record the previous point for this point when minimum
@@ -38,7 +38,7 @@ void Dijkstra::calculateShortestPath()
 
     while(points_info[end_point] == -1)
     {
-        costMap::DISTANCE_ACCURACY min_distance = -1;
+        adjacencyMap::DISTANCE_ACCURACY min_distance = -1;
         uint16_t current_point, next_point;
 
         // this loop find the points that has reached
@@ -73,7 +73,7 @@ void Dijkstra::calculateShortestPath()
                 }
 
                 // get the distance from startpoint to (point j) through (point i)
-                costMap::DISTANCE_ACCURACY cur_distance = cost_map->getCost(i,j) + points_info[i]; 
+                adjacencyMap::DISTANCE_ACCURACY cur_distance = cost_map->getCost(i,j) + points_info[i]; 
 
                 if(min_distance == -1){
                     // this means this is the first path the algorithm find

@@ -13,44 +13,13 @@
 #include "stdint.h"
 #include "string"
 
-class node_t
-{
-public:
-    uint32_t num;
-    float x;
-    float y;
-    bool is_boundary;
-};
+#include "triangleGeometry.h"
+#include "adjacencyMap.h" ///< used to convert the data to adjacencyMap
 
-class shape_t
-{
-public: 
-    shape_t(){};
-    ~shape_t(){delete[] node;};
 
-    uint16_t num;        
-    uint16_t nodes_num;
-    node_t** node;
-};
 
 class triangleData
 {
-// public:
-    // typedef struct
-    // {
-    //     uint32_t num;
-    //     float x;
-    //     float y;
-    //     bool is_boundary;
-    // }node_t;
-    // typedef struct
-    // {
-    //     uint16_t points_num;        
-    //     node_t* node;
-    // }shape_t;
-    
-    
-
 public:
     triangleData(/* args */);
     triangleData(std::string node_file, std::string ele_file);
@@ -63,15 +32,17 @@ public:
 
     void clearShape();
 
+    void toAdjacencyMap(adjacencyMap* map);
+
 
 private:
     /* data */
     
     uint16_t nodeNum;
-    node_t * nodeList;
+    node_c * nodeList;
 
     uint16_t shapeNum;
-    shape_t * shapeList;
+    shape_c * shapeList;
 
 
 };

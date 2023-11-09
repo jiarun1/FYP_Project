@@ -1,11 +1,12 @@
 #include <iostream>
-#include "costMap.h"
+#include "adjacencyMap.h"
+
 
 using namespace std;
 
 int main(int argv, char** argc)
 {
-    costMap test_map(10);
+    adjacencyMap test_map(10);
 
     test_map.setCost(4,6,20);
 

@@ -34,13 +34,13 @@ void shortestPathAlgorithm::calculateShortestPath(uint16_t startPoint, uint16_t 
     end_point = endPoint;
 }
 
-void shortestPathAlgorithm::setCostMap(costMap* map)
+void shortestPathAlgorithm::setAdjacencyMap(adjacencyMap* map)
 {
     cost_map = map;
 }
 
 
-costMap* shortestPathAlgorithm::getCostMap()
+adjacencyMap* shortestPathAlgorithm::getAdjacencyMap()
 {
     return cost_map;
 }
@@ -55,7 +55,7 @@ uint16_t shortestPathAlgorithm::getPathLength()
     return path_length;
 }
 
-costMap::DISTANCE_ACCURACY shortestPathAlgorithm::getPathCost()
+adjacencyMap::DISTANCE_ACCURACY shortestPathAlgorithm::getPathCost()
 {
     return path_cost;
 }

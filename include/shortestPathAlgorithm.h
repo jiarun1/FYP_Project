@@ -10,7 +10,7 @@
 #ifndef __SHORTESTPATHALGORITHM_H__
 #define __SHORTESTPATHALGORITHM_H__
 
-#include "costMap.h"
+#include "adjacencyMap.h"
 #include "stdint.h"
 
 class shortestPathAlgorithm
@@ -23,18 +23,18 @@ public:
     virtual void calculateShortestPath();
     virtual void calculateShortestPath(uint16_t startPoint, uint16_t endPoint);
 
-    void setCostMap(costMap* map);
-    costMap* getCostMap();
+    void setAdjacencyMap(adjacencyMap* map);
+    adjacencyMap* getAdjacencyMap();
 
     uint16_t* getPath();
     uint16_t getPathLength();
 
-    costMap::DISTANCE_ACCURACY getPathCost();
+    adjacencyMap::DISTANCE_ACCURACY getPathCost();
 
 protected:
     
     /// @brief used to store the cost data for the map
-    costMap* cost_map;
+    adjacencyMap* cost_map;
     
     /// @brief the calculated shortest path
     uint16_t* path; 
@@ -49,7 +49,7 @@ protected:
     uint16_t end_point;
 
     /// @brief the length of the shortest path
-    costMap::DISTANCE_ACCURACY path_cost;
+    adjacencyMap::DISTANCE_ACCURACY path_cost;
     
 
 };
