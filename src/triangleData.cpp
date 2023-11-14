@@ -174,3 +174,12 @@ void triangleData::toAdjacencyMap(adjacencyMap *map)
         map->setCost(shape_tmp.node[shape_tmp.nodes_num - 1]->num - 1, shape_tmp.node[0]->num - 1, getPointDistance(*shape_tmp.node[0], *shape_tmp.node[shape_tmp.nodes_num-1]));
     }
 }
+
+uint16_t triangleData::getNodeNum()
+{
+    return nodeNum;
+}
+uint16_t triangleData::getShapeNum()
+{
+    return shapeNum;
+}

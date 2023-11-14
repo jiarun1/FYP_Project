@@ -44,17 +44,17 @@ void triangleCommand::clearParameter()
     return;
 }
 
-void triangleCommand::addParameter(std::string parameter_marker, int value)
+void triangleCommand::setParameter(std::string parameter_marker, int value)
 {
-    addParameter(parameter_marker,std::to_string(value));
+    setParameter(parameter_marker,std::to_string(value));
 }
 
-void triangleCommand::addParameter(std::string parameter_marker, float value)
+void triangleCommand::setParameter(std::string parameter_marker, float value)
 {
-    addParameter(parameter_marker,std::to_string(value));
+    setParameter(parameter_marker,std::to_string(value));
 }
 
-void triangleCommand::addParameter(std::string parameter_marker, std::string value)
+void triangleCommand::setParameter(std::string parameter_marker, std::string value)
 {
     struct Parameter_t* parameter_tmp = parameters;
     if(parameter_tmp == nullptr){
@@ -64,14 +64,14 @@ void triangleCommand::addParameter(std::string parameter_marker, std::string val
         parameter_new->nextParameter = nullptr;
         parameters = parameter_new;
     } else {
-        while (parameter_tmp->nextParameter != nullptr)
-        {
+
+        do {
             if(parameter_marker == parameter_tmp->marker){
                 parameter_tmp->value = value;
                 return;
             }
             parameter_tmp = parameter_tmp->nextParameter;
-        }
+        }while(parameter_tmp->nextParameter != nullptr);
 
         struct Parameter_t* parameter_new = new (struct Parameter_t);
         parameter_new->marker = parameter_marker;

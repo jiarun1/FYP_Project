@@ -27,7 +27,7 @@ public:
     adjacencyMap* getAdjacencyMap();
 
     uint16_t* getPath();
-    uint16_t getPathLength();
+    uint16_t getPathPointNum();
 
     adjacencyMap::DISTANCE_ACCURACY getPathCost();
 
@@ -40,7 +40,7 @@ protected:
     uint16_t* path; 
 
     /// @brief the number of points in the path
-    uint16_t path_length;
+    uint16_t path_point_num;
 
     /// @brief the start point for the path
     uint16_t start_point;

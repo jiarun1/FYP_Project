@@ -50,9 +50,9 @@ uint16_t* shortestPathAlgorithm::getPath()
     return path;
 }
 
-uint16_t shortestPathAlgorithm::getPathLength()
+uint16_t shortestPathAlgorithm::getPathPointNum()
 {
-    return path_length;
+    return path_point_num;
 }
 
 adjacencyMap::DISTANCE_ACCURACY shortestPathAlgorithm::getPathCost()

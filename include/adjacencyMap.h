@@ -15,12 +15,14 @@
 #include <stdint.h>
 #include <iostream>
 
+
 class adjacencyMap
 {
 public:
     // Change this if want to use double type accuracy
     typedef float DISTANCE_ACCURACY;
     typedef float WEIGHT_ACCURACY;
+
 
 
 public:
@@ -41,8 +43,12 @@ public:
     void setPointNum(uint32_t point_num);
     uint32_t getPointNum(void);
 
-
-
+    /**
+     * @brief: get the number of path that is available to go through
+     * 
+     * @note: it consider as directional path, one path would be consider twice
+    */
+    uint32_t getPathNum(void);
 
 
 
@@ -64,4 +70,9 @@ private:
     
 
 };
+
+
+static const adjacencyMap::DISTANCE_ACCURACY NO_CONNECTION = -1.0;
+
+
 #endif

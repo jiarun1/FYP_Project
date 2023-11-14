@@ -82,7 +82,7 @@ int main(int argc, char** argv)
     dijkstra.calculateShortestPath(1,12);
 
 
-    uint16_t path_len = dijkstra.getPathLength();
+    uint16_t path_len = dijkstra.getPathPointNum();
 
     auto path = dijkstra.getPath();
 

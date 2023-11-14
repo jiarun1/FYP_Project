@@ -23,9 +23,9 @@ public:
 
     void clearParameter();
 
-    void addParameter(std::string parameter_marker, int value);
-    void addParameter(std::string parameter_marker, float value);
-    void addParameter(std::string parameter_marker, std::string value);
+    void setParameter(std::string parameter_marker, int value);
+    void setParameter(std::string parameter_marker, float value);
+    void setParameter(std::string parameter_marker, std::string value);
 
     void setMinTriangleArea(float area);
     void setMinTriangleAngle(float angle);

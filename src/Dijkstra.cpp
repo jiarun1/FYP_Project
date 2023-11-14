@@ -14,7 +14,7 @@
 
 Dijkstra::Dijkstra()
 {
-    path_length = 0;
+    path_point_num = 0;
 }
 
 void Dijkstra::calculateShortestPath()
@@ -101,7 +101,7 @@ void Dijkstra::calculateShortestPath()
     /// update the path information
 
     // delete the previous pass data
-    if(path_length != 0)
+    if(path_point_num != 0)
     {   
         delete[] path;
     }
@@ -118,12 +118,12 @@ void Dijkstra::calculateShortestPath()
     }
     
     // store the path to the result
-    path_length = passed_point_num;
+    path_point_num = passed_point_num;
     path_cost = points_info[end_point];
-    path = new uint16_t[path_length];
+    path = new uint16_t[path_point_num];
 
-    path[path_length-1] = end_point;
-    for(int i = path_length - 2; i > 0; i--)
+    path[path_point_num-1] = end_point;
+    for(int i = path_point_num - 2; i > 0; i--)
     {
         path[i] = previous_point[path[i+1]];
     }

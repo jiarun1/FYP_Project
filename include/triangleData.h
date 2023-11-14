@@ -34,6 +34,9 @@ public:
 
     void toAdjacencyMap(adjacencyMap* map);
 
+    uint16_t getNodeNum();
+    uint16_t getShapeNum();
+
 
 private:
     /* data */

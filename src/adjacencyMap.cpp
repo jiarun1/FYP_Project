@@ -48,7 +48,7 @@ void adjacencyMap::clear()
     }
 
 
-    for(int i = 0; i < pointNum; i++)
+    for(uint32_t i = 0; i < pointNum; i++)
     {
         delete[] cost[i];
     }
@@ -71,16 +71,16 @@ void adjacencyMap::setPointNum(uint32_t point_num)
     pointNum = point_num;
     // create a pointNum * pointNum dimension matrix
     cost = new DISTANCE_ACCURACY*[pointNum];
-    for(int i = 0; i < pointNum; i++)
+    for(uint32_t i = 0; i < pointNum; i++)
     {
         cost[i] = new DISTANCE_ACCURACY[pointNum];
     }
 
-    for(int i = 0; i < pointNum; i++)
+    for(uint32_t i = 0; i < pointNum; i++)
     {
-        for(int j = 0; j < pointNum; j++)
+        for(uint32_t j = 0; j < pointNum; j++)
         {
-            cost[i][j] = -1;
+            cost[i][j] = NO_CONNECTION;
         }
     }
 }
@@ -88,6 +88,27 @@ void adjacencyMap::setPointNum(uint32_t point_num)
 uint32_t adjacencyMap::getPointNum(void)
 {
     return pointNum;
+}
+
+/**
+ * @brief: get the number of path that is available to go through
+ * 
+ * @note: it consider as directional path, one path would be consider twice
+*/
+uint32_t adjacencyMap::getPathNum(void)
+{
+    uint32_t path_num = 0;
+    for(uint32_t i = 0; i < pointNum; i ++)
+    {
+        for(uint32_t j = 0; j < pointNum; j++)
+        {
+            if(cost[i][j] != NO_CONNECTION)
+            {
+                path_num ++;
+            }
+        }
+    }
+    return path_num;
 }
 
 
