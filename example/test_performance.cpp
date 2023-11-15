@@ -56,8 +56,8 @@ int main(int argv, char** argc)
     writeLog_c log("../tests/performance_test_1/log-1.txt");
 
 
-    float max_area = 400;
-    float area_dif = 1;
+    float max_area = 20;
+    float area_dif = 1e-2;
 
     auto start_time = std::chrono::high_resolution_clock::now();
     auto end_time = std::chrono::high_resolution_clock::now();
