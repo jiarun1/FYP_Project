@@ -3,6 +3,8 @@
 #include <string>
 #include <chrono>
 
+#include <google/profiler.h>
+
 #include "triangleCommand.h"
 #include "triangleData.h"
 #include "adjacencyMap.h"
@@ -54,19 +56,23 @@ int main(int argv, char** argc)
 
 
     float max_area = 400;
-    float area_dif = 1e-2;
+    float area_dif = 1;
 
     auto start_time = std::chrono::high_resolution_clock::now();
     auto end_time = std::chrono::high_resolution_clock::now();
     auto duration = std::chrono::duration_cast<std::chrono::microseconds>(end_time - start_time);
 
-    for(float test_area = max_area; test_area > 0; test_area -= area_dif)
+
+    ProfilerStart("test.prof");
+
+    for(float test_area = max_area; test_area > 20; test_area -= area_dif)
     {
         //-------------------------- Parameter Settings --------------------------------
         triangle.setParameter("a", test_area);
 
         //--------------------------- Start Count Time --------------------------------
         start_time = std::chrono::high_resolution_clock::now();
+
 
 
         triangle.call("../tests/performance_test_1/squareMapTest.poly");
@@ -86,7 +92,9 @@ int main(int argv, char** argc)
         duration = std::chrono::duration_cast<std::chrono::microseconds>(end_time - start_time);
 
         log.write(duration, map.getPointNum(), map.getPathNum(), path_planing.getPathCost());
+        
     }
+    ProfilerStop();
 
     return 0;
 }

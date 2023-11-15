@@ -10,6 +10,12 @@ project(ShortestPathPlanning)
 # set execution file path
 set(EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/bin)
 
+# Use gperftools to monitor the performance (CPU time, memory, etc)
+SET(GPERFTOOLS_LIBS  
+    /usr/local/lib/libprofiler.so
+    /usr/local/lib/libtcmalloc.so
+)
+
 # set the include directionary
 include_directories(${PROJECT_SOURCE_DIR}/include)
 
@@ -34,4 +40,5 @@ FILE(GLOB_RECURSE CURRENT_SOURCES src/*.cpp)
 ###########################################################
 
 # Link librarys
+target_link_libraries(Test_Performance ${GPERFTOOLS_LIBS})
 #target_link_libraries(ShortestPathPlanning ${OpenCV_LIBS})
