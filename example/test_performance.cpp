@@ -3,12 +3,13 @@
 #include <string>
 #include <chrono>
 
-#include <google/profiler.h>
+#include <gperftools/profiler.h>
 
 #include "triangleCommand.h"
 #include "triangleData.h"
 #include "adjacencyMap.h"
 #include "Dijkstra.h"
+
 
 class writeLog_c
 {
@@ -65,7 +66,7 @@ int main(int argv, char** argc)
 
     ProfilerStart("test.prof");
 
-    for(float test_area = max_area; test_area > 20; test_area -= area_dif)
+    for(float test_area = max_area; test_area > 0; test_area -= area_dif)
     {
         //-------------------------- Parameter Settings --------------------------------
         triangle.setParameter("a", test_area);

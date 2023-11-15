@@ -16,7 +16,7 @@
 triangleCommand::triangleCommand(std::string software_path):
     softwarePath(software_path)
 {
-    
+    parameters = nullptr;
 }
 
 
@@ -65,13 +65,17 @@ void triangleCommand::setParameter(std::string parameter_marker, std::string val
         parameters = parameter_new;
     } else {
 
-        do {
+        while(1) {
             if(parameter_marker == parameter_tmp->marker){
                 parameter_tmp->value = value;
                 return;
             }
+            if(parameter_tmp->nextParameter == nullptr)
+            {
+                break;
+            }
             parameter_tmp = parameter_tmp->nextParameter;
-        }while(parameter_tmp->nextParameter != nullptr);
+        }
 
         struct Parameter_t* parameter_new = new (struct Parameter_t);
         parameter_new->marker = parameter_marker;
