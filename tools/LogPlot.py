@@ -1,6 +1,15 @@
 import matplotlib.pyplot as plot
 import numpy as np
 
+# import tkinter as tk
+
+# from tkinter.filedialog import  askopenfilename
+
+# tk.Tk().withdraw()
+
+# filename = askopenfilename()
+# print(filename)
+
 fo = open("../tests/performance_test_1/log-1.txt","r")
 
 count = 0
@@ -34,25 +43,36 @@ cost_time_max = max(cost_time)
 line_num_max = max(line_num)
 
 
-fig = plot.figure()
-ax1 = fig.add_subplot(211)
-ax2 = fig.add_subplot(212)
-
-ax1.scatter(point_num,cost_time)
-ax2.scatter(line_num,cost_time)
 
 ##################################################################33
-########## Plot fitting ##############
+########## Plot drawing 1 ##############
+plot.subplot(2,1,1)
+plot.scatter(point_num,cost_time)
+
+# fit curve
 a,b,c = np.polyfit(point_num,cost_time,2)
 point_fit_result = [a*np.square(x)+b*x+c for x in point_num]
-ax1.plot(point_num, point_fit_result, color="red")
+plot.plot(point_num, point_fit_result, color="red")
+plot.title('Point Number Vs Execution Time')
+plot.legend(["Test Result", "Curve Fitted Result"])
+plot.xlabel('Point Number')
+plot.ylabel('Cost time ($ \mu s $)')
+plot.grid()
 
+plot.subplot(2,1,2)
+plot.scatter(line_num,cost_time)
 a,b,c = np.polyfit(line_num,cost_time,2)
 line_fit_result = [a*np.square(x)+b*x+c for x in line_num]
-ax2.plot(line_num, line_fit_result, color="red")
+plot.plot(line_num, line_fit_result, color="red")
+plot.title('Line Number Vs Execution Time')
+plot.legend(["Test Result", "Curve Fitted Result"])
+plot.xlabel('Line Number')
+plot.ylabel('Cost time ($ \mu s $)')
+plot.grid()
 
-
+plot.tight_layout()
 plot.show()
+
 
 fo.close()
 
