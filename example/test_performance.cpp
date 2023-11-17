@@ -33,7 +33,7 @@ public:
             return;
         }
         file << "Area Set" << ','
-             << "Line Num" << ',' 
+             << "Test Count" << ',' 
              << "Mapping Time(us)" << ',' 
              << "Convertion Time(us)" << ',' 
              << "Shorest Path Time(us)" << ',' 
@@ -73,7 +73,7 @@ int main(int argv, char** argc)
     // call the triangle with parameters
     triangleCommand triangle("../ThirdParty/triangle/triangle");
     
-    writeLog_c log("../tests/performance_test_1/log-2.txt");
+    writeLog_c log("../tests/performance_test_1/log-3.txt");
 
 
     float max_area = 20;
