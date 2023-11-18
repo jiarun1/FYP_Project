@@ -125,15 +125,15 @@ plot.ion
 # plot.tight_layout()
 
 # plot 3
-plot.figure("Mapping Points Vs Time",figsize=(21/2.54,9/2.54),dpi=200)
-plot.scatter(point_num, mapping_time,label="Test Result",s=10)
-plot.plot(point_num, mapping_point_vs_time_fit_result, color="red",label = "Curve Fitted Result")
-plot.title('Mapping points Vs Mapping Time',size=11)
-plot.legend()
-plot.xlabel('Mapping Points Result',size=11)
-plot.ylabel('Cost time ($ \mu s $)',size=11)
-plot.grid()
-plot.tight_layout()
+# plot.figure("Mapping Points Vs Time",figsize=(21/2.54,9/2.54),dpi=200)
+# plot.scatter(point_num, mapping_time,label="Test Result",s=10)
+# plot.plot(point_num, mapping_point_vs_time_fit_result, color="red",label = "Curve Fitted Result")
+# plot.title('Mapping points Vs Mapping Time',size=11)
+# plot.legend()
+# plot.xlabel('Mapping Points Result',size=11)
+# plot.ylabel('Cost time ($ \mu s $)',size=11)
+# plot.grid()
+# plot.tight_layout()
 
 # plot 4
 # plot.figure("Convertion Plot",figsize=(21/2.54,9/2.54),dpi=200)
@@ -154,6 +154,18 @@ plot.tight_layout()
 # plot.xlabel('Point Number',size=11)
 # plot.ylabel('Cost time ($ \mu s $)',size=11)
 # plot.grid()
+
+# plot 6 Time cost percentage for the system
+plot.figure("Time Cost Percentage with point number",figsize=(21/2.54,9/2.54),dpi=200)
+plot.fill_between(point_num, mapping_time/total_time , color = '#009392', label='mapping time')
+plot.fill_between(point_num, mapping_time/total_time , (mapping_time+convertion_time)/total_time , color='#39B185', label='convertion time')
+plot.fill_between(point_num, (mapping_time+convertion_time)/total_time, 1 , color='#E9E29C', label='shortest path time')
+plot.title('Time cost for each function',size=11)
+plot.legend()
+plot.xlabel('Point Number',size=11)
+plot.ylabel(r'Cost time in percentage (%)',size=11)
+plot.grid()
+plot.xlim([0,1000])
 
 
 plot.tight_layout()
