@@ -11,7 +11,7 @@ from tkinter.filedialog import askopenfilename
 ##############################################################3
 # Data Reading
 
-data = pd.read_csv("../tests/performance_test_1/log-2.csv")
+data = pd.read_csv("../tests/squareMapTest/log-2.csv")
 data_col = data.columns.values
 print(data_col)
 
@@ -57,11 +57,11 @@ plot.ion
 # Plotting
 plot.figure("Mapping Points Vs Error",figsize=(21/2.54,9/2.54),dpi=200)
 plot.scatter(point_num, ErrorRate,label="Test Result",s=10)
-plot.plot(point_num, errorrate_fit_result, color="red",label = "Curve Fitted Result")
-plot.title('Setted Maximum Area Vs Mapping Time',size=11)
+# plot.plot(point_num, errorrate_fit_result, color="red",label = "Curve Fitted Result")
+plot.title('Number of Points Vs Mapping Time',size=11)
 plot.legend()
-plot.xlabel('Max area settings',size=11)
-plot.ylabel('Cost time ($ \mu s $)',size=11)
+plot.xlabel('Number of Points',size=11)
+plot.ylabel('Accuracy',size=11)
 plot.grid()
 
 

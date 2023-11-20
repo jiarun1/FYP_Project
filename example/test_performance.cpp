@@ -10,6 +10,12 @@
 #include "adjacencyMap.h"
 #include "Dijkstra.h"
 
+static const std::string TrianglePath = "../ThirdParty/triangle/triangle";
+static const std::string MapPath = "../tests/squareMapTest/";
+static const std::string MapName = "squareMapTest";
+static const std::string LogFilePath = "../tests/squareMapTest/";
+static const std::string LogFileName = "V1_Code_Test.csv";
+
 
 class writeLog_c
 {
@@ -71,9 +77,9 @@ public:
 int main(int argv, char** argc)
 {
     // call the triangle with parameters
-    triangleCommand triangle("../ThirdParty/triangle/triangle");
+    triangleCommand triangle(TrianglePath);
     
-    writeLog_c log("../tests/performance_test_1/log-3.txt");
+    writeLog_c log(LogFilePath + LogFileName);
 
 
     float max_area = 20;
@@ -103,13 +109,13 @@ int main(int argv, char** argc)
         //--------------------------- Start Count Time --------------------------------
         start_time = std::chrono::high_resolution_clock::now();
 
-        triangle.call("../tests/performance_test_1/squareMapTest.poly");
+        triangle.call(MapPath + MapName +".poly");
 
         triangle_time = std::chrono::high_resolution_clock::now();
         
         // Data import and convertion start
         triangleData data;
-        data.import("../tests/performance_test_1/squareMapTest.1.node", "../tests/performance_test_1/squareMapTest.1.ele");
+        data.import(MapPath + MapName + ".1.node", MapPath + MapName + ".1.ele");
 
         adjacencyMap map;
         data.toAdjacencyMap(&map);

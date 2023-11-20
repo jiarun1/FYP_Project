@@ -10,7 +10,7 @@ import numpy as np
 # filename = askopenfilename()
 # print(filename)
 
-fo = open("../tests/performance_test_1/log-1.txt","r")
+fo = open("../tests/squareMapTest/log-2.txt","r")
 
 count = 0
 
