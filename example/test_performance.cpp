@@ -11,10 +11,13 @@
 #include "Dijkstra.h"
 
 static const std::string TrianglePath = "../ThirdParty/triangle/triangle";
-static const std::string MapPath = "../tests/squareMapTest/";
-static const std::string MapName = "squareMapTest";
-static const std::string LogFilePath = "../tests/squareMapTest/";
+static const std::string MapPath = "../tests/CMapTest/";
+static const std::string MapName = "CMapTest";
+static const std::string LogFilePath = "../tests/CMapTest/";
 static const std::string LogFileName = "V1_Code_Test.csv";
+
+static const int START_POINT = 1;
+static const int END_POINT = 17;
 
 
 class writeLog_c
@@ -125,7 +128,7 @@ int main(int argv, char** argc)
 
         Dijkstra path_planing;
         path_planing.setAdjacencyMap(&map);
-        path_planing.calculateShortestPath(1,3);
+        path_planing.calculateShortestPath(START_POINT, END_POINT);
 
         shortestPathAlgorithm_time = std::chrono::high_resolution_clock::now();
 
