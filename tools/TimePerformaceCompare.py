@@ -10,21 +10,23 @@ from tkinter.filedialog import askopenfilename
 
 ##############################################################3
 # Data Processing
+# data class
+        
 
-# data = pd.read_csv("../tests/squareMapTest/log-2.csv")
-data = pd.read_csv("../tests/squareMapTest/V2_Code_Test.csv")
-data_col = data.columns.values
+
+# read the first set of data
+data_set_1 = pd.read_csv("../tests/squareMapTest/V2_Code_Test.csv")
+data_col = data_set_1.columns.values
 print(data_col)
 
-
-area_set = data.loc[:,'Area Set']
-line_num = data.loc[:,'Test Count']
-mapping_time = data.loc[:,'Mapping Time(us)']
-convertion_time = data.loc[:,'Convertion Time(us)']
-shortestpath_time = data.loc[:,'Shorest Path Time(us)']
-point_num = data.loc[:,'Points Num']
-line_num = data.loc[:,'Path Num']
-result_dif = data.loc[:,'Result Distance']
+area_set = data_set_1.loc[:,'Area Set']
+line_num = data_set_1.loc[:,'Test Count']
+mapping_time = data_set_1.loc[:,'Mapping Time(us)']
+convertion_time = data_set_1.loc[:,'Convertion Time(us)']
+shortestpath_time = data_set_1.loc[:,'Shorest Path Time(us)']
+point_num = data_set_1.loc[:,'Points Num']
+line_num = data_set_1.loc[:,'Path Num']
+result_dif = data_set_1.loc[:,'Result Distance']
 
 print(area_set)
 
