@@ -84,12 +84,12 @@ print("Convertion Fixed Result:", convertion_fit_function)
 
 #-------------------------------------------------------------
 # dijkstra curve fitting
-def dijkstra_fitting(x, a, b,c): # function for the fitting
-    return a*np.log10(x)*x + b*x+c
+def dijkstra_fitting(x, a, b): # function for the fitting
+    return a*x*x + b
 
-a,b,c = op.curve_fit(dijkstra_fitting, point_num, shortestpath_time)[0]
-shortestpath_fit_result = [dijkstra_fitting(x,a,b,c) for x in point_num]
-shortestpath_fit_function = str((a))+"x^2+" +str(b)+"x+" + str(c)
+a,b = op.curve_fit(dijkstra_fitting, point_num, shortestpath_time)[0]
+shortestpath_fit_result = [dijkstra_fitting(x,a,b) for x in point_num]
+shortestpath_fit_function = str((a))+"xlog(x)+" +str(b)
 print("Shortest Path Fixed Result:", shortestpath_fit_function)
 
 
