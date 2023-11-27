@@ -5,7 +5,7 @@
  *              
  * \copyright : Copyright Jiarun LIU
  * \author    : Jiarun LIU
- * \version   : V0.1
+ * \version   : V1.1
 ***********************************************************/
 #ifndef __DIJKSTRA_H__
 #define __DIJKSTRA_H__

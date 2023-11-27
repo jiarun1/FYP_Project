@@ -5,26 +5,23 @@ import scipy.optimize as op
 import tkinter as tk
 from tkinter.filedialog import askopenfilename
 
-
-
-
 ##############################################################3
 # Data Processing
 
 # data = pd.read_csv("../tests/squareMapTest/log-2.csv")
-data = pd.read_csv("../tests/squareMapTest/V2_Code_Test.csv")
+data = pd.read_csv("../tests/squareMapTest/V1_1_Code_Test.csv")
 data_col = data.columns.values
 print(data_col)
 
 
-area_set = data.loc[:,'Area Set']
-line_num = data.loc[:,'Test Count']
-mapping_time = data.loc[:,'Mapping Time(us)']
-convertion_time = data.loc[:,'Convertion Time(us)']
-shortestpath_time = data.loc[:,'Shorest Path Time(us)']
-point_num = data.loc[:,'Points Num']
-line_num = data.loc[:,'Path Num']
-result_dif = data.loc[:,'Result Distance']
+area_set = data.loc[:,'Area Set'].values
+line_num = data.loc[:,'Test Count'].values
+mapping_time = data.loc[:,'Mapping Time(us)'].values
+convertion_time = data.loc[:,'Convertion Time(us)'].values
+shortestpath_time = data.loc[:,'Shorest Path Time(us)'].values
+point_num = data.loc[:,'Points Num'].values
+line_num = data.loc[:,'Path Num'].values
+result_dif = data.loc[:,'Result Distance'].values
 
 print(area_set)
 
@@ -84,12 +81,12 @@ print("Convertion Fixed Result:", convertion_fit_function)
 
 #-------------------------------------------------------------
 # dijkstra curve fitting
-def dijkstra_fitting(x, a, b): # function for the fitting
-    return a*x*x + b
+def dijkstra_fitting(x, a, b, c): # function for the fitting
+    return a*x*x + b*np.log(x)*x + c
 
-a,b = op.curve_fit(dijkstra_fitting, point_num, shortestpath_time)[0]
-shortestpath_fit_result = [dijkstra_fitting(x,a,b) for x in point_num]
-shortestpath_fit_function = str((a))+"xlog(x)+" +str(b)
+a,b,c = op.curve_fit(dijkstra_fitting, point_num, shortestpath_time)[0]
+shortestpath_fit_result = [dijkstra_fitting(x,a,b,c) for x in point_num]
+shortestpath_fit_function = str((a))+"x^2+" +str(b) + "x+" + str(c)
 print("Shortest Path Fixed Result:", shortestpath_fit_function)
 
 
@@ -98,7 +95,7 @@ print("Shortest Path Fixed Result:", shortestpath_fit_function)
 ##################################################################33
 # Plot overall settings
 plot.rc('font',family='Arial')
-plot.ion
+plot.ion()
 ########## Plot drawing 1 ##############
 # general setting
 
@@ -146,17 +143,17 @@ plot.xlabel('Point Number',size=11)
 plot.ylabel('Cost time ($ \mu s $)',size=11)
 plot.grid()
 
-# plot 5
+# # plot 5
 plot.figure("Shortest Path Plot",figsize=(21/2.54,9/2.54),dpi=200)
 plot.scatter(point_num, shortestpath_time ,label="Test Result")
-plot.plot(point_num, shortestpath_fit_result, color="red",label = "Curve Fitted Result")
+plot.plot(point_num, shortestpath_fit_result, color="red", label = "Curve Fitted Result")
 plot.title('Point Number Vs Shortest Path Execution Time',size=11)
 plot.legend()
 plot.xlabel('Point Number',size=11)
 plot.ylabel('Cost time ($ \mu s $)',size=11)
 plot.grid()
 
-# plot 6 Time cost percentage for the system
+# # plot 6 Time cost percentage for the system
 plot.figure("Time Cost Percentage with point number",figsize=(21/2.54,9/2.54),dpi=200)
 plot.fill_between(point_num, mapping_time/total_time , color = '#009392', label='mapping time')
 plot.fill_between(point_num, mapping_time/total_time , (mapping_time+convertion_time)/total_time , color='#39B185', label='convertion time')
