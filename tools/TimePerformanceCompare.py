@@ -6,170 +6,118 @@ import tkinter as tk
 from tkinter.filedialog import askopenfilename
 
 
-##############################################################3
+#========================= Changed Data Area ========================================
 # Data Processing
 # data class
 
 # read the first set of data
-data_set_1 = pd.read_csv("../tests/squareMapTest/V2_Code_Test.csv")
-data_set_2 = pd.read_csv("../tests/squareMapTest/V2_Code_Test.csv")
+data_set_1 = pd.read_csv("../tests/squareMapTest/V1_Code_Test.csv")
+data_set_2 = pd.read_csv("../tests/squareMapTest/V1_1_Code_Test.csv")
 
-area_set = data_set_1.loc[:,'Area Set']
-line_num = data_set_1.loc[:,'Test Count']
-mapping_time = data_set_1.loc[:,'Mapping Time(us)']
-convertion_time = data_set_1.loc[:,'Convertion Time(us)']
-shortestpath_time = data_set_1.loc[:,'Shorest Path Time(us)']
-point_num = data_set_1.loc[:,'Points Num']
-line_num = data_set_1.loc[:,'Path Num']
-result_dif = data_set_1.loc[:,'Result Distance']
-
-print(area_set)
-
-total_time = mapping_time+convertion_time+shortestpath_time
-
-shortestpath_time_max = max(shortestpath_time)
-point_num_max = max(point_num)
-total_time_max = max(total_time)
-line_num_max = max(line_num)
+print(data_set_1.head)
 
 
-######################################################################
-## Plot 1: The Point Number Vs Shortest Path Time
-def shortestPathTimeComplexity(x, a, b, c)
-    return
+#########################
+## Plot:
+# Datas
+data_1_x = data_set_1.loc[:,'Points Num'].values
+data_2_x = data_set_2.loc[:,'Points Num'].values
+data_1_y = data_set_1.loc[:,'Shorest Path Time(us)'].values
+data_2_y = data_set_2.loc[:,'Shorest Path Time(us)'].values
 
+######### NORMAL PLOT IN CARTESIAN
+# Data Fitting Perform
+def dataSet_1_Fit(x, a, b, c):
+    return a*(np.square(x)) + b*x + c
 
+def dataSet_2_Fit(x, a, b, c):
+    return a*(np.square(x)) + b*x + c
 
-##################################################################33
-########## Data Analysing ##############
-# Curve Fitting
+# Data set 1 fitting
+a_1,b_1,c_1 = op.curve_fit(dataSet_1_Fit, data_1_x, data_1_y)[0]
+a_2,b_2,c_2 = op.curve_fit(dataSet_2_Fit, data_2_x, data_2_y)[0]
 
-#-------------------------------------------------------------
-# mapping area vs time fitting
-def area_vs_time_fitting(x, a, b): # function for the fitting
-    return a/x + b
+data_1_fitResult = [dataSet_1_Fit(x,a_1,b_1,c_1) for x in data_1_x]
+data_2_fitResult = [dataSet_2_Fit(x,a_2,b_2,c_2) for x in data_2_x]
 
-a,b = op.curve_fit(area_vs_time_fitting, area_set, mapping_time)[0]
-mappingtime_fit_result = [area_vs_time_fitting(x,a,b) for x in area_set]
-mappingtime_fit_funtion = str((a))+"/x+" +str(b)
-print("Mapping time information:", mappingtime_fit_funtion)
+data_1_fitFunction =  str(a_1)+"x^2 +" + str(b_1) + "x" + str(c_1)
+data_2_fitFunction =  str(a_2)+"x^2 +" + str(b_2) + "x" + str(c_2)
 
-#-------------------------------------------------------------
-# mapping area vs point fitting
-def area_vs_point_fitting(x, a, b): # function for the fitting
-    return a/x + b
+###########################
+set_1_defaultColor = ["#6CB0D6", "#0D4A70"]
+set_2_defaultColor = ["#FD8D3C", "#810026"]
 
-a,b = op.curve_fit(area_vs_point_fitting, area_set, point_num)[0]
-mapping_point_fit_result = [area_vs_point_fitting(x,a,b) for x in area_set]
-mapping_point_fit_funtion = str((a))+"/x+" +str(b)
-print("Mapping area vs point information:", mapping_point_fit_funtion)
-
-#-------------------------------------------------------------
-# mapping points vs time fitting
-def mapping_point_vs_time_fitting(x, a, b): # function for the fitting
-    return a*x + b
-
-a,b = op.curve_fit(mapping_point_vs_time_fitting, point_num, mapping_time)[0]
-mapping_point_vs_time_fit_result = [mapping_point_vs_time_fitting(x,a,b) for x in point_num]
-mapping_point_vs_time_fit_funtion = str((a))+"/x+" +str(b)
-print("Mapping Points vs time information:", mapping_point_vs_time_fit_funtion)
-
-
-#-------------------------------------------------------------
-# convertion curve fitting
-def convertion_fitting(x, a, b): # function for the fitting
-    return a*x*x+b
-
-a,b = op.curve_fit(convertion_fitting, point_num, convertion_time)[0]
-convertion_fit_result = [convertion_fitting(x,a,b) for x in point_num]
-convertion_fit_function = str((a))+"x^2+" +str(b)
-print("Convertion Fixed Result:", convertion_fit_function)
-
-#-------------------------------------------------------------
-# dijkstra curve fitting
-def dijkstra_fitting(x, a, b,c): # function for the fitting
-    return a*np.log10(x)*x + b*x+c
-
-a,b,c = op.curve_fit(dijkstra_fitting, point_num, shortestpath_time)[0]
-shortestpath_fit_result = [dijkstra_fitting(x,a,b,c) for x in point_num]
-shortestpath_fit_function = str((a))+"x^2+" +str(b)+"x+" + str(c)
-print("Shortest Path Fixed Result:", shortestpath_fit_function)
-
-
-
-
-##################################################################33
-# Plot overall settings
+# Plot Setup
 plot.rc('font',family='Arial')
-plot.ion
-########## Plot drawing 1 ##############
-# general setting
-
-# plot 1, mapping time
+plot.ion()
 plot.figure("Mapping Plot",figsize=(21/2.54,9/2.54),dpi=200)
-plot.scatter(area_set,mapping_time,label="Test Result",s=10)
-plot.plot(area_set, mappingtime_fit_result, color="red",label = "Curve Fitted Result")
-plot.title('Setted Maximum Area Vs Mapping Time',size=11)
-plot.legend()
-plot.xlabel('Max area settings',size=11)
-plot.ylabel('Cost time ($ \mu s $)',size=11)
-plot.grid()
-plot.tight_layout()
-plot.xlim([0,1.5])
+# Data Set 1
+plot.scatter(data_1_x,data_1_y, label="V1 Test Result", s = 10, color = set_1_defaultColor[0])
+plot.plot(data_1_x, data_1_fitResult, label = "V1 Curve Fitted Result",color = set_1_defaultColor[1])
 
-# plot 2, mapping time
-plot.figure("Mapping Area Vs Points",figsize=(21/2.54,9/2.54),dpi=200)
-plot.scatter(area_set,point_num,label="Test Result",s=10)
-plot.plot(area_set, mapping_point_fit_result, color="red",label = "Curve Fitted Result")
-plot.title('Setted Maximum Area Vs Mapping Points',size=11)
-plot.legend()
-plot.xlabel('Max area settings',size=11)
-plot.ylabel('Points Num',size=11)
-plot.grid()
-plot.tight_layout()
+# Data Set 2
+plot.scatter(data_2_x,data_2_y, label="V2 Test Result", s = 10, color = set_2_defaultColor[0])
+plot.plot(data_2_x, data_2_fitResult, label = "V2 Curve Fitted Result",color = set_2_defaultColor[1])
 
-# plot 3
-plot.figure("Mapping Points Vs Time",figsize=(21/2.54,9/2.54),dpi=200)
-plot.scatter(point_num, mapping_time,label="Test Result",s=10)
-plot.plot(point_num, mapping_point_vs_time_fit_result, color="red",label = "Curve Fitted Result")
-plot.title('Mapping points Vs Mapping Time',size=11)
-plot.legend()
-plot.xlabel('Mapping Points Result',size=11)
-plot.ylabel('Cost time ($ \mu s $)',size=11)
-plot.grid()
-plot.tight_layout()
-
-# plot 4
-plot.figure("Convertion Plot",figsize=(21/2.54,9/2.54),dpi=200)
-plot.scatter(point_num, convertion_time ,label="Test Result")
-plot.plot(point_num, convertion_fit_result, color="red",label = "Curve Fitted Result")
-plot.title('Point Number Vs Convertion Execution Time',size=11)
-plot.legend()
-plot.xlabel('Point Number',size=11)
-plot.ylabel('Cost time ($ \mu s $)',size=11)
-plot.grid()
-
-# plot 5
-plot.figure("Shortest Path Plot",figsize=(21/2.54,9/2.54),dpi=200)
-plot.scatter(point_num, shortestpath_time ,label="Test Result")
-plot.plot(point_num, shortestpath_fit_result, color="red",label = "Curve Fitted Result")
 plot.title('Point Number Vs Shortest Path Execution Time',size=11)
 plot.legend()
 plot.xlabel('Point Number',size=11)
 plot.ylabel('Cost time ($ \mu s $)',size=11)
 plot.grid()
 
-# plot 6 Time cost percentage for the system
-plot.figure("Time Cost Percentage with point number",figsize=(21/2.54,9/2.54),dpi=200)
-plot.fill_between(point_num, mapping_time/total_time , color = '#009392', label='mapping time')
-plot.fill_between(point_num, mapping_time/total_time , (mapping_time+convertion_time)/total_time , color='#39B185', label='convertion time')
-plot.fill_between(point_num, (mapping_time+convertion_time)/total_time, 1 , color='#E9E29C', label='shortest path time')
-plot.title('Time cost for each function',size=11)
+#################### PLOT IN LOGLOG
+data_1_log_x = np.log10(data_1_x)
+data_1_log_y = np.log10(data_1_y)
+data_2_log_x = np.log10(data_2_x)
+data_2_log_y = np.log10(data_2_y)
+
+# Data Fitting Perform
+def dataSet_1_logFit(x, a, b):
+    return a*x + b
+
+def dataSet_2_logFit(x, a, b):
+    return a*x + b
+
+# Data set 1 fitting
+a_1_log,b_1_log = op.curve_fit(dataSet_1_logFit, data_1_log_x, data_1_log_y)[0]
+a_2_log,b_2_log = op.curve_fit(dataSet_2_logFit, data_2_log_x, data_2_log_y)[0]
+
+data_1_log_fitResult = [dataSet_1_logFit(x,a_1_log,b_1_log) for x in data_1_log_x]
+data_2_log_fitResult = [dataSet_2_logFit(x,a_2_log,b_2_log) for x in data_2_log_x]
+
+data_1_log_fitFunction =  '$' +'{:.2e}'.format(a_1_log)+"x " + '{:+.2e}'.format(b_1_log)+ '$'
+data_2_log_fitFunction =  '$' +'{:.2e}'.format(a_2_log)+"x " + '{:+.2e}'.format(b_2_log)+ '$'
+
+###########################
+set_1_defaultColor = ["#6CB0D6", "#0D4A70"]
+set_2_defaultColor = ["#FD8D3C", "#810026"]
+
+# Plot Setup
+plot.figure("Mapping Plot in Loglog",figsize=(21/2.54,9/2.54),dpi=200)
+# Data Set 1
+plot.scatter(data_1_log_x,data_1_log_y, label="V1 Test Result", s = 10, color = set_1_defaultColor[0])
+plot.plot(data_1_log_x, data_1_log_fitResult, label = data_1_log_fitFunction,color = set_1_defaultColor[1])
+
+# Data Set 2
+plot.scatter(data_2_log_x,data_2_log_y, label="V1.1 Test Result", s = 10, color = set_2_defaultColor[0])
+plot.plot(data_2_log_x, data_2_log_fitResult, label = data_2_log_fitFunction,color = set_2_defaultColor[1])
+
+plot.title('Point Number Vs Shortest Path Execution Time',size=11)
 plot.legend()
-plot.xlabel('Point Number',size=11)
-plot.ylabel(r'Cost time in percentage (%)',size=11)
+plot.xlabel('Point Number (dB)',size=11)
+plot.ylabel('Cost time ($ dB $)',size=11)
 plot.grid()
-plot.xlim([0,1000])
+
+
+
+
+
+
+
+
+
+
+
 
 
 plot.tight_layout()
