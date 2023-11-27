@@ -6,18 +6,13 @@ import tkinter as tk
 from tkinter.filedialog import askopenfilename
 
 
-
-
 ##############################################################3
 # Data Processing
 # data class
-        
-
 
 # read the first set of data
 data_set_1 = pd.read_csv("../tests/squareMapTest/V2_Code_Test.csv")
-data_col = data_set_1.columns.values
-print(data_col)
+data_set_2 = pd.read_csv("../tests/squareMapTest/V2_Code_Test.csv")
 
 area_set = data_set_1.loc[:,'Area Set']
 line_num = data_set_1.loc[:,'Test Count']
@@ -36,6 +31,12 @@ shortestpath_time_max = max(shortestpath_time)
 point_num_max = max(point_num)
 total_time_max = max(total_time)
 line_num_max = max(line_num)
+
+
+######################################################################
+## Plot 1: The Point Number Vs Shortest Path Time
+def shortestPathTimeComplexity(x, a, b, c)
+    return
 
 
 
