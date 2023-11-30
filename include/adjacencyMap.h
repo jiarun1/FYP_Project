@@ -15,7 +15,6 @@
 #include <stdint.h>
 #include <iostream>
 
-
 class adjacencyMap
 {
 public:
@@ -23,6 +22,13 @@ public:
     typedef float DISTANCE_ACCURACY;
     typedef float WEIGHT_ACCURACY;
 
+    typedef struct
+    {
+        float x;
+        float y;
+        float z;
+    }pointLocation;
+    
 
 
 public:
@@ -42,6 +48,8 @@ public:
 
     void setPointNum(uint32_t point_num);
     uint32_t getPointNum(void);
+
+    void setPointPosition(uint32_t point_label ,float x, float y, float z);
 
     /**
      * @brief: get the number of path that is available to go through
@@ -67,6 +75,9 @@ private:
 
     /// @brief this parameter used to store the number of points in this map
     uint32_t pointNum;
+
+    /// @brief this parameter 
+    pointLocation* pointLoc;
     
 
 };

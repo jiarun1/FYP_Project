@@ -17,7 +17,7 @@
  * @brief: constructure the map
 */
 adjacencyMap::adjacencyMap():
-    pointNum(0),cost(nullptr)
+    pointNum(0),cost(nullptr),pointLoc(nullptr)
 {
 
 }
@@ -26,7 +26,7 @@ adjacencyMap::adjacencyMap():
  * @brief: initialize the class by entering the point number
 */
 adjacencyMap::adjacencyMap(uint32_t point_num):
-    pointNum(0),cost(nullptr)
+    pointNum(0),cost(nullptr),pointLoc(nullptr)
 {
     setPointNum(point_num);
 }
@@ -69,6 +69,9 @@ void adjacencyMap::setPointNum(uint32_t point_num)
 {
     clear();
     pointNum = point_num;
+
+    // create a list of points
+    pointLoc = new pointLocation[pointNum];
     // create a pointNum * pointNum dimension matrix
     cost = new DISTANCE_ACCURACY*[pointNum];
     for(uint32_t i = 0; i < pointNum; i++)
@@ -88,6 +91,19 @@ void adjacencyMap::setPointNum(uint32_t point_num)
 uint32_t adjacencyMap::getPointNum(void)
 {
     return pointNum;
+}
+
+void adjacencyMap::setPointPosition(uint32_t point_label ,float x, float y, float z)
+{
+    if(point_label >= pointNum)
+    {
+        return;
+    }
+
+    pointLoc[point_label].x = x;
+    pointLoc[point_label].x = y;
+    pointLoc[point_label].x = z;
+
 }
 
 /**
