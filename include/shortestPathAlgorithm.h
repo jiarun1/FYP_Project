@@ -12,6 +12,7 @@
 
 #include "adjacencyMap.h"
 #include "stdint.h"
+#include "fstream"
 
 class shortestPathAlgorithm
 {
@@ -30,6 +31,8 @@ public:
     uint16_t getPathPointNum();
 
     adjacencyMap::DISTANCE_ACCURACY getPathCost();
+
+    void exportToPolyFile(std::string file_path);
 
 protected:
     

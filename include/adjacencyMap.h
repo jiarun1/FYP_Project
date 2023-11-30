@@ -15,6 +15,8 @@
 #include <stdint.h>
 #include <iostream>
 
+#define ADJACENT_NO_PATH (-1)
+
 class adjacencyMap
 {
 public:
@@ -50,6 +52,7 @@ public:
     uint32_t getPointNum(void);
 
     void setPointPosition(uint32_t point_label ,float x, float y, float z);
+    pointLocation* getPointPosition(uint32_t point_label);
 
     /**
      * @brief: get the number of path that is available to go through

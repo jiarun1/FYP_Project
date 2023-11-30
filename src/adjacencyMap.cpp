@@ -101,9 +101,14 @@ void adjacencyMap::setPointPosition(uint32_t point_label ,float x, float y, floa
     }
 
     pointLoc[point_label].x = x;
-    pointLoc[point_label].x = y;
-    pointLoc[point_label].x = z;
+    pointLoc[point_label].y = y;
+    pointLoc[point_label].z = z;
 
+}
+
+adjacencyMap::pointLocation* adjacencyMap::getPointPosition(uint32_t point_label)
+{
+    return &(pointLoc[point_label]);
 }
 
 /**

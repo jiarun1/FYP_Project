@@ -53,6 +53,7 @@ public:
     }
     ~writeLog_c()
     {
+        file.close();
     }
 
     void write(float set_area, 

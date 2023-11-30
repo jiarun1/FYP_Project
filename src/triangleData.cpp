@@ -162,6 +162,14 @@ void triangleData::readEles(std::string ele_file)
 void triangleData::toAdjacencyMap(adjacencyMap *map)
 {
     map->setPointNum(nodeNum);
+
+    // set points
+    for(int i = 0; i < nodeNum; i++)
+    {
+        map->setPointPosition(i, nodeList[i].x , nodeList[i].y, 0);
+    }
+
+    // set lines
     for(int i = 0; i < shapeNum; i++)
     {
         shape_c shape_tmp = shapeList[i];
