@@ -5,8 +5,8 @@ from tkinter.filedialog import  askopenfilename
 
 polyFilePath = "/home/jiarun/FYP_Project/code/tests/squareMapTest/Result.poly"
 
-tk.Tk().withdraw()
-polyFilePath = askopenfilename()
+# tk.Tk().withdraw()
+# polyFilePath = askopenfilename()
 print(polyFilePath)
 
 
@@ -39,16 +39,16 @@ def read_poly_file(file_path):
 
 
 vertices, polygons = read_poly_file(polyFilePath)
-print(vertices)
-print(vertices[1][1][1])
-print(len(vertices))
+# print(vertices)
+# print(vertices[1][1][1])
+# print(len(vertices))
 
 plt.rc('font',family='Arial')
 plt.ion()
 plt.figure()
 
 for i in range(len(vertices)):
-    print(vertices[i])
+    # print(vertices[i])
 
     if(vertices[i][2] == 1):
         plt.plot(vertices[i][1][0], vertices[i][1][1],'o', color = '#FF0000', markersize='4')
@@ -57,7 +57,7 @@ for i in range(len(vertices)):
 
 
 for i in range(len(polygons)):
-    print(polygons[i])
+    # print(polygons[i])
 
     point1 = vertices[polygons[i][1][0]]
     point2 = vertices[polygons[i][1][1]]

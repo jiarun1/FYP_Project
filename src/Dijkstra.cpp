@@ -47,6 +47,8 @@ void Dijkstra::calculateShortestPath()
     points_info[start_point] = 0;
 
     uint16_t current_point = start_point;
+
+    // std::cout << *cost_map << std::endl;
    
     do{
         points_reached[current_point] = true;
@@ -73,7 +75,7 @@ void Dijkstra::calculateShortestPath()
                 points_available[i] = true;
             }
 
-            if(cost < points_info[i])
+            if(cost + points_info[current_point] < points_info[i])
             {
                 points_info[i] = cost + points_info[current_point];
                 previous_point[i] = current_point;
@@ -94,17 +96,19 @@ void Dijkstra::calculateShortestPath()
             {
                 min_cost = points_info[i];
                 current_point = i;
+                continue;
             }
 
             if(points_info[i] < min_cost)
             {
                 min_cost = points_info[i];
                 current_point = i;
+                continue;
             }
         }
 
 
-    }while(points_info[end_point] == -1);
+    }while(current_point != end_point);
 
     /// update the path information
 
@@ -160,6 +164,7 @@ void Dijkstra::calculateShortestPath()
     // initialize the start point
     points_info[start_point] = 0;
    
+    // std::cout << *cost_map << std::endl;
 
     while(points_info[end_point] == -1)
     {
