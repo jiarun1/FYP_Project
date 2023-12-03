@@ -34,6 +34,11 @@ public:
 
     void exportToPolyFile(std::string file_path);
 
+    /**
+     * @brief: Display the shprtest path through the cout
+    */
+    friend std::ostream& operator<< (std::ostream & out,const shortestPathAlgorithm &outPath);
+
 protected:
     
     /// @brief used to store the cost data for the map

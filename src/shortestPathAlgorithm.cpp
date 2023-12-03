@@ -129,3 +129,18 @@ void shortestPathAlgorithm::exportToPolyFile(std::string file_path)
     
     file.close();
 }
+
+
+/**
+ * @brief: Display the unidirectional map through the cout
+*/
+std::ostream& operator<< (std::ostream & out,const shortestPathAlgorithm &outPath)
+{
+    out << "path:";
+    for(int i = 0; i < outPath.path_point_num; i++)
+    {
+        out << outPath.path[i] << "->";
+    }
+    out << "\n";
+    return out;
+}

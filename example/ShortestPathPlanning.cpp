@@ -20,7 +20,7 @@ int main(int argv, char** argc)
     // call the triangle
     triangleCommand triangle(TrianglePath);
 
-    triangle.setParameter("a", (float)0.05);
+    triangle.setParameter("a", (float)3);
 
     triangle.call(MapPath + MapName +".poly");
  
@@ -40,8 +40,11 @@ int main(int argv, char** argc)
     path_planing.exportToPolyFile(MapPath + "Result.poly");
 
     std::cout << "Shortest Distance: " << float(path_planing.getPathCost()) << std::endl;
+    std::cout << path_planing;
 
     system("/bin/python3 ../tools/displayPath.py");
 
     return 0;
 }
+
+
