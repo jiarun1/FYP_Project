@@ -3,7 +3,8 @@ import tkinter as tk
 
 from tkinter.filedialog import  askopenfilename
 
-polyFilePath = "/home/jiarun/FYP_Project/code/tests/squareMapTest/Result.poly"
+#polyFilePath = "/home/jiarun/FYP_Project/code/tests/squareMapTest/Result.poly"
+polyFilePath = "/home/jiarun/Desktop/FYP/code/tests/squareMapTest/Result.poly"
 
 # tk.Tk().withdraw()
 # polyFilePath = askopenfilename()
@@ -44,7 +45,7 @@ vertices, polygons = read_poly_file(polyFilePath)
 # print(len(vertices))
 
 plt.rc('font',family='Arial')
-plt.ion()
+#plt.ion()
 plt.figure()
 
 for i in range(len(vertices)):
@@ -69,11 +70,6 @@ for i in range(len(polygons)):
         plt.plot(point_x, point_y, color = '#FF0000')
     else :
         plt.plot(point_x, point_y, color = '#000000')
-
-    
-    
-    
-
 
 
 plt.tight_layout()

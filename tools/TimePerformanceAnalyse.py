@@ -9,7 +9,7 @@ from tkinter.filedialog import askopenfilename
 # Data Processing
 
 # data = pd.read_csv("../tests/squareMapTest/log-2.csv")
-data = pd.read_csv("../tests/squareMapTest/V1_1_Code_Test.csv")
+data = pd.read_csv("../tests/squareMapTest/V2_Code_Test.csv")
 data_col = data.columns.values
 print(data_col)
 
@@ -81,12 +81,12 @@ print("Convertion Fixed Result:", convertion_fit_function)
 
 #-------------------------------------------------------------
 # dijkstra curve fitting
-def dijkstra_fitting(x, a, b, c): # function for the fitting
-    return a*x*x + b*np.log(x)*x + c
+def dijkstra_fitting(x, a, b): # function for the fitting
+    return a*np.log(x)*x + b
 
-a,b,c = op.curve_fit(dijkstra_fitting, point_num, shortestpath_time)[0]
-shortestpath_fit_result = [dijkstra_fitting(x,a,b,c) for x in point_num]
-shortestpath_fit_function = str((a))+"x^2+" +str(b) + "x+" + str(c)
+a,b = op.curve_fit(dijkstra_fitting, point_num, shortestpath_time)[0]
+shortestpath_fit_result = [dijkstra_fitting(x,a,b) for x in point_num]
+shortestpath_fit_function = str(b) + "xlog(x)+" + str(b)
 print("Shortest Path Fixed Result:", shortestpath_fit_function)
 
 
@@ -95,7 +95,7 @@ print("Shortest Path Fixed Result:", shortestpath_fit_function)
 ##################################################################33
 # Plot overall settings
 plot.rc('font',family='Arial')
-plot.ion()
+#plot.ion()
 ########## Plot drawing 1 ##############
 # general setting
 

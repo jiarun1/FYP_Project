@@ -11,8 +11,8 @@ from tkinter.filedialog import askopenfilename
 # data class
 
 # read the first set of data
-data_set_1 = pd.read_csv("../tests/squareMapTest/V1_Code_Test.csv")
-data_set_2 = pd.read_csv("../tests/squareMapTest/V1_1_Code_Test.csv")
+data_set_1 = pd.read_csv("../tests/squareMapTest/V1_1_Code_Test.csv")
+data_set_2 = pd.read_csv("../tests/squareMapTest/V2_Code_Test.csv")
 
 print(data_set_1.head)
 
@@ -49,7 +49,7 @@ set_2_defaultColor = ["#FD8D3C", "#810026"]
 
 # Plot Setup
 plot.rc('font',family='Arial')
-plot.ion()
+#plot.ion()
 plot.figure("Mapping Plot",figsize=(21/2.54,9/2.54),dpi=200)
 # Data Set 1
 plot.scatter(data_1_x,data_1_y, label="V1 Test Result", s = 10, color = set_1_defaultColor[0])
