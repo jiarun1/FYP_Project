@@ -40,8 +40,11 @@ a_2,b_2,c_2 = op.curve_fit(dataSet_2_Fit, data_2_x, data_2_y)[0]
 data_1_fitResult = [dataSet_1_Fit(x,a_1,b_1,c_1) for x in data_1_x]
 data_2_fitResult = [dataSet_2_Fit(x,a_2,b_2,c_2) for x in data_2_x]
 
-data_1_fitFunction =  str(a_1)+"x^2 +" + str(b_1) + "x" + str(c_1)
-data_2_fitFunction =  str(a_2)+"x^2 +" + str(b_2) + "x" + str(c_2)
+data_1_fitFunction =  str(a_1)+"x^2 +" + str(b_1) + "x+" + str(c_1)
+data_2_fitFunction =  str(a_2)+"x^2 +" + str(b_2) + "x+" + str(c_2)
+
+print("Data 1: " , data_1_fitFunction)
+print("Data 2: " , data_2_fitFunction)
 
 ###########################
 set_1_defaultColor = ["#6CB0D6", "#0D4A70"]
@@ -52,8 +55,8 @@ plot.rc('font',family='Arial')
 #plot.ion()
 plot.figure("Mapping Plot",figsize=(21/2.54,9/2.54),dpi=200)
 # Data Set 1
-plot.scatter(data_1_x,data_1_y, label="V1 Test Result", s = 10, color = set_1_defaultColor[0])
-plot.plot(data_1_x, data_1_fitResult, label = "V1 Curve Fitted Result",color = set_1_defaultColor[1])
+plot.scatter(data_1_x,data_1_y, label="V1.1 Test Result", s = 10, color = set_1_defaultColor[0])
+plot.plot(data_1_x, data_1_fitResult, label = "V1.1 Curve Fitted Result",color = set_1_defaultColor[1])
 
 # Data Set 2
 plot.scatter(data_2_x,data_2_y, label="V2 Test Result", s = 10, color = set_2_defaultColor[0])
@@ -95,11 +98,11 @@ set_2_defaultColor = ["#FD8D3C", "#810026"]
 # Plot Setup
 plot.figure("Mapping Plot in Loglog",figsize=(21/2.54,9/2.54),dpi=200)
 # Data Set 1
-plot.scatter(data_1_log_x,data_1_log_y, label="V1 Test Result", s = 10, color = set_1_defaultColor[0])
+plot.scatter(data_1_log_x,data_1_log_y, label="V1.1 Test Result", s = 10, color = set_1_defaultColor[0])
 plot.plot(data_1_log_x, data_1_log_fitResult, label = data_1_log_fitFunction,color = set_1_defaultColor[1])
 
 # Data Set 2
-plot.scatter(data_2_log_x,data_2_log_y, label="V1.1 Test Result", s = 10, color = set_2_defaultColor[0])
+plot.scatter(data_2_log_x,data_2_log_y, label="V2 Test Result", s = 10, color = set_2_defaultColor[0])
 plot.plot(data_2_log_x, data_2_log_fitResult, label = data_2_log_fitFunction,color = set_2_defaultColor[1])
 
 plot.title('Point Number Vs Shortest Path Execution Time',size=11)
