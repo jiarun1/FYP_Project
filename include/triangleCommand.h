@@ -25,6 +25,7 @@ public:
 
     void setParameter(std::string parameter_marker, int value);
     void setParameter(std::string parameter_marker, float value);
+    void setParameter(std::string parameter_marker, double value);
     void setParameter(std::string parameter_marker, std::string value);
 
     void setMinTriangleArea(float area);

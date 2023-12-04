@@ -54,6 +54,11 @@ void triangleCommand::setParameter(std::string parameter_marker, float value)
     setParameter(parameter_marker,std::to_string(value));
 }
 
+void triangleCommand::setParameter(std::string parameter_marker, double value)
+{
+    setParameter(parameter_marker,std::to_string(value));
+}
+
 void triangleCommand::setParameter(std::string parameter_marker, std::string value)
 {
     struct Parameter_t* parameter_tmp = parameters;
