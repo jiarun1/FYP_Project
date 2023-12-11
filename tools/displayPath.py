@@ -1,14 +1,11 @@
 import matplotlib.pyplot as plt
 import tkinter as tk
-
+import sys
+import getopt
 from tkinter.filedialog import  askopenfilename
 
 #polyFilePath = "/home/jiarun/FYP_Project/code/tests/squareMapTest/Result.poly"
-polyFilePath = "/home/jiarun/Desktop/FYP/code/tests/squareMapTest/Result.poly"
-
-# tk.Tk().withdraw()
-# polyFilePath = askopenfilename()
-print(polyFilePath)
+defaultFilePath = "/home/jiarun/Desktop/FYP/code/tests/squareMapTest/Result.poly"
 
 
 def read_poly_file(file_path):
@@ -38,45 +35,75 @@ def read_poly_file(file_path):
 
     return vertices, polygons
 
+def main(polyPath):
 
-vertices, polygons = read_poly_file(polyFilePath)
-# print(vertices)
-# print(vertices[1][1][1])
-# print(len(vertices))
+    print(polyPath)
+    # tk.Tk().withdraw()
+    # polyFilePath = askopenfilename()
+    vertices, polygons = read_poly_file(polyPath)
+    # print(vertices)
+    # print(vertices[1][1][1])
+    # print(len(vertices))
 
-plt.rc('font',family='Arial')
-#plt.ion()
-plt.figure()
+    plt.rc('font',family='Arial')
+    #plt.ion()
+    plt.figure()
 
-for i in range(len(vertices)):
-    # print(vertices[i])
+    for i in range(len(vertices)):
+        # print(vertices[i])
 
-    if(vertices[i][2] == 1):
-        plt.plot(vertices[i][1][0], vertices[i][1][1],'o', color = '#FF0000', markersize='4')
-    else:
-        plt.plot(vertices[i][1][0], vertices[i][1][1],'o', color = '#000000', markersize='4')
-
-
-for i in range(len(polygons)):
-    # print(polygons[i])
-
-    point1 = vertices[polygons[i][1][0]]
-    point2 = vertices[polygons[i][1][1]]
-
-    point_x = [point1[1][0], point2[1][0]]
-    point_y = [point1[1][1], point2[1][1]]
-
-    if point1[2] == 1 and point2[2] == 1:
-        plt.plot(point_x, point_y, color = '#FF0000')
-    else :
-        plt.plot(point_x, point_y, color = '#000000')
+        if(vertices[i][2] == 1):
+            plt.plot(vertices[i][1][0], vertices[i][1][1],'o', color = '#FF0000', markersize='4')
+        else:
+            plt.plot(vertices[i][1][0], vertices[i][1][1],'o', color = '#000000', markersize='4')
 
 
-plt.tight_layout()
-plt.show()
+    for i in range(len(polygons)):
+        # print(polygons[i])
 
-wait = input("Press Enter to continue.")
+        point1 = vertices[polygons[i][1][0]]
+        point2 = vertices[polygons[i][1][1]]
 
+        point_x = [point1[1][0], point2[1][0]]
+        point_y = [point1[1][1], point2[1][1]]
+
+        if point1[2] == 1 and point2[2] == 1:
+            plt.plot(point_x, point_y, color = '#FF0000')
+        else :
+            plt.plot(point_x, point_y, color = '#000000')
+
+
+    plt.tight_layout()
+    plt.show()
+
+    wait = input("Press Enter to continue.")
+
+def inputParameter(argv):
+    filepath = defaultFilePath
+    try:
+        opts, args = getopt.getopt(argv, "hf:", ["help", "file="])
+    except getopt.GetoptError:
+        print('Error: displayPath.py -f <filepath>')
+        print('   or: displayPath.py --file=<filepath>')
+        sys.exit(2)
+
+    for opt, arg in opts:
+        if opt in ("-h", "--help"):
+            print('    displayPath.py -f <filepath>')
+            print('or: displayPath.py --file=<filepath>')
+            sys.exit()
+        elif opt in ("-f", "--file"):
+            filepath = arg
+
+
+
+    print('filepath:', filepath)
+    return filepath
+
+
+if __name__ == "__main__":
+    filepath = inputParameter(sys.argv[1:])
+    main(filepath)
 
 
 

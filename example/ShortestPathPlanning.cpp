@@ -1,5 +1,7 @@
 #include <iostream>
 #include <string>
+#include <libgen.h>
+#include <unistd.h> // for getopt in decoding command line data
 #include "adjacencyMap.h"
 
 #include "triangleCommand.h"
@@ -10,7 +12,7 @@
 static const std::string TrianglePath = "../ThirdParty/triangle/triangle";
 
 
-static const std::string DefaultMapPath = "../tests/squareMapTest/";
+static const std::string DefaultMapPath = "../tests/squareMapTest";
 static const std::string DefaultMapName = "squareMapTest";
 static const int START_POINT = 1;
 static const int END_POINT = 3;
@@ -37,30 +39,43 @@ public:
 
 public:
     /// @brief Enter the data from the command lines
-    inputParameters(int argv = 0, char** argc = nullptr):
-        MapPath(DefaultMapName),MapName(DefaultMapName),
+    inputParameters(int argc = 0, char** argv = nullptr):
+        MapPath(DefaultMapPath),MapName(DefaultMapName),
         startPoint(START_POINT),endPoint(END_POINT),
         areaSet(DefaultAreaSet),
         display(false)
     {
-        for(int i = 0; i < argv; i++)
-        {
-            std::string parameter_string(argc[i]);
-
-            std::cout << parameter_string << std::endl;
-
-            if(parameter_string == std::string("-a"))
-            {
-                i += 1;
-                if(i >= argv){std::cerr << "Please enter area number after -a" << std::endl;abort;}
-                parameter_string= std::string(argc[i]);    
-                areaSet = std::stod(parameter_string);
-                continue;
-            } else if(parameter_string == std::string("-d")){
-                display = true;
-                continue;
+        int command;
+        const char *optstring = "ha:df:"; 
+        std::string parameter_string;
+        while ((command = getopt(argc, argv, optstring)) != -1) {
+            switch (command) {
+                case 'h':
+                    std::cout << "usage: ./ShortestPathPlanning [option] [arg] ... \n"
+                              << "Options and arguments:\n"
+                              << "-h          : help\n"
+                              << "-a area     : maximum area for the triangulation \n"
+                              << "-d          : enable display \n"
+                              << "-f filepath : set the map path \n"
+                              << std::endl;
+                    exit(0);
+                    break;
+                case 'a':
+                    parameter_string = std::string(optarg);    
+                    areaSet = std::stod(parameter_string);
+                    break;
+                case 'd':
+                    display = true;
+                    break;
+                case 'f':
+                    MapPath = std::string(dirname(optarg));
+                    MapName = std::string(basename(optarg));
+                    break;
+                case '?':
+                    printf("error optopt: %c\n", optopt);
+                    printf("error opterr: %d\n", opterr);
+                    break;
             }
-
         }
     };
 
@@ -69,6 +84,7 @@ public:
         out << "Parameters Settings List:" << std::endl
             << "  - maximum area: " << out_paraneter.areaSet << std::endl
             << "  - display     : " << ((out_paraneter.display)? std::string("true"):std::string("false")) << std::endl
+            << "  - map file    : " << out_paraneter.MapPath + "/" + out_paraneter.MapName << std::endl
             << std::endl;
         return out;
     }
@@ -77,9 +93,9 @@ public:
 };
 
 
-int main(int argv, char** argc)
+int main(int argc, char** argv)
 {
-    inputParameters commandInput(argv, argc);
+    inputParameters commandInput(argc, argv);
 
     std::cout << commandInput << std::endl;
 
@@ -88,11 +104,11 @@ int main(int argv, char** argc)
 
     triangle.setParameter("a", commandInput.areaSet);
 
-    triangle.call(DefaultMapPath + DefaultMapName +".poly");
+    triangle.call(commandInput.MapPath + "/" + commandInput.MapName +".poly");
  
     // analyse the data from triangle
     triangleData data;
-    data.import(DefaultMapPath + DefaultMapName + ".1.node", DefaultMapPath + DefaultMapName + ".1.ele");
+    data.import(commandInput.MapPath + "/" + commandInput.MapName + ".1.node", commandInput.MapPath + "/" + commandInput.MapName + ".1.ele");
 
     adjacencyMap map;
     data.toAdjacencyMap(&map);
@@ -103,14 +119,17 @@ int main(int argv, char** argc)
     path_planing.setAdjacencyMap(&map);
     path_planing.calculateShortestPath(START_POINT, END_POINT);
 
-    path_planing.exportToPolyFile(DefaultMapPath + "Result.poly");
+    // result output
+    std::string resultFile = commandInput.MapPath + "/" + "Result.poly";
+
+    path_planing.exportToPolyFile(resultFile);
 
     std::cout << "Shortest Distance: " << float(path_planing.getPathCost()) << std::endl;
     
     if(commandInput.display)
     {
         std::cout << path_planing;
-        system("/bin/python3 ../tools/displayPath.py");
+        system((std::string("/bin/python3 ../tools/displayPath.py -f ") + resultFile).c_str());
     }
 
     return 0;
