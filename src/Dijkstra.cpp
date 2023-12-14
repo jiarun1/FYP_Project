@@ -5,7 +5,7 @@
  *              
  * \copyright : Copyright Jiarun LIU
  * \author    : Jiarun LIU
- * \version   : V1.1
+ * \version   : V2.1
 ***********************************************************/
 #include "Dijkstra.h"
 #include "iostream"
