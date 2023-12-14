@@ -41,4 +41,6 @@ FILE(GLOB_RECURSE CURRENT_SOURCES src/*.cpp)
 
 # Link librarys
 target_link_libraries(Test_Performance ${GPERFTOOLS_LIBS})
+target_link_libraries(ShortestPathPlanning ${GPERFTOOLS_LIBS})
+
 #target_link_libraries(ShortestPathPlanning ${OpenCV_LIBS})

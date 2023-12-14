@@ -4,6 +4,9 @@
 #include <unistd.h> // for getopt in decoding command line data
 #include "adjacencyMap.h"
 
+
+#include <gperftools/profiler.h> // for testing the code
+
 #include "triangleCommand.h"
 #include "triangleData.h"
 #include "adjacencyMap.h"
@@ -97,6 +100,8 @@ int main(int argc, char** argv)
 {
     inputParameters commandInput(argc, argv);
 
+
+
     std::cout << commandInput << std::endl;
 
     // call the triangle
@@ -117,7 +122,12 @@ int main(int argc, char** argv)
 
     Dijkstra path_planing;
     path_planing.setAdjacencyMap(&map);
+
+    ProfilerStart("test.prof");
     path_planing.calculateShortestPath(START_POINT, END_POINT);
+    ProfilerFlush();
+    ProfilerStop();
+
 
     // result output
     std::string resultFile = commandInput.MapPath + "/" + "Result.poly";
