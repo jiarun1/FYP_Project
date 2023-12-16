@@ -7,7 +7,7 @@
  *              
  * @copyright : Copyright Jiarun LIU
  * @author    : Jiarun LIU
- * @version   : V0.1
+ * @version   : V3.1
 ***********************************************************/
 #include "adjacencyMap.h"
 

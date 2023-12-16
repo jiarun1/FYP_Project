@@ -7,7 +7,7 @@
  *              
  * @copyright : Copyright Jiarun LIU
  * @author    : Jiarun LIU
- * @version   : 
+ * @version   : V3.1
 ***********************************************************/
 #ifndef __COSTMAP_H__
 #define __COSTMAP_H__
