@@ -4,5 +4,6 @@
 *.ele
 *.node
 *.*.poly
+Result.poly
 
 *.ini
