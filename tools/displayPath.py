@@ -61,9 +61,11 @@ def main(polyPath):
     for i in range(len(polygons)):
         # print(polygons[i])
 
-        point1 = vertices[polygons[i][1][0]]
-        point2 = vertices[polygons[i][1][1]]
+        # this 2 value is the overall point detail list
+        point1 = vertices[polygons[i][1][0] - 1]
+        point2 = vertices[polygons[i][1][1] - 1]
 
+        # this 2 value is the x value list of the 2 points and the y value list of the points
         point_x = [point1[1][0], point2[1][0]]
         point_y = [point1[1][1], point2[1][1]]
 

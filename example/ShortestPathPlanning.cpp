@@ -2,13 +2,10 @@
 #include <string>
 #include <libgen.h>
 #include <unistd.h> // for getopt in decoding command line data
-#include "adjacencyMap.h"
-
 
 #include <gperftools/profiler.h> // for testing the code
 
 #include "triangleCommand.h"
-#include "triangleData.h"
 #include "adjacencyMap.h"
 #include "Dijkstra.h"
 
@@ -17,10 +14,10 @@ static const std::string TrianglePath = "../ThirdParty/triangle/triangle";
 
 static const std::string DefaultMapPath = "../tests/squareMapTest";
 static const std::string DefaultMapName = "squareMapTest";
-static const int START_POINT = 1;
-static const int END_POINT = 3;
+static const int START_POINT = 2;
+static const int END_POINT = 4;
 
-static const double DefaultAreaSet = 3;
+static const double DefaultAreaSet = 50;//3;
 
 class inputParameters
 {
@@ -112,11 +109,7 @@ int main(int argc, char** argv)
     triangle.call(commandInput.MapPath + "/" + commandInput.MapName +".poly");
  
     // analyse the data from triangle
-    triangleData data;
-    data.import(commandInput.MapPath + "/" + commandInput.MapName + ".1.node", commandInput.MapPath + "/" + commandInput.MapName + ".1.ele");
-
-    adjacencyMap map;
-    data.toAdjacencyMap(&map);
+    adjacencyMap map(commandInput.MapPath + "/" + commandInput.MapName + ".1.node", commandInput.MapPath + "/" + commandInput.MapName + ".1.ele");
 
     // Dijkstra algorithm start
 

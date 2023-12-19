@@ -30,7 +30,7 @@ public:
     uint16_t* getPath();
     uint16_t getPathPointNum();
 
-    adjacencyMap::DISTANCE_ACCURACY getPathCost();
+    ACCURACY getPathCost();
 
     void exportToPolyFile(std::string file_path);
 
@@ -57,7 +57,7 @@ protected:
     uint16_t end_point;
 
     /// @brief the length of the shortest path
-    adjacencyMap::DISTANCE_ACCURACY path_cost;
+    ACCURACY path_cost;
     
 
 };

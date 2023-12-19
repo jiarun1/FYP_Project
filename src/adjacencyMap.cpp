@@ -12,23 +12,22 @@
 #include "adjacencyMap.h"
 
 #include <iomanip>  
+#include <fstream>
+#include <iostream>
+#include <sstream>
 
 /**
  * @brief: constructure the map
 */
-adjacencyMap::adjacencyMap():
-    pointNum(0),cost(nullptr),pointLoc(nullptr)
+adjacencyMap::adjacencyMap()
 {
 
 }
 
-/**
- * @brief: initialize the class by entering the point number
-*/
-adjacencyMap::adjacencyMap(uint32_t point_num):
-    pointNum(0),cost(nullptr),pointLoc(nullptr)
+adjacencyMap::adjacencyMap(std::string nodefile, std::string elefile)
 {
-    setPointNum(point_num);
+    readNodes(nodefile);
+    readEles(elefile);
 }
 
 adjacencyMap::adjacencyMap(adjacencyMap& copy)
@@ -41,99 +40,192 @@ adjacencyMap::~adjacencyMap()
     clear();
 }
 
-void adjacencyMap::clear()
+pointInfo_c* adjacencyMap::findPoint(uint32_t num_point)
 {
-    if(pointNum == 0){
-        return;
-    }
-
-
-    for(uint32_t i = 0; i < pointNum; i++)
+    // if the point is at n, the system would be faster
+    if(num_point <= points.size())
     {
-        delete[] cost[i];
-    }
-    delete[] cost;
-}
-
-void adjacencyMap::setCost(int start_point, int end_point, adjacencyMap::DISTANCE_ACCURACY dis, adjacencyMap::WEIGHT_ACCURACY weight)
-{
-    cost[start_point][end_point] = dis;
-}
-
-adjacencyMap::DISTANCE_ACCURACY adjacencyMap::getCost(int start_point, int end_point)
-{
-    return cost[start_point][end_point];
-}
-
-void adjacencyMap::setPointNum(uint32_t point_num)
-{
-    clear();
-    pointNum = point_num;
-
-    // create a list of points
-    pointLoc = new pointLocation[pointNum];
-    // create a pointNum * pointNum dimension matrix
-    cost = new DISTANCE_ACCURACY*[pointNum];
-    for(uint32_t i = 0; i < pointNum; i++)
-    {
-        cost[i] = new DISTANCE_ACCURACY[pointNum];
-    }
-
-    for(uint32_t i = 0; i < pointNum; i++)
-    {
-        for(uint32_t j = 0; j < pointNum; j++)
+        if(points.at(num_point-1)->num == num_point)
         {
-            cost[i][j] = NO_CONNECTION;
+            return points.at(num_point-1);
         }
     }
-}
 
-uint32_t adjacencyMap::getPointNum(void)
-{
-    return pointNum;
-}
 
-void adjacencyMap::setPointPosition(uint32_t point_label ,float x, float y, float z)
-{
-    if(point_label >= pointNum)
+    // search all the points for the data
+    std::vector<pointInfo_c*>::iterator it = points.begin();
+
+    for(; it != points.end(); it++)
     {
+        if((*it)->num == num_point)
+        {
+            return *it;
+        }
+    }
+    return nullptr;
+}
+
+void adjacencyMap::readNodes(std::string nodefile)
+{
+    using namespace std;
+    ifstream fin;
+	fin.open(nodefile, ios::in);
+	if (!fin.is_open())
+	{
+		cerr << "can't find the node file" << endl;
+		return;
+	}
+
+    // read the data line by line
+    uint16_t count_lines = 0;
+    string line_tmp;
+    uint16_t pointNum = 0;
+    while(getline(fin, line_tmp))
+    {
+        // remove the comments from the input file
+        int index = line_tmp.find('#');
+        if(index != string::npos)
+        {
+            line_tmp = line_tmp.substr(0,index);
+        }
+
+        istringstream str(line_tmp);
+
+        if(count_lines == 0)
+        {
+            // the first line of node file, indicate the number of nodes and information
+            points.clear();
+            str >> pointNum;
+        } else if (count_lines > pointNum){
+            break;
+        } else {
+            auto pointNew = new pointInfo_c;
+            str >> pointNew->num;
+            str >> pointNew->x;
+            str >> pointNew->y;
+            str >> pointNew->is_boundary;
+            points.push_back(pointNew);
+        }
+        count_lines ++;
+    }    
+	fin.close();
+}
+
+
+void adjacencyMap::readEles(std::string elefile)
+{
+    using namespace std;
+    
+    if(points.size() == 0)
+    {
+        cerr << "Please import the node file first" << endl;
         return;
     }
 
-    pointLoc[point_label].x = x;
-    pointLoc[point_label].y = y;
-    pointLoc[point_label].z = z;
+    ifstream fin;
+	fin.open(elefile, ios::in);
+	if (!fin.is_open())
+	{
+		cerr << "can't find the ele file" << endl;
+		return;
+	}
 
-}
+    // read the data line by line
+    uint16_t count_lines = 0;
+    string line_tmp;
+    uint32_t shapeNum = 0;
+    uint32_t nodesPerShape = 0;
 
-adjacencyMap::pointLocation* adjacencyMap::getPointPosition(uint32_t point_label)
-{
-    return &(pointLoc[point_label]);
-}
-
-/**
- * @brief: get the number of path that is available to go through
- * 
- * @note: it consider as directional path, one path would be consider twice
-*/
-uint32_t adjacencyMap::getPathNum(void)
-{
-    uint32_t path_num = 0;
-    for(uint32_t i = 0; i < pointNum; i ++)
+    while(getline(fin, line_tmp))
     {
-        for(uint32_t j = 0; j < pointNum; j++)
+        // remove the comments from the input file
+        int index = line_tmp.find('#');
+        if(index != string::npos)
         {
-            if(cost[i][j] != NO_CONNECTION)
+            line_tmp = line_tmp.substr(0,index);
+        }
+
+        istringstream str(line_tmp);
+
+        if(count_lines == 0)
+        {
+            // decode the first line
+            str >> shapeNum;
+            str >> nodesPerShape;
+        } else if (count_lines > shapeNum){
+            break;
+        } else {
+            uint32_t shape_num = 0;
+            str >> shape_num;
+            uint32_t* node_list = new uint32_t[nodesPerShape];
+            for(int i = 0; i < nodesPerShape; i++)
             {
-                path_num ++;
+                str >> node_list[i];
+            }
+
+            pointInfo_c* currentPoints; 
+            pointInfo_c* nextPoints;
+
+            for(int i = 0; i < nodesPerShape - 1; i++)
+            {
+                currentPoints = findPoint(node_list[i]);
+                nextPoints = findPoint(node_list[i+1]);
+                auto connection_new = currentPoints->addConnection(nextPoints);
+                if(connection_new != nullptr)
+                {
+                    connections.push_back(connection_new);
+                }
+            }
+            currentPoints = findPoint(node_list[nodesPerShape-1]);
+            nextPoints = findPoint(node_list[0]);
+            auto connection_new = currentPoints->addConnection(nextPoints);
+            if(connection_new != nullptr)
+            {
+                connections.push_back(connection_new);
             }
         }
-    }
-    return path_num;
+        count_lines ++;
+    }    
+	fin.close();
 }
 
 
 
+void adjacencyMap::clear()
+{
+    //TODO: add clear code
+}
+
+
+ACCURACY adjacencyMap::getCost(pointCon_c* connection)
+{
+    return connection->distance;
+}
+
+uint32_t adjacencyMap::getPointNum()
+{
+    return points.size();
+}
+
+uint32_t adjacencyMap::getPathNum()
+{
+    return connections.size();
+}
+
+std::vector<pointCon_c*> adjacencyMap::getConnections(pointInfo_c* point)
+{
+    return point->connection;
+}
+
+std::vector<pointCon_c*> adjacencyMap::getAllConnections()
+{
+    return connections;
+}
+
+std::vector<pointInfo_c*> adjacencyMap::getAllPoints()
+{
+    return points;
+}
 
 
 
@@ -145,18 +237,13 @@ uint32_t adjacencyMap::getPathNum(void)
 */
 std::ostream& operator<< (std::ostream & out,const adjacencyMap &out_map)
 {
-    out << "[ ";
-    for(int i = 0; i < out_map.pointNum; i++)
+    out << "";
+    for(int i = 0; i < out_map.points.size(); i++)
     {
-        for(int j = 0; j < out_map.pointNum; j++)
+        for(int j = 0; j < out_map.points.at(i)->connection.size();j++)
         {
-            out << std::setprecision(3) << out_map.cost[i][j] << "\t";
-        }
-
-        if (i == out_map.pointNum - 1){
-            out << " ]";
-        } else {
-            out << std::endl << "  ";
+            out << out_map.points.at(i)->connection.at(j)->node1 << " - ";
+            out << out_map.points.at(i)->connection.at(j)->node2 << " - \n";
         }
     }
 

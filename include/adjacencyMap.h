@@ -14,54 +14,41 @@
 
 #include <stdint.h>
 #include <iostream>
-
-#define ADJACENT_NO_PATH (-1)
+#include <vector>
+#include "mapGeometry.h"
 
 class adjacencyMap
 {
-public:
-    // Change this if want to use double type accuracy
-    typedef float DISTANCE_ACCURACY;
-    typedef float WEIGHT_ACCURACY;
-
-    typedef struct
-    {
-        float x;
-        float y;
-        float z;
-    }pointLocation;
-    
-
-
 public:
 
 
 
     adjacencyMap();
-    adjacencyMap(uint32_t point_num);
+    adjacencyMap(std::string nodefile, std::string elefile);
     adjacencyMap(adjacencyMap& copy);
     ~adjacencyMap();
 
-
     void clear();
 
-    void setCost(int start_point, int end_point, DISTANCE_ACCURACY dis, WEIGHT_ACCURACY weight = 1.);
-    DISTANCE_ACCURACY getCost(int start_point, int end_point);
+    void readNodes(std::string nodefile);
+    void readEles(std::string elefile);
 
-    void setPointNum(uint32_t point_num);
-    uint32_t getPointNum(void);
-
-    void setPointPosition(uint32_t point_label ,float x, float y, float z);
-    pointLocation* getPointPosition(uint32_t point_label);
-
-    /**
-     * @brief: get the number of path that is available to go through
-     * 
-     * @note: it consider as directional path, one path would be consider twice
-    */
-    uint32_t getPathNum(void);
+    ACCURACY getCost(pointCon_c* connection);
+    uint32_t getPointNum();
+    uint32_t getPathNum();
+    std::vector<pointCon_c*> getAllConnections();
+    std::vector<pointInfo_c*> getAllPoints();
 
 
+    std::vector<pointCon_c*> getConnections(pointInfo_c* point);
+
+    /// @brief find the points based on the num value of the point
+    /// @param num_point : the num value for the points
+    /// @return the target points address
+    pointInfo_c* findPoint(uint32_t num_point);
+    
+
+    
 
     friend std::ostream& operator<< (std::ostream & out,const adjacencyMap &out_map);
     //TODO: add the code for cin
@@ -71,22 +58,12 @@ protected:
 
 
 private:
-    /// @brief this parameter used to store the cost(distance*weight) between 2 point, in matrix format
-    ///
-    /// @note  the -1 is represent the line is not connected
-    DISTANCE_ACCURACY** cost; ///< size: pointNum*pointNum
 
-    /// @brief this parameter used to store the number of points in this map
-    uint32_t pointNum;
 
-    /// @brief this parameter 
-    pointLocation* pointLoc;
-    
+    std::vector<pointInfo_c*> points;
+    std::vector<pointCon_c*> connections;   
 
 };
-
-
-static const adjacencyMap::DISTANCE_ACCURACY NO_CONNECTION = -1.0;
 
 
 #endif

@@ -55,7 +55,7 @@ uint16_t shortestPathAlgorithm::getPathPointNum()
     return path_point_num;
 }
 
-adjacencyMap::DISTANCE_ACCURACY shortestPathAlgorithm::getPathCost()
+ACCURACY shortestPathAlgorithm::getPathCost()
 {
     return path_cost;
 }
@@ -76,21 +76,21 @@ void shortestPathAlgorithm::exportToPolyFile(std::string file_path)
     /******************************************************/
     // Point Section
     file << point_num << " "  // point number
-         << 2 << " "    // dimension, should be 2
-         << 1 << " "    // attribute number
-         << 0 << endl;  // boundary number
+         << 2 << " "          // dimension, should be 2
+         << 1 << " "          // attribute number
+         << 0 << endl;        // boundary number
 
     // vertex information
     for(int i = 0; i < point_num; i++)
     {
         file << i + 1 << " " // vertex number
-             << cost_map->getPointPosition(i)->x << " "
-             << cost_map->getPointPosition(i)->y << " ";
+             << cost_map->findPoint(i+1)->x << " "
+             << cost_map->findPoint(i+1)->y << " ";
 
         int j = 0;
         for(j = 0; j < path_point_num; j++)
         {
-            if(path[j] == i)
+            if(path[j] == i + 1)
             {
                 file << 1 << endl;
                 break;
@@ -104,23 +104,14 @@ void shortestPathAlgorithm::exportToPolyFile(std::string file_path)
 
     /******************************************************/
     // Line Section
-    uint32_t path_num = cost_map->getPathNum()/2; // the path is unidirectional
+    std::vector<pointCon_c*> availablePaths = cost_map->getAllConnections();
 
-    file << path_num << " "  // point number
+    file << availablePaths.size() << " "  // point number
          << 0 << endl;  // boundary number
 
-    int path_count = 1;
-    for(int i = point_num - 1; i >= 0; i--)
+    for(int i = 0; i < availablePaths.size(); i++)
     {
-        for(int j = 0; j < i; j++)
-        {
-            if(cost_map->getCost(i,j) == ADJACENT_NO_PATH){
-                continue;
-            } else {
-                file << path_count << " " << i << " " << j << endl;
-                path_count++;
-            }
-        }
+        file << i+1 << " " << availablePaths.at(i)->node1->num << " " << availablePaths.at(i)->node2->num << endl;
     }
     
     /******************************************************/

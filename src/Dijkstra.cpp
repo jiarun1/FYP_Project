@@ -41,11 +41,6 @@ public:
         // XXX: Manually change the heap direction (default is Descending, but we require ascending)
         return minDistance > reference.minDistance;
     }
-
-    // bool operator>(heap_data const & reference) const
-    // {
-    //     return minDistance > reference.minDistance;
-    // }
 };
 
 
@@ -57,54 +52,54 @@ void Dijkstra::calculateShortestPath()
 
     for(int i = 0; i < point_num; i++)
     {
-        points_info[i].label = i;
+        points_info[i].label = i + 1;
     }
 
     boost::heap::fibonacci_heap<heap_data> points_dis_heap;
 
-    uint16_t current_point = start_point;
+    pointInfo_c* current_point = cost_map->findPoint(start_point);
 
     // initialize the start point
-    points_info[current_point].minDistance = 0;
+    points_info[current_point->num - 1].minDistance = 0;
 
    
     do{
-        points_info[current_point].reached = true;
+        points_info[current_point->num - 1].reached = true;
 
         // based on the previous point, update all the point distance near the current one
-        for(int i = 0; i < point_num; i++)
+        auto current_connection_path = cost_map->getConnections(current_point);
+
+        for(int i = 0; i < current_connection_path.size(); i++)
         {
-            adjacencyMap::DISTANCE_ACCURACY cost = cost_map->getCost(current_point, i);
-            if(cost == -1)
-            {
+            auto next_point = current_connection_path[i]->getAnotherNode(current_point);
+            auto connection_cost = current_connection_path[i]->distance;
+
+            // if the point is reached, goto the next point
+            if(points_info[next_point->num - 1].reached == true){
                 continue;
             }
 
-            if(points_info[i].reached == true)
+            if(points_info[next_point->num - 1].minDistance == -1)
             {
-                continue;
-            }
-
-            if(points_info[i].minDistance == -1)
-            {
-                points_info[i].minDistance = cost + points_info[current_point].minDistance;
-                points_info[i].prePoint = &(points_info[current_point]);
-                points_info[i].handle = points_dis_heap.push(points_info[i]);      
+                points_info[next_point->num - 1].minDistance = connection_cost + points_info[current_point->num - 1].minDistance;
+                points_info[next_point->num - 1].prePoint = &(points_info[current_point->num - 1]);
+                points_info[next_point->num - 1].handle = points_dis_heap.push(points_info[next_point->num - 1]);      
                 continue;          
             }
 
-            if(cost + points_info[current_point].minDistance < points_info[i].minDistance)
+            if(connection_cost + points_info[current_point->num - 1].minDistance < points_info[next_point->num - 1].minDistance)
             {
-                points_info[i].minDistance = cost + points_info[current_point].minDistance;
-                points_info[i].prePoint = &(points_info[current_point]);
+                points_info[next_point->num - 1].minDistance = connection_cost + points_info[current_point->num - 1].minDistance;
+                points_info[next_point->num - 1].prePoint = &(points_info[current_point->num - 1]);
 
                 // update the minimum points
-                points_dis_heap.decrease(points_info[i].handle, points_info[i]);
-            }            
+                points_dis_heap.decrease(points_info[next_point->num - 1].handle, points_info[next_point->num - 1]);
+            }      
+
         }
 
         //find the nearest point that has not been reached
-        current_point = points_dis_heap.top().label;
+        current_point = cost_map->findPoint(points_dis_heap.top().label);
         points_dis_heap.pop();
 
         // code for debug
@@ -114,7 +109,7 @@ void Dijkstra::calculateShortestPath()
         // }
         // std::cout << std::endl;
 
-    }while(current_point != end_point);
+    }while(current_point->num != end_point);
 
     /// update the path information
 
@@ -129,21 +124,21 @@ void Dijkstra::calculateShortestPath()
     uint16_t point_tmp = end_point;
     
     // contineous find the previous point until reach the start point
-    while (points_info[point_tmp].prePoint->label != start_point)
+    while (points_info[point_tmp - 1].prePoint->label != start_point)
     {
         passed_point_num ++;
-        point_tmp = points_info[point_tmp].prePoint->label;
+        point_tmp = points_info[point_tmp - 1].prePoint->label;
     }
     
     // store the path to the result
     path_point_num = passed_point_num;
-    path_cost = points_info[end_point].minDistance;
+    path_cost = points_info[end_point - 1].minDistance;
     path = new uint16_t[path_point_num];
 
     path[path_point_num-1] = end_point;
     for(int i = path_point_num - 2; i > 0; i--)
     {
-        path[i] = points_info[path[i+1]].prePoint->label;
+        path[i] = points_info[path[i+1]-1].prePoint->label;
     }
     path[0] = start_point;
 }
