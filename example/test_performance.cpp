@@ -6,7 +6,6 @@
 #include <gperftools/profiler.h>
 
 #include "triangleCommand.h"
-#include "triangleData.h"
 #include "adjacencyMap.h"
 #include "Dijkstra.h"
 
@@ -15,10 +14,10 @@ static const std::string MapName = "squareMapTest";
 static const std::string TrianglePath = "../ThirdParty/triangle/triangle";
 static const std::string MapPath = GeneralPath;
 static const std::string LogFilePath = GeneralPath;
-static const std::string LogFileName = "V2_Code_Test.csv";
+static const std::string LogFileName = "V3_Code_Test.csv";
 
-static const int START_POINT = 1;
-static const int END_POINT = 3;
+static const int START_POINT = 2;
+static const int END_POINT = 4;
 
 
 class writeLog_c
@@ -119,11 +118,7 @@ int main(int argv, char** argc)
         triangle_time = std::chrono::high_resolution_clock::now();
         
         // Data import and convertion start
-        triangleData data;
-        data.import(MapPath + MapName + ".1.node", MapPath + MapName + ".1.ele");
-
-        adjacencyMap map;
-        data.toAdjacencyMap(&map);
+        adjacencyMap map(MapPath + MapName + ".1.node", MapPath + MapName + ".1.ele");
 
         dataImportConvertion_time = std::chrono::high_resolution_clock::now();
         // Dijkstra algorithm start
