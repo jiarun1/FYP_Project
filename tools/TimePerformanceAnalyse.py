@@ -9,7 +9,7 @@ from tkinter.filedialog import askopenfilename
 # Data Processing
 
 # data = pd.read_csv("../tests/squareMapTest/log-2.csv")
-data = pd.read_csv("../tests/squareMapTest/V2_Code_Test.csv")
+data = pd.read_csv("../tests/squareMapTest/V3_Code_Test.csv")
 data_col = data.columns.values
 print(data_col)
 
@@ -22,6 +22,9 @@ shortestpath_time = data.loc[:,'Shorest Path Time(us)'].values
 point_num = data.loc[:,'Points Num'].values
 line_num = data.loc[:,'Path Num'].values
 result_dif = data.loc[:,'Result Distance'].values
+
+point_num_log = np.log10(point_num)
+shortestpath_time_log = np.log10(shortestpath_time)
 
 print(area_set)
 
@@ -72,11 +75,11 @@ print("Mapping Points vs time information:", mapping_point_vs_time_fit_funtion)
 #-------------------------------------------------------------
 # convertion curve fitting
 def convertion_fitting(x, a, b): # function for the fitting
-    return a*x*x+b
+    return a*x +b
 
 a,b = op.curve_fit(convertion_fitting, point_num, convertion_time)[0]
 convertion_fit_result = [convertion_fitting(x,a,b) for x in point_num]
-convertion_fit_function = str((a))+"x^2+" +str(b)
+convertion_fit_function = str((a))+"x +" +str(b)
 print("Convertion Fixed Result:", convertion_fit_function)
 
 #-------------------------------------------------------------
@@ -90,6 +93,13 @@ shortestpath_fit_function = str(b) + "xlog(x)+" + str(b)
 print("Shortest Path Fixed Result:", shortestpath_fit_function)
 
 
+def dijkstra_fitting_log(x, a, b):
+    return a*x + b
+
+a,b = op.curve_fit(dijkstra_fitting_log, point_num_log, shortestpath_time_log)[0]
+shortestpath_log_fit_result = [dijkstra_fitting_log(x,a,b) for x in point_num_log]
+shortestpath_log_fit_function = str(a) + "x+" + str(b)
+print("Shortest Path Fixed Log Result:", shortestpath_log_fit_function)
 
 
 ##################################################################33
@@ -153,7 +163,18 @@ plot.xlabel('Point Number',size=11)
 plot.ylabel('Cost time ($ \mu s $)',size=11)
 plot.grid()
 
-# # plot 6 Time cost percentage for the system
+# # plot 6 in the log format
+plot.figure("Shortest Path Plot in dB",figsize=(21/2.54,9/2.54),dpi=200)
+plot.scatter(point_num_log, shortestpath_time_log ,label="Test Result")
+plot.plot(point_num_log, shortestpath_log_fit_result, color="red", label=shortestpath_log_fit_function)#label = "Curve Fitted Result")
+plot.title('Point Number Vs Shortest Path Execution Time in DB',size=11)
+plot.legend()
+plot.xlabel('Point Number (dB)',size=11)
+plot.ylabel('Cost time (dB)',size=11)
+plot.grid()
+
+
+# # plot 7 Time cost percentage for the system
 plot.figure("Time Cost Percentage with point number",figsize=(21/2.54,9/2.54),dpi=200)
 plot.fill_between(point_num, mapping_time/total_time , color = '#009392', label='mapping time')
 plot.fill_between(point_num, mapping_time/total_time , (mapping_time+convertion_time)/total_time , color='#39B185', label='convertion time')

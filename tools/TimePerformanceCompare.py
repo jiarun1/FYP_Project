@@ -11,8 +11,11 @@ from tkinter.filedialog import askopenfilename
 # data class
 
 # read the first set of data
-data_set_1 = pd.read_csv("../tests/squareMapTest/V1_1_Code_Test.csv")
-data_set_2 = pd.read_csv("../tests/squareMapTest/V2_Code_Test.csv")
+data_set_1 = pd.read_csv("../tests/squareMapTest/V2_Code_Test.csv")
+data_set_2 = pd.read_csv("../tests/squareMapTest/V3_Code_Test.csv")
+
+data_set_1_version_string = "V2"
+data_set_2_version_string = "V3"
 
 print(data_set_1.head)
 
@@ -55,12 +58,12 @@ plot.rc('font',family='Arial')
 #plot.ion()
 plot.figure("Mapping Plot",figsize=(21/2.54,9/2.54),dpi=200)
 # Data Set 1
-plot.scatter(data_1_x,data_1_y, label="V1.1 Test Result", s = 10, color = set_1_defaultColor[0])
-plot.plot(data_1_x, data_1_fitResult, label = "V1.1 Curve Fitted Result",color = set_1_defaultColor[1])
+plot.scatter(data_1_x,data_1_y, label = data_set_1_version_string + "Test Result", s = 10, color = set_1_defaultColor[0])
+plot.plot(data_1_x, data_1_fitResult, label = data_set_1_version_string + "Curve Fitted Result",color = set_1_defaultColor[1])
 
 # Data Set 2
-plot.scatter(data_2_x,data_2_y, label="V2 Test Result", s = 10, color = set_2_defaultColor[0])
-plot.plot(data_2_x, data_2_fitResult, label = "V2 Curve Fitted Result",color = set_2_defaultColor[1])
+plot.scatter(data_2_x,data_2_y, label = data_set_2_version_string + "Test Result", s = 10, color = set_2_defaultColor[0])
+plot.plot(data_2_x, data_2_fitResult, label = data_set_2_version_string + "Curve Fitted Result",color = set_2_defaultColor[1])
 
 plot.title('Point Number Vs Shortest Path Execution Time',size=11)
 plot.legend()
@@ -98,11 +101,11 @@ set_2_defaultColor = ["#FD8D3C", "#810026"]
 # Plot Setup
 plot.figure("Mapping Plot in Loglog",figsize=(21/2.54,9/2.54),dpi=200)
 # Data Set 1
-plot.scatter(data_1_log_x,data_1_log_y, label="V1.1 Test Result", s = 10, color = set_1_defaultColor[0])
+plot.scatter(data_1_log_x,data_1_log_y, label= data_set_1_version_string + "Test Result", s = 10, color = set_1_defaultColor[0])
 plot.plot(data_1_log_x, data_1_log_fitResult, label = data_1_log_fitFunction,color = set_1_defaultColor[1])
 
 # Data Set 2
-plot.scatter(data_2_log_x,data_2_log_y, label="V2 Test Result", s = 10, color = set_2_defaultColor[0])
+plot.scatter(data_2_log_x,data_2_log_y, label= data_set_2_version_string + "Test Result" , s = 10, color = set_2_defaultColor[0])
 plot.plot(data_2_log_x, data_2_log_fitResult, label = data_2_log_fitFunction,color = set_2_defaultColor[1])
 
 plot.title('Point Number Vs Shortest Path Execution Time',size=11)
