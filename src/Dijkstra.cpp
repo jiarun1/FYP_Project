@@ -24,7 +24,7 @@ using namespace boost::heap;
 class heap_data
 {
 public:
-    uint32_t label;
+    POINT_NUM_MAX label;
     fibonacci_heap<heap_data>::handle_type handle;
     double minDistance;
     heap_data* prePoint;
@@ -46,7 +46,7 @@ public:
 
 void Dijkstra::calculateShortestPath()
 {
-    uint16_t point_num = cost_map->getPointNum();
+    POINT_NUM_MAX point_num = cost_map->getPointNum();
 
     heap_data* points_info = new heap_data[point_num];
 
@@ -120,8 +120,8 @@ void Dijkstra::calculateShortestPath()
     }
 
     // used to count the length of the path
-    uint16_t passed_point_num = 2;  //< count the start point and the end point
-    uint16_t point_tmp = end_point;
+    PATH_POINT_NUM_MAX passed_point_num = 2;  //< count the start point and the end point
+    POINT_NUM_MAX point_tmp = end_point;
     
     // contineous find the previous point until reach the start point
     while (points_info[point_tmp - 1].prePoint->label != start_point)
@@ -133,7 +133,7 @@ void Dijkstra::calculateShortestPath()
     // store the path to the result
     path_point_num = passed_point_num;
     path_cost = points_info[end_point - 1].minDistance;
-    path = new uint16_t[path_point_num];
+    path = new PATH_POINT_NUM_MAX[path_point_num];
 
     path[path_point_num-1] = end_point;
     for(int i = path_point_num - 2; i > 0; i--)
@@ -143,7 +143,7 @@ void Dijkstra::calculateShortestPath()
     path[0] = start_point;
 }
 
-void Dijkstra::calculateShortestPath(uint16_t startPoint, uint16_t endPoint)
+void Dijkstra::calculateShortestPath(POINT_NUM_MAX startPoint, POINT_NUM_MAX endPoint)
 {
     start_point = startPoint;
     end_point = endPoint;

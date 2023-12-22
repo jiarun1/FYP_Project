@@ -40,7 +40,7 @@ adjacencyMap::~adjacencyMap()
     clear();
 }
 
-pointInfo_c* adjacencyMap::findPoint(uint32_t num_point)
+pointInfo_c* adjacencyMap::findPoint(POINT_NUM_MAX num_point)
 {
     // if the point is at n, the system would be faster
     if(num_point <= points.size())
@@ -77,9 +77,9 @@ void adjacencyMap::readNodes(std::string nodefile)
 	}
 
     // read the data line by line
-    uint16_t count_lines = 0;
+    POINT_NUM_MAX count_lines = 0;
     string line_tmp;
-    uint16_t pointNum = 0;
+    POINT_NUM_MAX pointNum = 0;
     while(getline(fin, line_tmp))
     {
         // remove the comments from the input file
@@ -131,10 +131,10 @@ void adjacencyMap::readEles(std::string elefile)
 	}
 
     // read the data line by line
-    uint16_t count_lines = 0;
+    POINT_NUM_MAX count_lines = 0;
     string line_tmp;
-    uint32_t shapeNum = 0;
-    uint32_t nodesPerShape = 0;
+    POINT_NUM_MAX shapeNum = 0;
+    POINT_NUM_MAX nodesPerShape = 0;
 
     while(getline(fin, line_tmp))
     {
@@ -155,9 +155,9 @@ void adjacencyMap::readEles(std::string elefile)
         } else if (count_lines > shapeNum){
             break;
         } else {
-            uint32_t shape_num = 0;
+            POINT_NUM_MAX shape_num = 0;
             str >> shape_num;
-            uint32_t* node_list = new uint32_t[nodesPerShape];
+            POINT_NUM_MAX* node_list = new POINT_NUM_MAX[nodesPerShape];
             for(int i = 0; i < nodesPerShape; i++)
             {
                 str >> node_list[i];
@@ -183,6 +183,7 @@ void adjacencyMap::readEles(std::string elefile)
             {
                 connections.push_back(connection_new);
             }
+            delete[] node_list;
         }
         count_lines ++;
     }    
@@ -202,12 +203,12 @@ ACCURACY adjacencyMap::getCost(pointCon_c* connection)
     return connection->distance;
 }
 
-uint32_t adjacencyMap::getPointNum()
+POINT_NUM_MAX adjacencyMap::getPointNum()
 {
     return points.size();
 }
 
-uint32_t adjacencyMap::getPathNum()
+POINT_NUM_MAX adjacencyMap::getPathNum()
 {
     return connections.size();
 }

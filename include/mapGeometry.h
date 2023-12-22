@@ -16,6 +16,8 @@
 // Change this if want to use double type accuracy
 typedef float ACCURACY;
 typedef float WEIGHT_ACCURACY;
+typedef uint64_t POINT_NUM_MAX;
+typedef uint32_t PATH_POINT_NUM_MAX;
 
 class pointInfo_c;
 
@@ -43,7 +45,7 @@ public:
 class pointInfo_c
 {
 public:
-    uint32_t num;
+    POINT_NUM_MAX num;
     ACCURACY x;
     ACCURACY y;
     ACCURACY z;

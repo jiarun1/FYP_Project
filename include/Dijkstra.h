@@ -22,7 +22,7 @@ public:
     }
 
     void calculateShortestPath();
-    void calculateShortestPath(uint16_t startPoint, uint16_t endPoint);
+    void calculateShortestPath(POINT_NUM_MAX startPoint, POINT_NUM_MAX endPoint);
 
 private:
     

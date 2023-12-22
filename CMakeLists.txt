@@ -4,6 +4,7 @@ set(CMAKE_CXX_STANDARD 11)
 
 set(CMAKE_BUILD_TYPE Debug)
 
+
 # Define project name
 project(ShortestPathPlanning)
 

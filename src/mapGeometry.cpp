@@ -75,7 +75,7 @@ pointCon_c* pointInfo_c::addConnection(pointInfo_c* adjacentPoint)
     {
         return nullptr;
     }
-
+    
     auto connectionNew = new pointCon_c(this, adjacentPoint);
     this->connection.push_back(connectionNew);
     adjacentPoint->connection.push_back(connectionNew);

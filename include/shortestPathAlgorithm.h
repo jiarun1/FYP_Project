@@ -22,13 +22,13 @@ public:
     virtual ~shortestPathAlgorithm();
 
     virtual void calculateShortestPath();
-    virtual void calculateShortestPath(uint16_t startPoint, uint16_t endPoint);
+    virtual void calculateShortestPath(POINT_NUM_MAX startPoint, POINT_NUM_MAX endPoint);
 
     void setAdjacencyMap(adjacencyMap* map);
     adjacencyMap* getAdjacencyMap();
 
-    uint16_t* getPath();
-    uint16_t getPathPointNum();
+    PATH_POINT_NUM_MAX* getPath();
+    PATH_POINT_NUM_MAX getPathPointNum();
 
     ACCURACY getPathCost();
 
@@ -45,16 +45,16 @@ protected:
     adjacencyMap* cost_map;
     
     /// @brief the calculated shortest path
-    uint16_t* path; 
+    PATH_POINT_NUM_MAX* path; 
 
     /// @brief the number of points in the path
-    uint16_t path_point_num;
+    PATH_POINT_NUM_MAX path_point_num;
 
     /// @brief the start point for the path
-    uint16_t start_point;
+    POINT_NUM_MAX start_point;
 
     /// @brief the end point for the path
-    uint16_t end_point;
+    POINT_NUM_MAX end_point;
 
     /// @brief the length of the shortest path
     ACCURACY path_cost;

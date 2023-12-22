@@ -28,7 +28,7 @@ void shortestPathAlgorithm::calculateShortestPath()
     
 }
 
-void shortestPathAlgorithm::calculateShortestPath(uint16_t startPoint, uint16_t endPoint)
+void shortestPathAlgorithm::calculateShortestPath(POINT_NUM_MAX startPoint, POINT_NUM_MAX endPoint)
 {
     start_point = startPoint;
     end_point = endPoint;
@@ -45,12 +45,12 @@ adjacencyMap* shortestPathAlgorithm::getAdjacencyMap()
     return cost_map;
 }
 
-uint16_t* shortestPathAlgorithm::getPath()
+PATH_POINT_NUM_MAX* shortestPathAlgorithm::getPath()
 {
     return path;
 }
 
-uint16_t shortestPathAlgorithm::getPathPointNum()
+PATH_POINT_NUM_MAX shortestPathAlgorithm::getPathPointNum()
 {
     return path_point_num;
 }

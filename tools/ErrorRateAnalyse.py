@@ -11,7 +11,7 @@ from tkinter.filedialog import askopenfilename
 ##############################################################3
 # Data Reading
 
-data = pd.read_csv("../tests/squareMapTest/log-2.csv")
+data = pd.read_csv("../tests/squareMapTest/V3_Code_Test.csv")
 data_col = data.columns.values
 print(data_col)
 

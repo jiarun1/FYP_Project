@@ -4,6 +4,7 @@
 #include <unistd.h> // for getopt in decoding command line data
 
 #include <gperftools/profiler.h> // for testing the code
+#include <gperftools/heap-profiler.h>
 
 #include "triangleCommand.h"
 #include "adjacencyMap.h"
@@ -17,7 +18,7 @@ static const std::string DefaultMapName = "squareMapTest";
 static const int START_POINT = 2;
 static const int END_POINT = 4;
 
-static const double DefaultAreaSet = 50;//3;
+static const double DefaultAreaSet = 0.1;
 
 class inputParameters
 {
@@ -107,20 +108,30 @@ int main(int argc, char** argv)
     triangle.setParameter("a", commandInput.areaSet);
 
     triangle.call(commandInput.MapPath + "/" + commandInput.MapName +".poly");
- 
+
+#ifndef NDEBUG
+    ProfilerStart("test.prof");
+    HeapProfilerStart("heap.log");
+#endif
+
     // analyse the data from triangle
     adjacencyMap map(commandInput.MapPath + "/" + commandInput.MapName + ".1.node", commandInput.MapPath + "/" + commandInput.MapName + ".1.ele");
+
+
 
     // Dijkstra algorithm start
 
     Dijkstra path_planing;
     path_planing.setAdjacencyMap(&map);
 
-    ProfilerStart("test.prof");
     path_planing.calculateShortestPath(START_POINT, END_POINT);
+
+#ifndef NDEBUG
+    HeapProfilerDump("");
+    HeapProfilerStop();
     ProfilerFlush();
     ProfilerStop();
-
+#endif
 
     // result output
     std::string resultFile = commandInput.MapPath + "/" + "Result.poly";

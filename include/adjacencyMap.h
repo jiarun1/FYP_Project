@@ -34,8 +34,8 @@ public:
     void readEles(std::string elefile);
 
     ACCURACY getCost(pointCon_c* connection);
-    uint32_t getPointNum();
-    uint32_t getPathNum();
+    POINT_NUM_MAX getPointNum();
+    POINT_NUM_MAX getPathNum();
     std::vector<pointCon_c*> getAllConnections();
     std::vector<pointInfo_c*> getAllPoints();
 
@@ -45,7 +45,7 @@ public:
     /// @brief find the points based on the num value of the point
     /// @param num_point : the num value for the points
     /// @return the target points address
-    pointInfo_c* findPoint(uint32_t num_point);
+    pointInfo_c* findPoint(POINT_NUM_MAX num_point);
     
 
     
