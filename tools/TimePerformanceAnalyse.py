@@ -9,7 +9,7 @@ from tkinter.filedialog import askopenfilename
 # Data Processing
 
 # data = pd.read_csv("../tests/squareMapTest/log-2.csv")
-data = pd.read_csv("../tests/squareMapTest/V3_Code_Test.csv")
+data = pd.read_csv("../tests/squareMapTest/V3_1_Code_Test.csv")
 data_col = data.columns.values
 print(data_col)
 

@@ -14,7 +14,7 @@ static const std::string MapName = "squareMapTest";
 static const std::string TrianglePath = "../ThirdParty/triangle/triangle";
 static const std::string MapPath = GeneralPath;
 static const std::string LogFilePath = GeneralPath;
-static const std::string LogFileName = "V3_Code_Test.csv";
+static const std::string LogFileName = "V3_1_Code_Test.csv";
 
 static const int START_POINT = 2;
 static const int END_POINT = 4;
@@ -87,8 +87,8 @@ int main(int argv, char** argc)
 
 
     float max_area = 20;
-    float min_area = 1e-2;
-    float area_divide = 1.0/100.0+1;
+    float min_area = 1e-3;
+    float area_divide = 1.0/1000.0+1;
     int count_loop = 0;
 
     auto start_time = std::chrono::high_resolution_clock::now();
@@ -101,7 +101,7 @@ int main(int argv, char** argc)
     for(float test_area = max_area; test_area > min_area; test_area = test_area / area_divide)
     {
         count_loop ++;
-        if(count_loop >= 1000)
+        if(count_loop >= 100000)
         {
             std::cout << count_loop << std::endl;
             break;
