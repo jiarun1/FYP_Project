@@ -3,6 +3,17 @@ import tkinter as tk
 import sys
 import getopt
 from tkinter.filedialog import  askopenfilename
+from enum import Enum
+
+class verticleParam_e(Enum):
+    NUMBER = 0
+    COORDINATE = int(1)
+    PROPORITIES = int(2)
+    IS_BOUNDARY = int(3)
+
+class verticleProporityParam_e(Enum):
+    IS_PATH = int(0)
+    POINT_TYPE = int(1)
 
 #polyFilePath = "/home/jiarun/FYP_Project/code/tests/squareMapTest/Result.poly"
 defaultFilePath = "/home/jiarun/Desktop/FYP/code/tests/squareMapTest/Result.poly"
@@ -18,16 +29,40 @@ def read_poly_file(file_path):
         num_vertices, num_dimension, num_property, num_boundary  = map(int, file.readline().split())
         for _ in range(num_vertices):
             line = file.readline().strip()
+
+            # ignore the comment line
+            if(line.find("#") != -1):
+                continue
+
             parts = line.split()
-            vertex_index = int(parts[0])
-            coordinates = list([float(parts[1]), float(parts[2])])
-            is_path = int(parts[3])
-            vertices.append((vertex_index, coordinates, is_path))
+            # if(parts.count() < (1 + num_dimension + num_property + num_boundary)):
+            #     print("Reading verticles failed")
+            #     exit()
+
+            item_count = 0
+            coordinates = list()
+            propertys = list()
+
+            vertex_index = int(parts[item_count])
+            for _ in range(num_dimension):
+                item_count += 1
+                coordinates.append(float(parts[item_count]))
+
+            for _ in range(num_property):
+                item_count += 1
+                propertys.append(int(parts[item_count]))
+                
+            vertices.append((vertex_index, coordinates, propertys))
 
         # Reading polygons
         num_polygons, num_boundary  = map(int, file.readline().split())
         for _ in range(num_polygons):
             line = file.readline().strip()
+
+            # ignore the comment line
+            if(line.find("#") != -1):
+                continue
+
             parts = line.split()
             polygon_index = int(parts[0])
             vertex_indices = list([int(parts[1]), int(parts[2])])
@@ -52,10 +87,10 @@ def main(polyPath):
     for i in range(len(vertices)):
         # print(vertices[i])
 
-        if(vertices[i][2] == 1):
-            plt.plot(vertices[i][1][0], vertices[i][1][1],'o', color = '#FF0000', markersize='4')
+        if(vertices[i][verticleParam_e.PROPORITIES.value][verticleProporityParam_e.IS_PATH.value] == 1):
+            plt.plot(vertices[i][verticleParam_e.COORDINATE.value][0], vertices[i][verticleParam_e.COORDINATE.value][1],'o', color = '#FF0000', markersize='4')
         else:
-            plt.plot(vertices[i][1][0], vertices[i][1][1],'o', color = '#000000', markersize='4')
+            plt.plot(vertices[i][verticleParam_e.COORDINATE.value][0], vertices[i][verticleParam_e.COORDINATE.value][1],'o', color = '#000000', markersize='4')
 
 
     for i in range(len(polygons)):
@@ -66,10 +101,10 @@ def main(polyPath):
         point2 = vertices[polygons[i][1][1] - 1]
 
         # this 2 value is the x value list of the 2 points and the y value list of the points
-        point_x = [point1[1][0], point2[1][0]]
-        point_y = [point1[1][1], point2[1][1]]
-
-        if point1[2] == 1 and point2[2] == 1:
+        point_x = [point1[verticleParam_e.COORDINATE.value][0], point2[verticleParam_e.COORDINATE.value][0]]
+        point_y = [point1[verticleParam_e.COORDINATE.value][1], point2[verticleParam_e.COORDINATE.value][1]]
+        
+        if (point1[verticleParam_e.PROPORITIES.value][verticleProporityParam_e.IS_PATH.value] == 1) and (point2[verticleParam_e.PROPORITIES.value][verticleProporityParam_e.IS_PATH.value] == 1):
             plt.plot(point_x, point_y, color = '#FF0000')
         else :
             plt.plot(point_x, point_y, color = '#000000')

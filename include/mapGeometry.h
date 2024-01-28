@@ -19,6 +19,7 @@ typedef float WEIGHT_ACCURACY;
 typedef uint64_t POINT_NUM_MAX;
 typedef uint32_t PATH_POINT_NUM_MAX;
 
+
 class pointInfo_c;
 
 class pointCon_c
@@ -31,7 +32,12 @@ public:
     pointCon_c(pointInfo_c* node_1 = nullptr, pointInfo_c* node_2 = nullptr);
     ~pointCon_c();
 
+
+    double calDistance();
     double calDistance(pointInfo_c* node_1, pointInfo_c* node_2);
+
+    pointInfo_c getMiddlePoint();
+    pointInfo_c getMiddlePoint(pointInfo_c* node_1, pointInfo_c* node_2);
 
     /**
      * @brief this function is used to get the adjacent point of the current node
@@ -52,8 +58,17 @@ public:
     bool is_boundary;
 
     std::vector<pointCon_c*> connection;
+
+
+    typedef enum{
+        normal_point = 0,
+        middle_point = 1
+    }proporities_e;
+
+    proporities_e proporities;
+
 public:
-    pointInfo_c();
+    pointInfo_c(proporities_e Porp = normal_point);
     ~pointInfo_c();
 
     /**

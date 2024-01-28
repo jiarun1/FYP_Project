@@ -191,6 +191,33 @@ void adjacencyMap::readEles(std::string elefile)
 }
 
 
+void adjacencyMap::addMiddlePoint()
+{   
+    
+    for(int i = 0; i < connections.size(); i++)
+    {
+        pointInfo_c middle_point = connections.at(i)->getMiddlePoint();
+
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 void adjacencyMap::clear()
 {

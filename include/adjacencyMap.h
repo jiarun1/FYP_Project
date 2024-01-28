@@ -33,6 +33,22 @@ public:
     void readNodes(std::string nodefile);
     void readEles(std::string elefile);
 
+    /**
+     * @defgroup accuracy improvement functions
+     * This is a group of function that used to improve the performance of the distance
+     * @{
+     */
+
+    /**
+     * @brief add the middle point to all the edges
+    */
+    void addMiddlePoint();
+
+
+    /** @} */ // end of accuracy improvement functions
+
+
+
     ACCURACY getCost(pointCon_c* connection);
     POINT_NUM_MAX getPointNum();
     POINT_NUM_MAX getPathNum();

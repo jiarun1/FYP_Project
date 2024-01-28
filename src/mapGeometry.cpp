@@ -27,7 +27,10 @@ pointCon_c::~pointCon_c()
 
 }
 
-
+double pointCon_c::calDistance()
+{
+    return calDistance(node1, node2);
+}
 
 double pointCon_c::calDistance(pointInfo_c* node_1, pointInfo_c* node_2)
 {
@@ -35,6 +38,23 @@ double pointCon_c::calDistance(pointInfo_c* node_1, pointInfo_c* node_2)
     float y_dif = node_1->y - node_2->y;
 
     return (sqrt(x_dif*x_dif+y_dif*y_dif));
+}
+
+pointInfo_c pointCon_c::getMiddlePoint()
+{
+    return getMiddlePoint(node1, node2);
+}
+pointInfo_c pointCon_c::getMiddlePoint(pointInfo_c* node_1, pointInfo_c* node_2)
+{
+    pointInfo_c middle_point;
+
+    middle_point.x = (node_1->x + node_2->x)/2;
+    middle_point.y = (node_1->y + node_2->y)/2;
+    middle_point.z = (node_1->z + node_2->z)/2;
+
+    middle_point.proporities = pointInfo_c::middle_point;
+
+    return middle_point;
 }
 
 
@@ -58,7 +78,8 @@ pointInfo_c* pointCon_c::getAnotherNode(pointInfo_c* current_node)
 //--------------------------------------------------------------
 // CLASS: pointInfo_c
 //----------------------------------------------------------
-pointInfo_c::pointInfo_c()
+pointInfo_c::pointInfo_c(proporities_e porp):
+    proporities(porp)
 {
 
 }
