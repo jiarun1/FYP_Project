@@ -32,11 +32,14 @@ public:
     /// @brief the maximum area set for the triangle
     double areaSet;
     
+    /// @brief decide if added the middle points to the map
+    bool middlePoint;
 
 
     /// settings for the output data
     /// @brief decide if the software need to use python for display
     bool display;
+
 
 public:
     /// @brief Enter the data from the command lines
@@ -44,6 +47,7 @@ public:
         MapPath(DefaultMapPath),MapName(DefaultMapName),
         startPoint(START_POINT),endPoint(END_POINT),
         areaSet(DefaultAreaSet),
+        middlePoint(false),
         display(false)
     {
         int command;
@@ -58,6 +62,7 @@ public:
                               << "-a area     : maximum area for the triangulation \n"
                               << "-d          : enable display \n"
                               << "-f filepath : set the map path \n"
+                              << "-m          : add the middle points to the map \n"
                               << std::endl;
                     exit(0);
                     break;
@@ -71,6 +76,9 @@ public:
                 case 'f':
                     MapPath = std::string(dirname(optarg));
                     MapName = std::string(basename(optarg));
+                    break;
+                case 'm':
+                    middlePoint = true;
                     break;
                 case '?':
                     printf("error optopt: %c\n", optopt);
@@ -117,12 +125,19 @@ int main(int argc, char** argv)
     // analyse the data from triangle
     adjacencyMap map(commandInput.MapPath + "/" + commandInput.MapName + ".1.node", commandInput.MapPath + "/" + commandInput.MapName + ".1.ele");
 
+    if(commandInput.middlePoint == true)
+    {
+        std::cout << "add middle points" << std::endl;
+        map.addMiddlePoints();
+    }
 
 
     // Dijkstra algorithm start
 
     Dijkstra path_planing;
     path_planing.setAdjacencyMap(&map);
+
+
 
     path_planing.calculateShortestPath(START_POINT, END_POINT);
 

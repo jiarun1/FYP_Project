@@ -191,12 +191,33 @@ void adjacencyMap::readEles(std::string elefile)
 }
 
 
-void adjacencyMap::addMiddlePoint()
+
+void adjacencyMap::addMiddlePoints()
 {   
-    
-    for(int i = 0; i < connections.size(); i++)
+    int current_connection_size = connections.size();
+    for(int i = 0; i < current_connection_size; i++)
     {
-        pointInfo_c middle_point = connections.at(i)->getMiddlePoint();
+        auto current_connection = connections.at(i);
+
+        auto middle_point = current_connection->getMiddlePoint();
+        auto point_1 = current_connection->node1;
+        auto point_2 = current_connection->node2;
+        
+        // give the middle point a number
+        middle_point->num = points.size() + 1;
+        points.push_back(middle_point);
+
+        // remove the connection from the point
+        point_1->removeConnection(current_connection);
+
+        // make the middle point connected to the nodes
+        auto connection_1 = middle_point->addConnection(point_1);
+        auto connection_2 = middle_point->addConnection(point_2);
+        // TODO: write code to connect adjacent middle point
+
+        // change the old connection to the new one, so that other element in the original connection list would not change
+        connections.at(i) = connection_1;
+        connections.push_back(connection_2);
 
     }
 }

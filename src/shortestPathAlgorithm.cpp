@@ -77,7 +77,7 @@ void shortestPathAlgorithm::exportToPolyFile(std::string file_path)
     // Point Section
     file << point_num << " "  // point number
          << 2 << " "          // dimension, should be 2
-         << 1 << " "          // attribute number
+         << 2 << " "          // attribute number
          << 0 << endl;        // boundary number
 
     // vertex information
@@ -92,14 +92,18 @@ void shortestPathAlgorithm::exportToPolyFile(std::string file_path)
         {
             if(path[j] == i + 1)
             {
-                file << 1 << endl;
+                file << 1 << " ";
                 break;
             }
         }
         if(j >= path_point_num)
         {
-            file << 0 << endl;
+            file << 0 << " ";
         }
+
+        file << cost_map->findPoint(i+1)->proporities << " ";
+
+        file << endl;
     }
 
     /******************************************************/

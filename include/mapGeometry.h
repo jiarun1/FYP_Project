@@ -22,6 +22,8 @@ typedef uint32_t PATH_POINT_NUM_MAX;
 
 class pointInfo_c;
 
+
+/// @brief Class that discribe the connection of 2 points
 class pointCon_c
 {
 public:    
@@ -36,8 +38,8 @@ public:
     double calDistance();
     double calDistance(pointInfo_c* node_1, pointInfo_c* node_2);
 
-    pointInfo_c getMiddlePoint();
-    pointInfo_c getMiddlePoint(pointInfo_c* node_1, pointInfo_c* node_2);
+    pointInfo_c* getMiddlePoint();
+    pointInfo_c* getMiddlePoint(pointInfo_c* node_1, pointInfo_c* node_2);
 
     /**
      * @brief this function is used to get the adjacent point of the current node
@@ -46,8 +48,23 @@ public:
     pointInfo_c* getAnotherNode(pointInfo_c* current_node);
 };
 
+/// @brief class defines a triangle
+class triangle_c
+{
+public:
+    pointInfo_c* nodes[3];
 
 
+public:
+    triangle_c(pointInfo_c* node_1 = nullptr, pointInfo_c* node_2 = nullptr, pointInfo_c* node_3 = nullptr);
+    ~triangle_c();
+
+};
+
+
+
+
+/// @brief Class defines all the proporities of a point
 class pointInfo_c
 {
 public:
@@ -68,7 +85,7 @@ public:
     proporities_e proporities;
 
 public:
-    pointInfo_c(proporities_e Porp = normal_point);
+    pointInfo_c(proporities_e porp = normal_point);
     ~pointInfo_c();
 
     /**
@@ -78,6 +95,15 @@ public:
      * @retval nullptr: the connection is already exist
     */
     pointCon_c* addConnection(pointInfo_c* adjacentPoint);
+
+    /**
+     * @brief remove the connection to the point
+     * @param adjacentPoint the connection class want to remove
+     * @return if the connection removed successful
+     * @retval true: remove successful
+     * @retval false: connection may not exist
+    */
+    bool removeConnection(pointCon_c* connection);
     
     /// @brief decide if the point is already connected to the other one
     /// @param adjacentPoint  the next point

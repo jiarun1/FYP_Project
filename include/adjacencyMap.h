@@ -42,7 +42,7 @@ public:
     /**
      * @brief add the middle point to all the edges
     */
-    void addMiddlePoint();
+    void addMiddlePoints();
 
 
     /** @} */ // end of accuracy improvement functions

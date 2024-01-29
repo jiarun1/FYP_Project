@@ -38,7 +38,7 @@ public:
 
     bool operator<(heap_data const & reference) const
     {
-        // XXX: Manually change the heap direction (default is Descending, but we require ascending)
+        // NOTE: Manually change the heap direction (default is Descending, but we require ascending)
         return minDistance > reference.minDistance;
     }
 };
