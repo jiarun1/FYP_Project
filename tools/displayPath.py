@@ -86,11 +86,13 @@ def main(polyPath):
 
     for i in range(len(vertices)):
         # print(vertices[i])
-
-        if(vertices[i][verticleParam_e.PROPORITIES.value][verticleProporityParam_e.IS_PATH.value] == 1):
+        if(vertices[i][verticleParam_e.PROPORITIES.value][verticleProporityParam_e.POINT_TYPE.value] == 1):
+            plt.plot(vertices[i][verticleParam_e.COORDINATE.value][0], vertices[i][verticleParam_e.COORDINATE.value][1],'o', color = '#00F0FF', markersize='4')
+        elif(vertices[i][verticleParam_e.PROPORITIES.value][verticleProporityParam_e.IS_PATH.value] == 1):
             plt.plot(vertices[i][verticleParam_e.COORDINATE.value][0], vertices[i][verticleParam_e.COORDINATE.value][1],'o', color = '#FF0000', markersize='4')
         else:
             plt.plot(vertices[i][verticleParam_e.COORDINATE.value][0], vertices[i][verticleParam_e.COORDINATE.value][1],'o', color = '#000000', markersize='4')
+
 
 
     for i in range(len(polygons)):

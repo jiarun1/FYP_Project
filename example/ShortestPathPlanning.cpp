@@ -51,7 +51,7 @@ public:
         display(false)
     {
         int command;
-        const char *optstring = "ha:df:"; 
+        const char *optstring = "ha:df:ms:e:"; 
         std::string parameter_string;
         while ((command = getopt(argc, argv, optstring)) != -1) {
             switch (command) {
@@ -63,6 +63,8 @@ public:
                               << "-d          : enable display \n"
                               << "-f filepath : set the map path \n"
                               << "-m          : add the middle points to the map \n"
+                              << "-s          : set the start point \n"
+                              << "-e          : set the end point \n"
                               << std::endl;
                     exit(0);
                     break;
@@ -79,6 +81,14 @@ public:
                     break;
                 case 'm':
                     middlePoint = true;
+                    break;
+                case 's':
+                    parameter_string = std::string(optarg);
+                    startPoint = std::stoi(parameter_string);
+                    break;
+                case 'e':
+                    parameter_string = std::string(optarg);
+                    endPoint = std::stoi(parameter_string);
                     break;
                 case '?':
                     printf("error optopt: %c\n", optopt);
@@ -139,7 +149,7 @@ int main(int argc, char** argv)
 
 
 
-    path_planing.calculateShortestPath(START_POINT, END_POINT);
+    path_planing.calculateShortestPath(commandInput.startPoint, commandInput.endPoint);
 
 #ifndef NDEBUG
     HeapProfilerDump("");
