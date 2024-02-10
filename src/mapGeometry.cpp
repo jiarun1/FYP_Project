@@ -8,13 +8,14 @@
 ***********************************************************/
 #include "mapGeometry.h"
 #include <math.h>
+#include <iostream>
 
 //--------------------------------------------------------------
 // CLASS: pointCon_c
 //--------------------------------------------------------------
 
 pointCon_c::pointCon_c(pointInfo_c* node_1, pointInfo_c* node_2):
-    node1(node_1), node2(node_2), middlePoint(NULL)
+    node1(node_1), node2(node_2), middlePoint(NULL), proporities(normal_connection)
 {
     // update and set the distance data
     distance = calDistance(node1,node2);
@@ -77,22 +78,6 @@ pointInfo_c* pointCon_c::getAnotherNode(pointInfo_c* current_node)
 }
 
 
-//--------------------------------------------------------------
-// CLASS: triangle c
-//--------------------------------------------------------------
-triangle_c::triangle_c(pointInfo_c* node_1, pointInfo_c* node_2, pointInfo_c* node_3)
-{
-    nodes[0] = node_1;
-    nodes[1] = node_2;
-    nodes[2] = node_3;
-}
-
-
-triangle_c::~triangle_c()
-{
-
-}
-
 
 //--------------------------------------------------------------
 // CLASS: pointInfo_c
@@ -111,15 +96,18 @@ pointInfo_c::~pointInfo_c()
 
 pointCon_c* pointInfo_c::addConnection(pointInfo_c* adjacentPoint)
 {
-    if(this->isConnected(adjacentPoint))
+    pointCon_c* connection_new = this->findConnected(adjacentPoint);
+
+    // if the connection is already exist, return a null
+    if(connection_new != nullptr)
     {
         return nullptr;
     }
     
-    auto connectionNew = new pointCon_c(this, adjacentPoint);
-    this->connection.push_back(connectionNew);
-    adjacentPoint->connection.push_back(connectionNew);
-    return connectionNew;
+    connection_new = new pointCon_c(this, adjacentPoint);
+    this->connection.push_back(connection_new);
+    adjacentPoint->connection.push_back(connection_new);
+    return connection_new;
 }
 
 bool pointInfo_c::removeConnection(pointCon_c* connection)
@@ -142,16 +130,54 @@ bool pointInfo_c::removeConnection(pointCon_c* connection)
 
 bool pointInfo_c::isConnected(pointInfo_c* adjacentPoint)
 {
+    if(findConnected(adjacentPoint) == nullptr)
+    {
+        return false;
+    } else {
+        return true;
+    }
+}
+
+pointCon_c* pointInfo_c::findConnected(pointInfo_c* adjacentPoint)
+{
     for(int i = 0; i < this->connection.size(); i++)
     {
         if(this->connection.at(i)->node1 == adjacentPoint)
         {
-            return true;
+            return this->connection.at(i);
         }
         if(this->connection.at(i)->node2 == adjacentPoint)
         {
-            return true;
+            return this->connection.at(i);
         }
     }
-    return false;
+    return nullptr;
+}
+
+
+//--------------------------------------------------------------
+// CLASS: triangle c
+//--------------------------------------------------------------
+triangle_c::triangle_c(pointInfo_c* node_1, pointInfo_c* node_2, pointInfo_c* node_3)
+{
+    nodes[0] = node_1;
+    nodes[1] = node_2;
+    nodes[2] = node_3;
+}
+
+
+triangle_c::~triangle_c()
+{
+
+}
+
+void triangle_c::initConnections()
+{
+    for(int i = 0; i < 3; i++)
+    {
+        connections[i] = nodes[i%3]->findConnected(nodes[(i+1)%3]);
+
+        nodes[i]->triangles.push_back(this);
+        connections[i]->triangles.push_back(this);
+    }
 }

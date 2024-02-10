@@ -77,7 +77,8 @@ private:
 
 
     std::vector<pointInfo_c*> points;
-    std::vector<pointCon_c*> connections;   
+    std::vector<pointCon_c*> connections;
+    std::vector<triangle_c*> triangles;   
 
 };
 

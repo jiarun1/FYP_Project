@@ -36,6 +36,14 @@ public:
     /// Some special function points in the line
     pointInfo_c* middlePoint;
 
+
+    typedef enum{
+        normal_connection = 0,
+        middle_connection = 1
+    }proporities_e;
+
+    proporities_e proporities;
+
     
 
 public:
@@ -108,6 +116,12 @@ public:
     /// @retval true: are connected
     /// @retval false: not connected
     bool isConnected(pointInfo_c* adjacentPoint);
+
+    /// @brief find the connection is exist or not
+    /// @param adjacentPoint  the next point
+    /// @return 
+    /// @retval nullptr: no connection yet
+    pointCon_c* findConnected(pointInfo_c* adjacentPoint);
 };
 
 
@@ -120,9 +134,12 @@ public:
 
 
 public:
-    triangle_c(pointInfo_c* node_1 = nullptr, pointInfo_c* node_2 = nullptr, pointInfo_c* node_3 = nullptr);
+    triangle_c(pointInfo_c* node_1, pointInfo_c* node_2, pointInfo_c* node_3);
     ~triangle_c();
 
+    /// @brief used to initialize the connection of the triangle
+    /// @note it can only be used once
+    void initConnections();
 };
 
 

@@ -15,6 +15,16 @@ class verticleProporityParam_e(Enum):
     IS_PATH = int(0)
     POINT_TYPE = int(1)
 
+class pointColour(Enum):
+    NORMAL_POINT = "#A9A9A9"
+    SHORTEST_POINT = '#DF7A5E'
+    MIDDLE_POINT = '#0112EB'
+
+class lineColour(Enum):
+    NORMAL_Line = "#696969"
+    SHORTEST_Line = '#DF7A5E'
+    MIDDLE_Line = '#00D4EB'
+
 #polyFilePath = "/home/jiarun/FYP_Project/code/tests/squareMapTest/Result.poly"
 defaultFilePath = "/home/jiarun/Desktop/FYP/code/tests/squareMapTest/Result.poly"
 
@@ -87,11 +97,11 @@ def main(polyPath):
     for i in range(len(vertices)):
         # print(vertices[i])
         if(vertices[i][verticleParam_e.PROPORITIES.value][verticleProporityParam_e.POINT_TYPE.value] == 1):
-            plt.plot(vertices[i][verticleParam_e.COORDINATE.value][0], vertices[i][verticleParam_e.COORDINATE.value][1],'o', color = '#00F0FF', markersize='4')
-        elif(vertices[i][verticleParam_e.PROPORITIES.value][verticleProporityParam_e.IS_PATH.value] == 1):
-            plt.plot(vertices[i][verticleParam_e.COORDINATE.value][0], vertices[i][verticleParam_e.COORDINATE.value][1],'o', color = '#FF0000', markersize='4')
+            plt.plot(vertices[i][verticleParam_e.COORDINATE.value][0], vertices[i][verticleParam_e.COORDINATE.value][1],'o', color = pointColour.MIDDLE_POINT.value, markersize='4')
+        # elif(vertices[i][verticleParam_e.PROPORITIES.value][verticleProporityParam_e.IS_PATH.value] == 1):
+        #     plt.plot(vertices[i][verticleParam_e.COORDINATE.value][0], vertices[i][verticleParam_e.COORDINATE.value][1],'o', color = pointAndConnectionColour.SHORTEST_POINT.value, markersize='3')
         else:
-            plt.plot(vertices[i][verticleParam_e.COORDINATE.value][0], vertices[i][verticleParam_e.COORDINATE.value][1],'o', color = '#000000', markersize='4')
+            plt.plot(vertices[i][verticleParam_e.COORDINATE.value][0], vertices[i][verticleParam_e.COORDINATE.value][1],'o', color = pointColour.NORMAL_POINT.value, markersize='4')
 
 
 
@@ -107,9 +117,11 @@ def main(polyPath):
         point_y = [point1[verticleParam_e.COORDINATE.value][1], point2[verticleParam_e.COORDINATE.value][1]]
         
         if (point1[verticleParam_e.PROPORITIES.value][verticleProporityParam_e.IS_PATH.value] == 1) and (point2[verticleParam_e.PROPORITIES.value][verticleProporityParam_e.IS_PATH.value] == 1):
-            plt.plot(point_x, point_y, color = '#FF0000')
+            plt.plot(point_x, point_y, color = lineColour.SHORTEST_Line.value, linewidth = 2)
+        elif (point1[verticleParam_e.PROPORITIES.value][verticleProporityParam_e.POINT_TYPE.value] == 1) and (point2[verticleParam_e.PROPORITIES.value][verticleProporityParam_e.POINT_TYPE.value] == 1):
+            plt.plot(point_x, point_y, color = lineColour.MIDDLE_Line.value, linewidth = 1)
         else :
-            plt.plot(point_x, point_y, color = '#000000')
+            plt.plot(point_x, point_y, color = lineColour.NORMAL_Line.value, linewidth = 1)
 
 
     plt.tight_layout()

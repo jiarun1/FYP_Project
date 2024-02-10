@@ -152,37 +152,44 @@ void adjacencyMap::readEles(std::string elefile)
             // decode the first line
             str >> shapeNum;
             str >> nodesPerShape;
+            
+
+            if(nodesPerShape != 3)
+            {
+                cerr << "The input ele file is not for triangle, the result might not work" << endl;
+            }
+
+
         } else if (count_lines > shapeNum){
             break;
         } else {
             POINT_NUM_MAX shape_num = 0;
             str >> shape_num;
-            POINT_NUM_MAX* node_list = new POINT_NUM_MAX[nodesPerShape];
-            for(int i = 0; i < nodesPerShape; i++)
+            POINT_NUM_MAX* node_list = new POINT_NUM_MAX[3];
+
+            for(int i = 0; i < 3; i++)
             {
                 str >> node_list[i];
             }
 
-            pointInfo_c* currentPoints; 
-            pointInfo_c* nextPoints;
+            triangle_c* triangle_new = new triangle_c(findPoint(node_list[0]),
+                                                      findPoint(node_list[1]),
+                                                      findPoint(node_list[2]));
 
-            for(int i = 0; i < nodesPerShape - 1; i++)
+            for(int i = 0; i < 3; i++)
             {
-                currentPoints = findPoint(node_list[i]);
-                nextPoints = findPoint(node_list[i+1]);
-                auto connection_new = currentPoints->addConnection(nextPoints);
+                // use % operator to makesure the 3 point are reached
+                auto connection_new = triangle_new->nodes[i % 3]->addConnection(triangle_new->nodes[(i+1)%3]);
                 if(connection_new != nullptr)
                 {
                     connections.push_back(connection_new);
                 }
             }
-            currentPoints = findPoint(node_list[nodesPerShape-1]);
-            nextPoints = findPoint(node_list[0]);
-            auto connection_new = currentPoints->addConnection(nextPoints);
-            if(connection_new != nullptr)
-            {
-                connections.push_back(connection_new);
-            }
+
+            triangle_new->initConnections();
+
+            triangles.push_back(triangle_new);
+
             delete[] node_list;
         }
         count_lines ++;
@@ -195,6 +202,8 @@ void adjacencyMap::readEles(std::string elefile)
 void adjacencyMap::addMiddlePoints()
 {   
     int current_connection_size = connections.size();
+    
+    /// get the middle point for all the connections
     for(int i = 0; i < current_connection_size; i++)
     {
         auto current_connection = connections.at(i);
@@ -213,12 +222,23 @@ void adjacencyMap::addMiddlePoints()
         // make the middle point connected to the nodes
         auto connection_1 = middle_point->addConnection(point_1);
         auto connection_2 = middle_point->addConnection(point_2);
-        // TODO: write code to connect adjacent middle point
 
         // change the old connection to the new one, so that other element in the original connection list would not change
         connections.at(i) = connection_1;
         connections.push_back(connection_2);
+    }
 
+    // connected all the middle point in a triangle
+    for(int i = 0; i < triangles.size(); i++)
+    {
+        auto current_triangle = triangles.at(i);
+        for(int i = 0; i < 3; i++)
+        {
+            auto connection_new = current_triangle->connections[i % 3]->middlePoint->addConnection(current_triangle->connections[(i+1) % 3]->middlePoint);
+            connection_new->proporities = pointCon_c::middle_connection;
+            
+            connections.push_back(connection_new);
+        }
     }
 }
 
