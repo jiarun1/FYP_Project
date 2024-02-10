@@ -19,8 +19,9 @@ typedef float WEIGHT_ACCURACY;
 typedef uint64_t POINT_NUM_MAX;
 typedef uint32_t PATH_POINT_NUM_MAX;
 
-
+class pointCon_c;
 class pointInfo_c;
+class triangle_c;
 
 
 /// @brief Class that discribe the connection of 2 points
@@ -29,7 +30,14 @@ class pointCon_c
 public:    
     pointInfo_c* node1;
     pointInfo_c* node2;
+    std::vector<triangle_c*> triangles;
     ACCURACY distance;
+
+    /// Some special function points in the line
+    pointInfo_c* middlePoint;
+
+    
+
 public:
     pointCon_c(pointInfo_c* node_1 = nullptr, pointInfo_c* node_2 = nullptr);
     ~pointCon_c();
@@ -48,18 +56,6 @@ public:
     pointInfo_c* getAnotherNode(pointInfo_c* current_node);
 };
 
-/// @brief class defines a triangle
-class triangle_c
-{
-public:
-    pointInfo_c* nodes[3];
-
-
-public:
-    triangle_c(pointInfo_c* node_1 = nullptr, pointInfo_c* node_2 = nullptr, pointInfo_c* node_3 = nullptr);
-    ~triangle_c();
-
-};
 
 
 
@@ -75,6 +71,7 @@ public:
     bool is_boundary;
 
     std::vector<pointCon_c*> connection;
+    std::vector<triangle_c*> triangles;
 
 
     typedef enum{
@@ -113,6 +110,20 @@ public:
     bool isConnected(pointInfo_c* adjacentPoint);
 };
 
+
+/// @brief class defines a triangle
+class triangle_c
+{
+public:
+    pointInfo_c* nodes[3];
+    pointCon_c* connections[3];
+
+
+public:
+    triangle_c(pointInfo_c* node_1 = nullptr, pointInfo_c* node_2 = nullptr, pointInfo_c* node_3 = nullptr);
+    ~triangle_c();
+
+};
 
 
 #endif

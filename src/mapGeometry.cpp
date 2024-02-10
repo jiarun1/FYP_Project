@@ -14,7 +14,7 @@
 //--------------------------------------------------------------
 
 pointCon_c::pointCon_c(pointInfo_c* node_1, pointInfo_c* node_2):
-    node1(node_1), node2(node_2)
+    node1(node_1), node2(node_2), middlePoint(NULL)
 {
     // update and set the distance data
     distance = calDistance(node1,node2);
@@ -42,11 +42,16 @@ double pointCon_c::calDistance(pointInfo_c* node_1, pointInfo_c* node_2)
 
 pointInfo_c* pointCon_c::getMiddlePoint()
 {
-    return getMiddlePoint(node1, node2);
+    if(middlePoint == NULL)
+    {
+        middlePoint = getMiddlePoint(node1, node2);
+    }
+    return middlePoint;
 }
 
 pointInfo_c* pointCon_c::getMiddlePoint(pointInfo_c* node_1, pointInfo_c* node_2)
 {
+
     pointInfo_c* middle_point = new pointInfo_c(pointInfo_c::middle_point);
 
     middle_point->x = (node_1->x + node_2->x)/2;
