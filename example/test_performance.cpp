@@ -9,12 +9,14 @@
 #include "adjacencyMap.h"
 #include "Dijkstra.h"
 
+#define VERSION 4
+
 static const std::string GeneralPath = "../tests/squareMapTest/";
 static const std::string MapName = "squareMapTest";
 static const std::string TrianglePath = "../ThirdParty/triangle/triangle";
 static const std::string MapPath = GeneralPath;
 static const std::string LogFilePath = GeneralPath;
-static const std::string LogFileName = "V3_1_Code_Test.csv";
+static const std::string LogFileName = "V4_middle_Code_Test.csv";
 
 static const int START_POINT = 2;
 static const int END_POINT = 4;

@@ -16,14 +16,14 @@ class verticleProporityParam_e(Enum):
     POINT_TYPE = int(1)
 
 class pointColour(Enum):
-    NORMAL_POINT = "#A9A9A9"
-    SHORTEST_POINT = '#DF7A5E'
-    MIDDLE_POINT = '#0112EB'
+    NORMAL_POINT = "#A0A0A0"
+    SHORTEST_POINT = '#FFA500'
+    MIDDLE_POINT = '#6495ED'
 
 class lineColour(Enum):
     NORMAL_Line = "#696969"
-    SHORTEST_Line = '#DF7A5E'
-    MIDDLE_Line = '#00D4EB'
+    SHORTEST_Line = '#FFA500'
+    MIDDLE_Line = '#6495ED'
 
 #polyFilePath = "/home/jiarun/FYP_Project/code/tests/squareMapTest/Result.poly"
 defaultFilePath = "/home/jiarun/Desktop/FYP/code/tests/squareMapTest/Result.poly"
@@ -97,11 +97,11 @@ def main(polyPath):
     for i in range(len(vertices)):
         # print(vertices[i])
         if(vertices[i][verticleParam_e.PROPORITIES.value][verticleProporityParam_e.POINT_TYPE.value] == 1):
-            plt.plot(vertices[i][verticleParam_e.COORDINATE.value][0], vertices[i][verticleParam_e.COORDINATE.value][1],'o', color = pointColour.MIDDLE_POINT.value, markersize='4')
+            plt.plot(vertices[i][verticleParam_e.COORDINATE.value][0], vertices[i][verticleParam_e.COORDINATE.value][1],'o', color = pointColour.MIDDLE_POINT.value, markersize='3')
         # elif(vertices[i][verticleParam_e.PROPORITIES.value][verticleProporityParam_e.IS_PATH.value] == 1):
         #     plt.plot(vertices[i][verticleParam_e.COORDINATE.value][0], vertices[i][verticleParam_e.COORDINATE.value][1],'o', color = pointAndConnectionColour.SHORTEST_POINT.value, markersize='3')
         else:
-            plt.plot(vertices[i][verticleParam_e.COORDINATE.value][0], vertices[i][verticleParam_e.COORDINATE.value][1],'o', color = pointColour.NORMAL_POINT.value, markersize='4')
+            plt.plot(vertices[i][verticleParam_e.COORDINATE.value][0], vertices[i][verticleParam_e.COORDINATE.value][1],'o', color = pointColour.NORMAL_POINT.value, markersize='3')
 
 
 
