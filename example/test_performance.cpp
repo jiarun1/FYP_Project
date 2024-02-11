@@ -122,6 +122,8 @@ int main(int argv, char** argc)
         // Data import and convertion start
         adjacencyMap map(MapPath + MapName + ".1.node", MapPath + MapName + ".1.ele");
 
+        map.addMiddlePoints();
+
         dataImportConvertion_time = std::chrono::high_resolution_clock::now();
         // Dijkstra algorithm start
 
