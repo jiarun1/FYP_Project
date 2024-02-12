@@ -32,7 +32,13 @@ adjacencyMap::adjacencyMap(std::string nodefile, std::string elefile)
 
 adjacencyMap::adjacencyMap(adjacencyMap& copy)
 {
-    //TODO: add copying code
+
+    //TODO: add the copying code
+    clear();
+    for(int i = 0; i < copy.points.size(); i++)
+    {
+        points.push_back(copy.points.at(i));
+    }
 }
 
 adjacencyMap::~adjacencyMap()
@@ -226,6 +232,8 @@ void adjacencyMap::addMiddlePoints()
         // change the old connection to the new one, so that other element in the original connection list would not change
         connections.at(i) = connection_1;
         connections.push_back(connection_2);
+
+        // NOTE: it is impossible to delete the connection here since the triangle_c still need it
     }
 
     // connected all the middle point in a triangle
@@ -276,7 +284,27 @@ void adjacencyMap::addMiddlePoints()
 
 void adjacencyMap::clear()
 {
-    //TODO: add clear code
+    // clear the points
+    for(int i = 0 ; i < points.size(); i++)
+    {
+        delete points.at(i);
+    }
+    points.clear();
+
+    // clear the connections
+    for(int i = 0 ; i < connections.size(); i++)
+    {
+        delete connections.at(i);
+    }
+    connections.clear();
+
+    // clear the triangles
+    for(int i = 0 ; i < triangles.size(); i++)
+    {
+        delete triangles.at(i);
+    }
+    triangles.clear();
+        
 }
 
 

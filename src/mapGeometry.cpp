@@ -168,7 +168,6 @@ triangle_c::triangle_c(pointInfo_c* node_1, pointInfo_c* node_2, pointInfo_c* no
 
 triangle_c::~triangle_c()
 {
-
 }
 
 void triangle_c::initConnections()
@@ -185,13 +184,30 @@ void triangle_c::initConnections()
 
 pointInfo_c* triangle_c::getAnotherNode(pointInfo_c* node_1, pointInfo_c* node_2)
 {
-    // TODO: add some code to verify both node is in this triangle
+    pointInfo_c* another_node = NULL;
+    bool if_node1 = false, if_node2 = false;
+
     for(int i = 0; i < 3; i++)
     {
-        if((nodes[i] != node_1) && (nodes[i] != node_2))
-        {
-            return nodes[i];
-        }
+        if((nodes[i] != node_1) && (nodes[i] != node_2)){
+            another_node = nodes[i];
+        } else if ((nodes[i] == node_1) && (nodes[i] != node_2)){
+            if_node1 = true;
+        } else if ((nodes[i] != node_1) && (nodes[i] == node_2)){
+            if_node2 = true;
+        } else if ((nodes[i] == node_1) && (nodes[i] == node_2)){
+            std::cerr << "triangle_c::getAnotherNode() : both input is the same" << std::endl;
+            return NULL; 
+        }       
+    }
+
+    // both node is inside the triangle
+    if((if_node1 == true) && (if_node2 == true))
+    {
+        return another_node;
+    } else {
+        std::cerr << "triangle_c::getAnotherNode() : one of the input node is not part of triangle" << std::endl;
+        return NULL;
     }
 }
 
@@ -199,4 +215,29 @@ pointInfo_c* triangle_c::getAnotherNode(pointInfo_c* node_1, pointInfo_c* node_2
 pointInfo_c* triangle_c::getAnotherNode(pointCon_c* connection)
 {
     return getAnotherNode(connection->node1, connection->node2);
+}
+
+
+triangle_c* triangle_c::getAdjacentTriangle(pointCon_c* connection)
+{
+    triangle_c* adjacent_triangle = NULL;
+    bool is_in_triangle = false; ///< used to makesure the connection is in the triangle
+
+    for(int i = 0; i < connection->triangles.size(); i++)
+    {
+        if(connection->triangles.at(i) != this)
+        {
+            adjacent_triangle = connection->triangles.at(i);
+        } else {
+            is_in_triangle = true;
+        }
+    }
+
+    if(is_in_triangle == false)
+    {
+        std::cerr << "triangle_c::getAdjacentTriangle() : the connection is not an edge of the triangle" << std::endl;
+        return NULL;
+    } else {
+        return adjacent_triangle;
+    }
 }

@@ -151,6 +151,12 @@ public:
     /// @param connection the edge in the triangle
     /// @return the address of the another node
     pointInfo_c* getAnotherNode(pointCon_c* connection);
+
+    /// @brief used to get the adjacent triangle of the current triangle
+    /// @param connection the shared edge with the adjacent triangle
+    /// @return the pointer of the adjacent triangle
+    /// @retval NULL: if the connection is not part of the triangle or there is no adjacent triangle
+    triangle_c* getAdjacentTriangle(pointCon_c* connection);
 };
 
 

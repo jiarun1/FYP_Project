@@ -13,7 +13,7 @@ from tkinter.filedialog import askopenfilename
 
 # read the first set of data
 data_set_1 = pd.read_csv("../tests/squareMapTest/V3_1_Code_Test.csv")
-data_set_2 = pd.read_csv("../tests/squareMapTest/V4_middle_Code_Test.csv")
+data_set_2 = pd.read_csv("../tests/squareMapTest/V4_1_Code_Test.csv")
 
 data_set_1_version_string = "V3"
 data_set_2_version_string = "V4"
@@ -80,10 +80,11 @@ distance_envelop_2_smooth = savgol_filter(distance_envelop_2, 10, 3)
 
 
 
-distance_1_fitFunction =  str(a_1)+"x^2 +" + str(b_1) + "x+" 
-
-print("Data 1: " , distance_1_fitFunction)
-
+# convert the data into percentage
+distance_envelop_1_percentage = distance_envelop_1 / realDistance * 100
+distance_envelop_2_percentage = distance_envelop_2 / realDistance * 100
+distance_envelop_1_percentage_smooth = distance_envelop_1_smooth / realDistance * 100
+distance_envelop_2_percentage_smooth = distance_envelop_2_smooth / realDistance * 100
 
 
 ###########################
@@ -113,19 +114,38 @@ plot.xlim([0,6e5])
 #### plot in envelop
 plot.figure("Envelop of accuracy",figsize=(21/2.54,9/2.54),dpi=200)
 # Data Set 1
-plot.plot(time_envelop_1, distance_envelop_1_smooth, label = data_set_1_version_string + " Test Result", color = set_1_defaultColor[0])
-plot.plot(time_envelop_1, distance_envelop_1, label = data_set_1_version_string + " Smooth Result", color = set_1_defaultColor[1])
+plot.plot(time_envelop_1, distance_envelop_1, label = data_set_1_version_string + " Test Result", color = set_1_defaultColor[0])
+plot.plot(time_envelop_1, distance_envelop_1_smooth, label = data_set_1_version_string + " Smooth Result", color = set_1_defaultColor[1])
 # plot.plot(time_envelop_1, distance_envelop_1_fit, label = data_set_1_version_string + "Fit Result", color = set_1_defaultColor[1])
 
 # Data Set 2
-plot.plot(time_envelop_2, distance_envelop_2_smooth, label = data_set_2_version_string + " Test Result", color = set_2_defaultColor[0])
-plot.plot(time_envelop_2, distance_envelop_2, label = data_set_2_version_string + " Smooth Result", color = set_2_defaultColor[1])
+plot.plot(time_envelop_2, distance_envelop_2, label = data_set_2_version_string + " Test Result", color = set_2_defaultColor[0])
+plot.plot(time_envelop_2, distance_envelop_2_smooth, label = data_set_2_version_string + " Smooth Result", color = set_2_defaultColor[1])
 # plot.plot(time_envelop_2, distance_envelop_2_fit, label = data_set_2_version_string + "Fit Result", color = set_2_defaultColor[1])
 
 plot.title('Overall Cost Time Vs Result Distance',size=11)
 plot.legend()
 plot.xlabel('Overall Cost Time ($\mu s$)',size=11)
 plot.ylabel('Result Distance',size=11)
+plot.grid()
+plot.xlim([0,6e5])
+
+#### plot in envelop with percentage
+plot.figure("Envelop of accuracy percentage",figsize=(21/2.54,9/2.54),dpi=200)
+# Data Set 1
+plot.plot(time_envelop_1, distance_envelop_1_percentage, label = data_set_1_version_string + " Test Result", color = set_1_defaultColor[0])
+plot.plot(time_envelop_1, distance_envelop_1_percentage_smooth, label = data_set_1_version_string + " Smooth Result", color = set_1_defaultColor[1])
+# plot.plot(time_envelop_1, distance_envelop_1_fit, label = data_set_1_version_string + "Fit Result", color = set_1_defaultColor[1])
+
+# Data Set 2
+plot.plot(time_envelop_2, distance_envelop_2_percentage, label = data_set_2_version_string + " Test Result", color = set_2_defaultColor[0])
+plot.plot(time_envelop_2, distance_envelop_2_percentage_smooth, label = data_set_2_version_string + " Smooth Result", color = set_2_defaultColor[1])
+# plot.plot(time_envelop_2, distance_envelop_2_fit, label = data_set_2_version_string + "Fit Result", color = set_2_defaultColor[1])
+
+plot.title('Overall Cost Time Vs Performance',size=11)
+plot.legend()
+plot.xlabel('Overall Cost Time ($\mu s$)',size=11)
+plot.ylabel('Accuracy Percentage (%)',size=11)
 plot.grid()
 plot.xlim([0,6e5])
 

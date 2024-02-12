@@ -67,7 +67,6 @@ public:
     
 
     friend std::ostream& operator<< (std::ostream & out,const adjacencyMap &out_map);
-    //TODO: add the code for cin
 
 
 protected:
