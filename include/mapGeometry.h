@@ -140,6 +140,17 @@ public:
     /// @brief used to initialize the connection of the triangle
     /// @note it can only be used once
     void initConnections();
+
+    /// @brief used to get the another node in this triangle
+    /// @param node_1 : the first node
+    /// @param node_2 : the second node
+    /// @return the address of the another node
+    pointInfo_c* getAnotherNode(pointInfo_c* node_1, pointInfo_c* node_2);
+
+    /// @brief used to get the another node in this triangle
+    /// @param connection the edge in the triangle
+    /// @return the address of the another node
+    pointInfo_c* getAnotherNode(pointCon_c* connection);
 };
 
 

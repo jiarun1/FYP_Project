@@ -181,3 +181,22 @@ void triangle_c::initConnections()
         connections[i]->triangles.push_back(this);
     }
 }
+
+
+pointInfo_c* triangle_c::getAnotherNode(pointInfo_c* node_1, pointInfo_c* node_2)
+{
+    // TODO: add some code to verify both node is in this triangle
+    for(int i = 0; i < 3; i++)
+    {
+        if((nodes[i] != node_1) && (nodes[i] != node_2))
+        {
+            return nodes[i];
+        }
+    }
+}
+
+
+pointInfo_c* triangle_c::getAnotherNode(pointCon_c* connection)
+{
+    return getAnotherNode(connection->node1, connection->node2);
+}

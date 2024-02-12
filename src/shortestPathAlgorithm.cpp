@@ -109,7 +109,7 @@ void shortestPathAlgorithm::exportToPolyFile(std::string file_path)
     /******************************************************/
     // Line Section
     std::vector<pointCon_c*> availablePaths = cost_map->getAllConnections();
-
+    
     file << availablePaths.size() << " "  // point number
          << 0 << endl;  // boundary number
 
@@ -117,7 +117,7 @@ void shortestPathAlgorithm::exportToPolyFile(std::string file_path)
     {
         file << i+1 << " " << availablePaths.at(i)->node1->num << " " << availablePaths.at(i)->node2->num << endl;
     }
-    
+
     /******************************************************/
     // Hole Section
     file << 0 << endl;

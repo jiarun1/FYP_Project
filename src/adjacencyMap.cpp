@@ -229,12 +229,26 @@ void adjacencyMap::addMiddlePoints()
     }
 
     // connected all the middle point in a triangle
+    // This part is the approach 1 (connected each middle point directly)
+    // for(int i = 0; i < triangles.size(); i++)
+    // {
+    //     auto current_triangle = triangles.at(i);
+    //     for(int i = 0; i < 3; i++)
+    //     {
+    //         auto connection_new = current_triangle->connections[i % 3]->middlePoint->addConnection(current_triangle->connections[(i+1) % 3]->middlePoint);
+    //         connection_new->proporities = pointCon_c::middle_connection;
+            
+    //         connections.push_back(connection_new);
+    //     }
+    // }
+
     for(int i = 0; i < triangles.size(); i++)
     {
         auto current_triangle = triangles.at(i);
         for(int i = 0; i < 3; i++)
         {
-            auto connection_new = current_triangle->connections[i % 3]->middlePoint->addConnection(current_triangle->connections[(i+1) % 3]->middlePoint);
+            pointInfo_c* target_point = current_triangle->getAnotherNode(current_triangle->connections[i]);
+            auto connection_new = current_triangle->connections[i % 3]->middlePoint->addConnection(target_point);
             connection_new->proporities = pointCon_c::middle_connection;
             
             connections.push_back(connection_new);

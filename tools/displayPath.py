@@ -16,12 +16,12 @@ class verticleProporityParam_e(Enum):
     POINT_TYPE = int(1)
 
 class pointColour(Enum):
-    NORMAL_POINT = "#A0A0A0"
+    NORMAL_POINT = "#696969"
     SHORTEST_POINT = '#FFA500'
     MIDDLE_POINT = '#6495ED'
 
 class lineColour(Enum):
-    NORMAL_Line = "#696969"
+    NORMAL_Line = "#C0C0C0"
     SHORTEST_Line = '#FFA500'
     MIDDLE_Line = '#6495ED'
 
@@ -94,17 +94,7 @@ def main(polyPath):
     #plt.ion()
     plt.figure()
 
-    for i in range(len(vertices)):
-        # print(vertices[i])
-        if(vertices[i][verticleParam_e.PROPORITIES.value][verticleProporityParam_e.POINT_TYPE.value] == 1):
-            plt.plot(vertices[i][verticleParam_e.COORDINATE.value][0], vertices[i][verticleParam_e.COORDINATE.value][1],'o', color = pointColour.MIDDLE_POINT.value, markersize='3')
-        # elif(vertices[i][verticleParam_e.PROPORITIES.value][verticleProporityParam_e.IS_PATH.value] == 1):
-        #     plt.plot(vertices[i][verticleParam_e.COORDINATE.value][0], vertices[i][verticleParam_e.COORDINATE.value][1],'o', color = pointAndConnectionColour.SHORTEST_POINT.value, markersize='3')
-        else:
-            plt.plot(vertices[i][verticleParam_e.COORDINATE.value][0], vertices[i][verticleParam_e.COORDINATE.value][1],'o', color = pointColour.NORMAL_POINT.value, markersize='3')
-
-
-
+    # plot polygens
     for i in range(len(polygons)):
         # print(polygons[i])
 
@@ -122,6 +112,18 @@ def main(polyPath):
             plt.plot(point_x, point_y, color = lineColour.MIDDLE_Line.value, linewidth = 1)
         else :
             plt.plot(point_x, point_y, color = lineColour.NORMAL_Line.value, linewidth = 1)
+
+
+    # plot vertices
+    for i in range(len(vertices)):
+        # print(vertices[i])
+        if(vertices[i][verticleParam_e.PROPORITIES.value][verticleProporityParam_e.POINT_TYPE.value] == 1):
+            plt.plot(vertices[i][verticleParam_e.COORDINATE.value][0], vertices[i][verticleParam_e.COORDINATE.value][1],'o', color = pointColour.MIDDLE_POINT.value, markersize='3')
+        # elif(vertices[i][verticleParam_e.PROPORITIES.value][verticleProporityParam_e.IS_PATH.value] == 1):
+        #     plt.plot(vertices[i][verticleParam_e.COORDINATE.value][0], vertices[i][verticleParam_e.COORDINATE.value][1],'o', color = pointAndConnectionColour.SHORTEST_POINT.value, markersize='3')
+        else:
+            plt.plot(vertices[i][verticleParam_e.COORDINATE.value][0], vertices[i][verticleParam_e.COORDINATE.value][1],'o', color = pointColour.NORMAL_POINT.value, markersize='3')
+
 
 
     plt.tight_layout()
