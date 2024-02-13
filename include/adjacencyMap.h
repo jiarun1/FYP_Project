@@ -45,6 +45,12 @@ public:
     void addMiddlePoints();
 
 
+    /**
+     * @brief add the fermat point to all the edges
+    */
+    void addFermatPoints();
+
+
     /** @} */ // end of accuracy improvement functions
 
 

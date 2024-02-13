@@ -19,11 +19,13 @@ class pointColour(Enum):
     NORMAL_POINT = "#696969"
     SHORTEST_POINT = '#FFA500'
     MIDDLE_POINT = '#6495ED'
+    FERMAT_POINT = '#00F000'
 
 class lineColour(Enum):
     NORMAL_Line = "#C0C0C0"
     SHORTEST_Line = '#FFA500'
     MIDDLE_Line = '#6495ED'
+    FERMAT_Line = '#00F000'
 
 #polyFilePath = "/home/jiarun/FYP_Project/code/tests/squareMapTest/Result.poly"
 defaultFilePath = "/home/jiarun/Desktop/FYP/code/tests/squareMapTest/Result.poly"
@@ -105,12 +107,14 @@ def main(polyPath):
         # this 2 value is the x value list of the 2 points and the y value list of the points
         point_x = [point1[verticleParam_e.COORDINATE.value][0], point2[verticleParam_e.COORDINATE.value][0]]
         point_y = [point1[verticleParam_e.COORDINATE.value][1], point2[verticleParam_e.COORDINATE.value][1]]
-        
+
         if (point1[verticleParam_e.PROPORITIES.value][verticleProporityParam_e.IS_PATH.value] == 1) and (point2[verticleParam_e.PROPORITIES.value][verticleProporityParam_e.IS_PATH.value] == 1):
             plt.plot(point_x, point_y, color = lineColour.SHORTEST_Line.value, linewidth = 2)
-        elif (point1[verticleParam_e.PROPORITIES.value][verticleProporityParam_e.POINT_TYPE.value] == 1) and (point2[verticleParam_e.PROPORITIES.value][verticleProporityParam_e.POINT_TYPE.value] == 1):
-            plt.plot(point_x, point_y, color = lineColour.MIDDLE_Line.value, linewidth = 1)
-        else :
+        # elif (point1[verticleParam_e.PROPORITIES.value][verticleProporityParam_e.POINT_TYPE.value] == 1) and (point2[verticleParam_e.PROPORITIES.value][verticleProporityParam_e.POINT_TYPE.value] == 1):
+        #     plt.plot(point_x, point_y, color = lineColour.MIDDLE_Line.value, linewidth = 1)
+        # elif (point1[verticleParam_e.PROPORITIES.value][verticleProporityParam_e.POINT_TYPE.value] == 2) and (point2[verticleParam_e.PROPORITIES.value][verticleProporityParam_e.POINT_TYPE.value] == 2):
+        #     plt.plot(point_x, point_y, color = lineColour.MIDDLE_Line.value, linewidth = 1)
+        else:
             plt.plot(point_x, point_y, color = lineColour.NORMAL_Line.value, linewidth = 1)
 
 
@@ -121,6 +125,8 @@ def main(polyPath):
             plt.plot(vertices[i][verticleParam_e.COORDINATE.value][0], vertices[i][verticleParam_e.COORDINATE.value][1],'o', color = pointColour.MIDDLE_POINT.value, markersize='3')
         # elif(vertices[i][verticleParam_e.PROPORITIES.value][verticleProporityParam_e.IS_PATH.value] == 1):
         #     plt.plot(vertices[i][verticleParam_e.COORDINATE.value][0], vertices[i][verticleParam_e.COORDINATE.value][1],'o', color = pointAndConnectionColour.SHORTEST_POINT.value, markersize='3')
+        elif(vertices[i][verticleParam_e.PROPORITIES.value][verticleProporityParam_e.POINT_TYPE.value] == 2):
+            plt.plot(vertices[i][verticleParam_e.COORDINATE.value][0], vertices[i][verticleParam_e.COORDINATE.value][1],'o', color = pointColour.FERMAT_POINT.value, markersize='3')
         else:
             plt.plot(vertices[i][verticleParam_e.COORDINATE.value][0], vertices[i][verticleParam_e.COORDINATE.value][1],'o', color = pointColour.NORMAL_POINT.value, markersize='3')
 

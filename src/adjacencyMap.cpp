@@ -264,6 +264,84 @@ void adjacencyMap::addMiddlePoints()
     }
 }
 
+void adjacencyMap::addFermatPoints()
+{
+    
+    /// get the fermat point for all the triangles
+    for(int i = 0; i < triangles.size(); i++)
+    {
+        // get the fermat point for all the triangles
+        auto fermat_point_new = triangles[i]->getFermatPoint();
+
+        // if the fermat point is not exist, just ignore the triangle
+        if(fermat_point_new == nullptr)
+        {
+            continue;   
+        }
+
+        fermat_point_new->num = points.size() + 1;
+        points.push_back(fermat_point_new);
+
+        // connected fermat point with the vertex
+        for(int j = 0; j < 3; j++)
+        {
+            auto connection_new = triangles[i]->nodes[j]->addConnection(fermat_point_new);
+            connections.push_back(connection_new);
+        }
+    }
+
+    /// connected adjacent fermat point
+    for(int i = 0; i < triangles.size(); i++)
+    {
+        auto current_fermat_point = triangles[i]->getFermatPoint();
+
+        // if the current triangle doesnot contain fermat point
+        if(current_fermat_point == nullptr)
+        {
+            continue;
+        }
+
+        for(int j = 0 ; j < 3; j++)
+        {
+            auto adjacent_triangles = triangles[i]->connections[j]->triangles;
+
+            // the segment are edge of only 1 triangle
+            if(adjacent_triangles.size() == 1)
+            {
+                continue;
+            }
+
+            // search all the adjacent triangles
+            for(int k = 0; k < adjacent_triangles.size(); k++)
+            {
+                // ignore the current triangle
+                if(adjacent_triangles.at(k) == triangles[i]){
+                    continue;
+                }
+
+                // if the fermat point is not exist for the other triangle
+                if(adjacent_triangles.at(k)->getFermatPoint() == nullptr)
+                {
+                    continue;
+                }
+
+                auto new_connection = adjacent_triangles.at(k)->getFermatPoint()->addConnection(current_fermat_point);
+
+                if(new_connection == nullptr)
+                {
+                    continue;
+                }
+
+                connections.push_back(new_connection);
+            }
+
+        }
+
+
+    }
+
+}
+
 
 
 

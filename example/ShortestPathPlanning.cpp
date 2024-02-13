@@ -35,6 +35,9 @@ public:
     /// @brief decide if added the middle points to the map
     bool middlePoint;
 
+    /// @brief decide if added the fermat points to the map
+    bool fermatPoint;
+
 
     /// settings for the output data
     /// @brief decide if the software need to use python for display
@@ -47,11 +50,11 @@ public:
         MapPath(DefaultMapPath),MapName(DefaultMapName),
         startPoint(START_POINT),endPoint(END_POINT),
         areaSet(DefaultAreaSet),
-        middlePoint(false),
+        middlePoint(false),fermatPoint(false),
         display(false)
     {
         int command;
-        const char *optstring = "ha:df:ms:e:"; 
+        const char *optstring = "ha:df:ms:e:F"; 
         std::string parameter_string;
         while ((command = getopt(argc, argv, optstring)) != -1) {
             switch (command) {
@@ -63,6 +66,7 @@ public:
                               << "-d          : enable display \n"
                               << "-f filepath : set the map path \n"
                               << "-m          : add the middle points to the map \n"
+                              << "-F          : add the fermat points to the map \n"
                               << "-s          : set the start point \n"
                               << "-e          : set the end point \n"
                               << std::endl;
@@ -81,6 +85,9 @@ public:
                     break;
                 case 'm':
                     middlePoint = true;
+                    break;
+                case 'F':
+                    fermatPoint = true;
                     break;
                 case 's':
                     parameter_string = std::string(optarg);
@@ -139,6 +146,12 @@ int main(int argc, char** argv)
     {
         std::cout << "add middle points" << std::endl;
         map.addMiddlePoints();
+    }
+
+    if(commandInput.fermatPoint == true)
+    {
+        std::cout << "add fermat points" << std::endl;
+        map.addFermatPoints();
     }
 
 
