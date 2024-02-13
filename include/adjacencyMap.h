@@ -49,19 +49,19 @@ public:
 
 
 
-    ACCURACY getCost(pointCon_c* connection);
+    ACCURACY getCost(segment_c* connection);
     POINT_NUM_MAX getPointNum();
     POINT_NUM_MAX getPathNum();
-    std::vector<pointCon_c*> getAllConnections();
-    std::vector<pointInfo_c*> getAllPoints();
+    std::vector<segment_c*> getAllConnections();
+    std::vector<point_c*> getAllPoints();
 
 
-    std::vector<pointCon_c*> getConnections(pointInfo_c* point);
+    std::vector<segment_c*> getConnections(point_c* point);
 
     /// @brief find the points based on the num value of the point
     /// @param num_point : the num value for the points
     /// @return the target points address
-    pointInfo_c* findPoint(POINT_NUM_MAX num_point);
+    point_c* findPoint(POINT_NUM_MAX num_point);
     
 
     
@@ -75,8 +75,8 @@ protected:
 private:
 
 
-    std::vector<pointInfo_c*> points;
-    std::vector<pointCon_c*> connections;
+    std::vector<point_c*> points;
+    std::vector<segment_c*> connections;
     std::vector<triangle_c*> triangles;   
 
 };

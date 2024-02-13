@@ -57,7 +57,7 @@ void Dijkstra::calculateShortestPath()
 
     boost::heap::fibonacci_heap<heap_data> points_dis_heap;
 
-    pointInfo_c* current_point = cost_map->findPoint(start_point);
+    point_c* current_point = cost_map->findPoint(start_point);
 
     // initialize the start point
     points_info[current_point->num - 1].minDistance = 0;

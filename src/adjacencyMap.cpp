@@ -46,7 +46,7 @@ adjacencyMap::~adjacencyMap()
     clear();
 }
 
-pointInfo_c* adjacencyMap::findPoint(POINT_NUM_MAX num_point)
+point_c* adjacencyMap::findPoint(POINT_NUM_MAX num_point)
 {
     // if the point is at n, the system would be faster
     if(num_point <= points.size())
@@ -59,7 +59,7 @@ pointInfo_c* adjacencyMap::findPoint(POINT_NUM_MAX num_point)
 
 
     // search all the points for the data
-    std::vector<pointInfo_c*>::iterator it = points.begin();
+    std::vector<point_c*>::iterator it = points.begin();
 
     for(; it != points.end(); it++)
     {
@@ -105,7 +105,7 @@ void adjacencyMap::readNodes(std::string nodefile)
         } else if (count_lines > pointNum){
             break;
         } else {
-            auto pointNew = new pointInfo_c;
+            auto pointNew = new point_c;
             str >> pointNew->num;
             str >> pointNew->x;
             str >> pointNew->y;
@@ -244,7 +244,7 @@ void adjacencyMap::addMiddlePoints()
     //     for(int i = 0; i < 3; i++)
     //     {
     //         auto connection_new = current_triangle->connections[i % 3]->middlePoint->addConnection(current_triangle->connections[(i+1) % 3]->middlePoint);
-    //         connection_new->proporities = pointCon_c::middle_connection;
+    //         connection_new->proporities = segment_c::middle_connection;
             
     //         connections.push_back(connection_new);
     //     }
@@ -255,9 +255,9 @@ void adjacencyMap::addMiddlePoints()
         auto current_triangle = triangles.at(i);
         for(int i = 0; i < 3; i++)
         {
-            pointInfo_c* target_point = current_triangle->getAnotherNode(current_triangle->connections[i]);
+            point_c* target_point = current_triangle->getAnotherNode(current_triangle->connections[i]);
             auto connection_new = current_triangle->connections[i % 3]->middlePoint->addConnection(target_point);
-            connection_new->proporities = pointCon_c::middle_connection;
+            connection_new->proporities = segment_c::middle_connection;
             
             connections.push_back(connection_new);
         }
@@ -308,7 +308,7 @@ void adjacencyMap::clear()
 }
 
 
-ACCURACY adjacencyMap::getCost(pointCon_c* connection)
+ACCURACY adjacencyMap::getCost(segment_c* connection)
 {
     return connection->distance;
 }
@@ -323,17 +323,17 @@ POINT_NUM_MAX adjacencyMap::getPathNum()
     return connections.size();
 }
 
-std::vector<pointCon_c*> adjacencyMap::getConnections(pointInfo_c* point)
+std::vector<segment_c*> adjacencyMap::getConnections(point_c* point)
 {
     return point->connection;
 }
 
-std::vector<pointCon_c*> adjacencyMap::getAllConnections()
+std::vector<segment_c*> adjacencyMap::getAllConnections()
 {
     return connections;
 }
 
-std::vector<pointInfo_c*> adjacencyMap::getAllPoints()
+std::vector<point_c*> adjacencyMap::getAllPoints()
 {
     return points;
 }

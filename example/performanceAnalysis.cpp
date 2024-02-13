@@ -1,9 +1,13 @@
-#include <iostream>
-#include <fstream>
 #include <string>
+
+#include <iostream>
+#include <string>
+#include <libgen.h>
+#include <unistd.h> // for getopt in decoding command line data
 #include <chrono>
 
-#include <gperftools/profiler.h>
+#include <gperftools/profiler.h> // for testing the code
+#include <gperftools/heap-profiler.h>
 
 #include "triangleCommand.h"
 #include "adjacencyMap.h"
@@ -11,15 +15,109 @@
 
 #define VERSION 4
 
-static const std::string GeneralPath = "../tests/squareMapTest/";
-static const std::string MapName = "squareMapTest";
-static const std::string TrianglePath = "../ThirdParty/triangle/triangle";
-static const std::string MapPath = GeneralPath;
-static const std::string LogFilePath = GeneralPath;
-static const std::string LogFileName = "V4_2_Code_Test.csv";
 
+static const std::string TrianglePath = "../ThirdParty/triangle/triangle";
+static const std::string DefaultMapPath = "../tests/squareMapTest";
+static const std::string DefaultMapName = "squareMapTest";
 static const int START_POINT = 2;
-static const int END_POINT = 4;
+static const int END_POINT = 3;
+static const double DefaultAreaSet = 1;
+
+
+
+
+class inputParameters
+{
+public:
+    std::string MapPath;
+    std::string MapName;
+    std::string LogPathAndName;
+    unsigned int startPoint;
+    unsigned int endPoint;
+
+    /// Settings for the area mappings
+    /// @brief the maximum area set for the triangle
+    double areaSet;
+    
+    /// @brief decide if added the middle points to the map
+    bool middlePoint;
+
+
+    /// settings for the output data
+    /// @brief decide if the software need to use python for display
+    bool display;
+
+    std::string Version;
+
+
+public:
+    /// @brief Enter the data from the command lines
+    inputParameters(int argc = 0, char** argv = nullptr):
+        MapPath(DefaultMapPath),MapName(DefaultMapName),
+        startPoint(START_POINT),endPoint(END_POINT),
+        areaSet(DefaultAreaSet),
+        middlePoint(false),
+        display(false)
+    {
+        int command;
+        const char *optstring = "hf:ms:e:V:"; 
+        std::string parameter_string;
+        while ((command = getopt(argc, argv, optstring)) != -1) {
+            switch (command) {
+                case 'h':
+                    std::cout << "usage: ./ShortestPathPlanning [option] [arg] ... \n"
+                              << "Options and arguments:\n"
+                              << "-h          : help\n"
+                              << "-f filepath : set the map path \n"
+                              << "-m          : add the middle points to the map \n"
+                              << "-s          : set the start point \n"
+                              << "-e          : set the end point \n"
+                              << "-V          : version number"
+                              << std::endl;
+                    exit(0);
+                    break;
+                case 'f':
+                    MapPath = std::string(dirname(optarg));
+                    MapName = std::string(basename(optarg));
+                    break;
+                case 'm':
+                    middlePoint = true;
+                    break;
+                case 's':
+                    parameter_string = std::string(optarg);
+                    startPoint = std::stoi(parameter_string);
+                    break;
+                case 'e':
+                    parameter_string = std::string(optarg);
+                    endPoint = std::stoi(parameter_string);
+                    break;
+                case 'V':
+                    Version = std::string(optarg);
+                    break;
+                case '?':
+                    printf("error optopt: %c\n", optopt);
+                    printf("error opterr: %d\n", opterr);
+                    break;
+            }
+        }
+
+        // The log file path and name
+        LogPathAndName = MapPath + "/" + Version + "_Code_Test.csv";  
+    };
+
+    friend std::ostream& operator<< (std::ostream & out,const inputParameters &out_paraneter)
+    {
+        out << "Parameters Settings List:" << std::endl
+            << "  - maximum area: " << out_paraneter.areaSet << std::endl
+            << "  - display     : " << ((out_paraneter.display)? std::string("true"):std::string("false")) << std::endl
+            << "  - map file    : " << out_paraneter.MapPath + "/" + out_paraneter.MapName << std::endl
+            << std::endl;
+        return out;
+    }
+
+    ~inputParameters(){};
+};
+
 
 
 class writeLog_c
@@ -80,12 +178,34 @@ public:
 };
 
 
-int main(int argv, char** argc)
+int main(int argc, char** argv)
 {
+    inputParameters commandInput(argc, argv);
+
     // call the triangle with parameters
     triangleCommand triangle(TrianglePath);
-    
-    writeLog_c log(LogFilePath + LogFileName);
+
+    if(commandInput.Version.empty())
+    {
+        std::cerr << "need to input the version number" << std::endl;
+        return -1;
+    }
+
+    if( access( commandInput.LogPathAndName.c_str(), F_OK ) != -1 )
+    {
+        std::cout << "The file is already exist. (press y to convert or n to stop)" << std::endl;
+        
+        char input;
+        std::cin >> input;
+        if(input != 'y')
+        {
+            std::cout << "Stop Program (change another log file name)" << std::endl;
+            return 0;
+        }
+    }
+
+
+    writeLog_c log(commandInput.LogPathAndName);
 
 
     float max_area = 20;
@@ -97,8 +217,6 @@ int main(int argv, char** argc)
     auto triangle_time = std::chrono::high_resolution_clock::now();
     auto dataImportConvertion_time = std::chrono::high_resolution_clock::now();
     auto shortestPathAlgorithm_time = std::chrono::high_resolution_clock::now();
-
-    ProfilerStart("test.prof");
 
     for(float test_area = max_area; test_area > min_area; test_area = test_area / area_divide)
     {
@@ -115,12 +233,12 @@ int main(int argv, char** argc)
         //--------------------------- Start Count Time --------------------------------
         start_time = std::chrono::high_resolution_clock::now();
 
-        triangle.call(MapPath + MapName +".poly");
+        triangle.call(commandInput.MapPath + "/" + commandInput.MapName +".poly");
 
         triangle_time = std::chrono::high_resolution_clock::now();
         
         // Data import and convertion start
-        adjacencyMap map(MapPath + MapName + ".1.node", MapPath + MapName + ".1.ele");
+        adjacencyMap map(commandInput.MapPath + "/" + commandInput.MapName + ".1.node", commandInput.MapPath + "/" + commandInput.MapName + ".1.ele");
 
         map.addMiddlePoints();
 
@@ -141,8 +259,8 @@ int main(int argv, char** argc)
         log.write(test_area ,mapping_duration, convertion_duration ,shortestPathAlgorithm_duration, map.getPointNum(), map.getPathNum(), path_planing.getPathCost());
         
     }
-    ProfilerStop();
 
     return 0;
 }
+
 
