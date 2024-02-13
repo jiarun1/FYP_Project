@@ -13,7 +13,7 @@ from tkinter.filedialog import askopenfilename
 
 # read the first set of data
 data_set_1 = pd.read_csv("../tests/squareMapTest/V3_1_Code_Test.csv")
-data_set_2 = pd.read_csv("../tests/squareMapTest/V4_1_Code_Test.csv")
+data_set_2 = pd.read_csv("../tests/squareMapTest/V4_3_Code_Test.csv")
 
 data_set_1_version_string = "V3"
 data_set_2_version_string = "V4"

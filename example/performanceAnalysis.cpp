@@ -20,7 +20,7 @@ static const std::string TrianglePath = "../ThirdParty/triangle/triangle";
 static const std::string DefaultMapPath = "../tests/squareMapTest";
 static const std::string DefaultMapName = "squareMapTest";
 static const int START_POINT = 2;
-static const int END_POINT = 3;
+static const int END_POINT = 4;
 static const double DefaultAreaSet = 1;
 
 
@@ -42,6 +42,9 @@ public:
     /// @brief decide if added the middle points to the map
     bool middlePoint;
 
+    /// @brief decide if added the fermat points to the map
+    bool fermatPoint;
+
 
     /// settings for the output data
     /// @brief decide if the software need to use python for display
@@ -56,11 +59,11 @@ public:
         MapPath(DefaultMapPath),MapName(DefaultMapName),
         startPoint(START_POINT),endPoint(END_POINT),
         areaSet(DefaultAreaSet),
-        middlePoint(false),
+        middlePoint(false),fermatPoint(false),
         display(false)
     {
         int command;
-        const char *optstring = "hf:ms:e:V:"; 
+        const char *optstring = "hf:ms:e:V:F"; 
         std::string parameter_string;
         while ((command = getopt(argc, argv, optstring)) != -1) {
             switch (command) {
@@ -70,6 +73,7 @@ public:
                               << "-h          : help\n"
                               << "-f filepath : set the map path \n"
                               << "-m          : add the middle points to the map \n"
+                              << "-F          : add the fermat points to the map \n"
                               << "-s          : set the start point \n"
                               << "-e          : set the end point \n"
                               << "-V          : version number"
@@ -79,6 +83,9 @@ public:
                 case 'f':
                     MapPath = std::string(dirname(optarg));
                     MapName = std::string(basename(optarg));
+                    break;
+                case 'F':
+                    fermatPoint = true;
                     break;
                 case 'm':
                     middlePoint = true;
@@ -240,7 +247,15 @@ int main(int argc, char** argv)
         // Data import and convertion start
         adjacencyMap map(commandInput.MapPath + "/" + commandInput.MapName + ".1.node", commandInput.MapPath + "/" + commandInput.MapName + ".1.ele");
 
-        map.addMiddlePoints();
+        if(commandInput.middlePoint == true)
+        {
+            map.addMiddlePoints();
+        }
+
+        if(commandInput.fermatPoint == true)
+        {
+            map.addFermatPoints();
+        }
 
         dataImportConvertion_time = std::chrono::high_resolution_clock::now();
         // Dijkstra algorithm start
