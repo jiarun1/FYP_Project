@@ -30,23 +30,35 @@ class lineColour(Enum):
 #polyFilePath = "/home/jiarun/FYP_Project/code/tests/squareMapTest/Result.poly"
 defaultFilePath = "/home/jiarun/Desktop/FYP/code/tests/squareMapTest/Result.poly"
 
+def remove_comments(line):
+    comments_start = line.strip().find('#')
+    return line[:comments_start]
 
 def read_poly_file(file_path):
     vertices = []
-    polygons = []
+    segments = []
+    holes = []
 
     with open(file_path, 'r') as file:
 
+        ################################################################################
         # Reading vertices
-        num_vertices, num_dimension, num_property, num_boundary  = map(int, file.readline().split())
+        line = file.readline()
+        line = remove_comments(line)
+        while(len(line) <= 0):
+            line = file.readline()
+            line = remove_comments(line)
+
+        num_vertices, num_dimension, num_property, num_boundary  = map(int, line.split())
         for _ in range(num_vertices):
-            line = file.readline().strip()
-
             # ignore the comment line
-            if(line.find("#") != -1):
-                continue
+            line = file.readline()  
+            line = remove_comments(line)
+            while(len(line) <= 0):
+                line = file.readline()
+                line = remove_comments(line)
 
-            parts = line.split()
+            parts = line.strip().split()
             # if(parts.count() < (1 + num_dimension + num_property + num_boundary)):
             #     print("Reading verticles failed")
             #     exit()
@@ -66,35 +78,120 @@ def read_poly_file(file_path):
                 
             vertices.append((vertex_index, coordinates, propertys))
 
-        # Reading polygons
-        num_polygons, num_boundary  = map(int, file.readline().split())
-        for _ in range(num_polygons):
-            line = file.readline().strip()
 
+
+        ################################################################################
+        # Reading segments
+        # remove the comments between 2 parts
+        line = file.readline()  
+        line = remove_comments(line)
+        while(len(line) <= 0):
+            line = file.readline()
+            line = remove_comments(line)
+        num_segments, num_boundary  = map(int, line.split())
+        for _ in range(num_segments):
             # ignore the comment line
-            if(line.find("#") != -1):
-                continue
+            line = file.readline()  
+            line = remove_comments(line)
+            while(len(line) <= 0):
+                line = file.readline()
+                line = remove_comments(line)
 
-            parts = line.split()
-            polygon_index = int(parts[0])
+            parts = line.strip().split()
+
+            segment_index = int(parts[0])
             vertex_indices = list([int(parts[1]), int(parts[2])])
-            polygons.append((polygon_index, vertex_indices))
+            segments.append((segment_index, vertex_indices))
 
-    return vertices, polygons
+        ################################################################################
+        # Reading holes
+        # remove the comments between 2 parts
+        line = file.readline()  
+        line = remove_comments(line)
+        while(len(line) <= 0):
+            line = file.readline()
+            line = remove_comments(line)
+        num_holes, = map(int, line.split())
+        for _ in range(num_holes):
+            # ignore the comment line
+            line = file.readline()  
+            line = remove_comments(line)
+            while(len(line) <= 0):
+                line = file.readline()
+                line = remove_comments(line)
+
+            parts = line.strip().split()
+
+            hole_index = int(parts[0])
+            hole_coordinates = list([int(parts[1]), int(parts[2])])
+            holes.append((hole_index, hole_coordinates))
+
+    return vertices, segments, holes
+# def read_poly_file(file_path):
+#     vertices = []
+#     polygons = []
+
+#     with open(file_path, 'r') as file:
+
+#         # Reading vertices
+#         num_vertices, num_dimension, num_property, num_boundary  = map(int, file.readline().split())
+#         for _ in range(num_vertices):
+#             line = file.readline().strip()
+
+#             # ignore the comment line
+#             if(line.find("#") != -1):
+#                 continue
+
+#             parts = line.split()
+#             # if(parts.count() < (1 + num_dimension + num_property + num_boundary)):
+#             #     print("Reading verticles failed")
+#             #     exit()
+
+#             item_count = 0
+#             coordinates = list()
+#             propertys = list()
+
+#             vertex_index = int(parts[item_count])
+#             for _ in range(num_dimension):
+#                 item_count += 1
+#                 coordinates.append(float(parts[item_count]))
+
+#             for _ in range(num_property):
+#                 item_count += 1
+#                 propertys.append(int(parts[item_count]))
+                
+#             vertices.append((vertex_index, coordinates, propertys))
+
+#         # Reading polygons
+#         num_polygons, num_boundary  = map(int, file.readline().split())
+#         for _ in range(num_polygons):
+#             line = file.readline().strip()
+
+#             # ignore the comment line
+#             if(line.find("#") != -1):
+#                 continue
+
+#             parts = line.split()
+#             polygon_index = int(parts[0])
+#             vertex_indices = list([int(parts[1]), int(parts[2])])
+#             polygons.append((polygon_index, vertex_indices))
+
+#     return vertices, polygons
 
 def main(polyPath):
 
     print(polyPath)
     # tk.Tk().withdraw()
     # polyFilePath = askopenfilename()
-    vertices, polygons = read_poly_file(polyPath)
+    vertices, polygons, holes = read_poly_file(polyPath)
     # print(vertices)
     # print(vertices[1][1][1])
     # print(len(vertices))
 
     plt.rc('font',family='Arial')
     #plt.ion()
-    plt.figure()
+    plt.figure("Path Display",figsize=(9/2.54,9/2.54),dpi=200)
+    plt.axis("off")
 
     # plot polygens
     for i in range(len(polygons)):
