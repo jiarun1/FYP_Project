@@ -153,6 +153,7 @@ def inputParameter(argv):
             sys.exit()
         elif opt in ("-f", "--file"):
             filepath = arg
+            
 
 
 
