@@ -175,3 +175,12 @@ void triangleCommand::setMinTriangleAngle(float angle)
 {
     
 }
+
+
+void triangleCommand::setConformingDelaunaryTriangle(bool enableCDT)
+{
+    if(enableCDT == true)
+    {
+        setParameter("D");
+    }
+}

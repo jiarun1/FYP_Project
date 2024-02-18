@@ -31,6 +31,9 @@ public:
     /// Settings for the area mappings
     /// @brief the maximum area set for the triangle
     double areaSet;
+
+    /// @brief enable the CDT (only the constrain the triangle included)
+    bool enableCDT;
     
     /// @brief decide if added the middle points to the map
     bool middlePoint;
@@ -49,7 +52,7 @@ public:
     inputParameters(int argc = 0, char** argv = nullptr):
         MapPath(DefaultMapPath),MapName(DefaultMapName),
         startPoint(START_POINT),endPoint(END_POINT),
-        areaSet(DefaultAreaSet),
+        areaSet(DefaultAreaSet),enableCDT(false),
         middlePoint(false),fermatPoint(false),
         display(false)
     {
@@ -79,6 +82,9 @@ public:
                     break;
                 case 'd':
                     display = true;
+                    break;
+                case 'D':
+                    enableCDT = true;
                     break;
                 case 'f':
                     MapPath = std::string(dirname(optarg));
@@ -133,6 +139,7 @@ int main(int argc, char** argv)
 
     // triangle.setParameter("a", commandInput.areaSet);
     triangle.setMaxTriangleArea(commandInput.areaSet);
+    triangle.setConformingDelaunaryTriangle()
 
     triangle.call(commandInput.MapPath + "/" + commandInput.MapName +".poly");
 
