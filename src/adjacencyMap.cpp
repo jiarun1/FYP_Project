@@ -32,7 +32,13 @@ adjacencyMap::adjacencyMap(std::string nodefile, std::string elefile)
 
 adjacencyMap::adjacencyMap(adjacencyMap& copy)
 {
-    //TODO: add copying code
+
+    //TODO: add the copying code
+    clear();
+    for(int i = 0; i < copy.points.size(); i++)
+    {
+        points.push_back(copy.points.at(i));
+    }
 }
 
 adjacencyMap::~adjacencyMap()
@@ -40,7 +46,7 @@ adjacencyMap::~adjacencyMap()
     clear();
 }
 
-pointInfo_c* adjacencyMap::findPoint(POINT_NUM_MAX num_point)
+point_c* adjacencyMap::findPoint(POINT_NUM_MAX num_point)
 {
     // if the point is at n, the system would be faster
     if(num_point <= points.size())
@@ -53,7 +59,7 @@ pointInfo_c* adjacencyMap::findPoint(POINT_NUM_MAX num_point)
 
 
     // search all the points for the data
-    std::vector<pointInfo_c*>::iterator it = points.begin();
+    std::vector<point_c*>::iterator it = points.begin();
 
     for(; it != points.end(); it++)
     {
@@ -99,7 +105,7 @@ void adjacencyMap::readNodes(std::string nodefile)
         } else if (count_lines > pointNum){
             break;
         } else {
-            auto pointNew = new pointInfo_c;
+            auto pointNew = new point_c;
             str >> pointNew->num;
             str >> pointNew->x;
             str >> pointNew->y;
@@ -226,6 +232,8 @@ void adjacencyMap::addMiddlePoints()
         // change the old connection to the new one, so that other element in the original connection list would not change
         connections.at(i) = connection_1;
         connections.push_back(connection_2);
+
+        // NOTE: it is impossible to delete the connection here since the triangle_c still need it
     }
 
     // connected all the middle point in a triangle
@@ -236,7 +244,7 @@ void adjacencyMap::addMiddlePoints()
     //     for(int i = 0; i < 3; i++)
     //     {
     //         auto connection_new = current_triangle->connections[i % 3]->middlePoint->addConnection(current_triangle->connections[(i+1) % 3]->middlePoint);
-    //         connection_new->proporities = pointCon_c::middle_connection;
+    //         connection_new->proporities = segment_c::middle_connection;
             
     //         connections.push_back(connection_new);
     //     }
@@ -247,13 +255,91 @@ void adjacencyMap::addMiddlePoints()
         auto current_triangle = triangles.at(i);
         for(int i = 0; i < 3; i++)
         {
-            pointInfo_c* target_point = current_triangle->getAnotherNode(current_triangle->connections[i]);
+            point_c* target_point = current_triangle->getAnotherNode(current_triangle->connections[i]);
             auto connection_new = current_triangle->connections[i % 3]->middlePoint->addConnection(target_point);
-            connection_new->proporities = pointCon_c::middle_connection;
+            connection_new->proporities = segment_c::middle_connection;
             
             connections.push_back(connection_new);
         }
     }
+}
+
+void adjacencyMap::addFermatPoints()
+{
+    
+    /// get the fermat point for all the triangles
+    for(int i = 0; i < triangles.size(); i++)
+    {
+        // get the fermat point for all the triangles
+        auto fermat_point_new = triangles[i]->getFermatPoint();
+
+        // if the fermat point is not exist, just ignore the triangle
+        if(fermat_point_new == nullptr)
+        {
+            continue;   
+        }
+
+        fermat_point_new->num = points.size() + 1;
+        points.push_back(fermat_point_new);
+
+        // connected fermat point with the vertex
+        for(int j = 0; j < 3; j++)
+        {
+            auto connection_new = triangles[i]->nodes[j]->addConnection(fermat_point_new);
+            connections.push_back(connection_new);
+        }
+    }
+
+    /// connected adjacent fermat point
+    for(int i = 0; i < triangles.size(); i++)
+    {
+        auto current_fermat_point = triangles[i]->getFermatPoint();
+
+        // if the current triangle doesnot contain fermat point
+        if(current_fermat_point == nullptr)
+        {
+            continue;
+        }
+
+        for(int j = 0 ; j < 3; j++)
+        {
+            auto adjacent_triangles = triangles[i]->connections[j]->triangles;
+
+            // the segment are edge of only 1 triangle
+            if(adjacent_triangles.size() == 1)
+            {
+                continue;
+            }
+
+            // search all the adjacent triangles
+            for(int k = 0; k < adjacent_triangles.size(); k++)
+            {
+                // ignore the current triangle
+                if(adjacent_triangles.at(k) == triangles[i]){
+                    continue;
+                }
+
+                // if the fermat point is not exist for the other triangle
+                if(adjacent_triangles.at(k)->getFermatPoint() == nullptr)
+                {
+                    continue;
+                }
+
+                auto new_connection = adjacent_triangles.at(k)->getFermatPoint()->addConnection(current_fermat_point);
+
+                if(new_connection == nullptr)
+                {
+                    continue;
+                }
+
+                connections.push_back(new_connection);
+            }
+
+        }
+
+
+    }
+
 }
 
 
@@ -276,11 +362,31 @@ void adjacencyMap::addMiddlePoints()
 
 void adjacencyMap::clear()
 {
-    //TODO: add clear code
+    // clear the points
+    for(int i = 0 ; i < points.size(); i++)
+    {
+        delete points.at(i);
+    }
+    points.clear();
+
+    // clear the connections
+    for(int i = 0 ; i < connections.size(); i++)
+    {
+        delete connections.at(i);
+    }
+    connections.clear();
+
+    // clear the triangles
+    for(int i = 0 ; i < triangles.size(); i++)
+    {
+        delete triangles.at(i);
+    }
+    triangles.clear();
+        
 }
 
 
-ACCURACY adjacencyMap::getCost(pointCon_c* connection)
+ACCURACY adjacencyMap::getCost(segment_c* connection)
 {
     return connection->distance;
 }
@@ -295,17 +401,17 @@ POINT_NUM_MAX adjacencyMap::getPathNum()
     return connections.size();
 }
 
-std::vector<pointCon_c*> adjacencyMap::getConnections(pointInfo_c* point)
+std::vector<segment_c*> adjacencyMap::getConnections(point_c* point)
 {
     return point->connection;
 }
 
-std::vector<pointCon_c*> adjacencyMap::getAllConnections()
+std::vector<segment_c*> adjacencyMap::getAllConnections()
 {
     return connections;
 }
 
-std::vector<pointInfo_c*> adjacencyMap::getAllPoints()
+std::vector<point_c*> adjacencyMap::getAllPoints()
 {
     return points;
 }

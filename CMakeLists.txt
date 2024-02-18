@@ -37,11 +37,14 @@ FILE(GLOB_RECURSE CURRENT_SOURCES src/*.cpp)
     # add_executable(Test_AdjacencyMap ./example/test_adjacencyMap.cpp ${CURRENT_INCLUDE} ${CURRENT_SOURCES})
     # add_executable(Test_Dijkstra ./example/test_Dijkstra.cpp ${CURRENT_INCLUDE} ${CURRENT_SOURCES})
     # add_executable(Test_Triangle ./example/test_Triangle.cpp ${CURRENT_INCLUDE} ${CURRENT_SOURCES})
-    add_executable(Test_Performance ./example/test_performance.cpp ${CURRENT_INCLUDE} ${CURRENT_SOURCES})
+    #add_executable(Test_Performance ./example/test_performance.cpp ${CURRENT_INCLUDE} ${CURRENT_SOURCES})
+    add_executable(PerformanceAnalysis ./example/performanceAnalysis.cpp ${CURRENT_INCLUDE} ${CURRENT_SOURCES})
+    add_executable(Test_Geometry ./example/test_geometry.cpp ${CURRENT_INCLUDE} ${CURRENT_SOURCES})
 ###########################################################
 
 # Link librarys
-target_link_libraries(Test_Performance ${GPERFTOOLS_LIBS})
+#target_link_libraries(Test_Performance ${GPERFTOOLS_LIBS})
+target_link_libraries(PerformanceAnalysis ${GPERFTOOLS_LIBS})
 target_link_libraries(ShortestPathPlanning ${GPERFTOOLS_LIBS})
 
 #target_link_libraries(ShortestPathPlanning ${OpenCV_LIBS})
