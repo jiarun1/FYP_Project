@@ -90,6 +90,45 @@ void triangleCommand::setParameter(std::string parameter_marker, std::string val
     }
 }
 
+void triangleCommand::deleteParameter(std::string parameter_marker)
+{
+    auto current_parameter = parameters;
+    auto previous_parameter = parameters;
+    if(current_parameter == nullptr){
+        return;
+    } else if (current_parameter->marker == parameter_marker) //< used to delete the first parameter
+    {
+        if(current_parameter->nextParameter == nullptr){
+            parameters = nullptr;
+        } else {
+            parameters = current_parameter->nextParameter;
+        }
+        delete current_parameter;
+    } else {
+        while (1)
+        {
+            previous_parameter = current_parameter;
+            current_parameter = current_parameter->nextParameter;
+            if(parameter_marker == current_parameter->marker){
+                previous_parameter->nextParameter = current_parameter->nextParameter;
+                delete current_parameter;
+                return;
+            }
+            if(current_parameter->nextParameter == nullptr)
+            {
+                break;
+            }
+        }
+        
+        
+        
+
+
+    }
+
+
+}
+
 
 
 void triangleCommand::call(std::string poly_path)
@@ -120,4 +159,19 @@ void triangleCommand::call(std::string poly_path)
     std::cout << "Command: " << command << std::endl;
 
     system(command.c_str());
+}
+
+void triangleCommand::setMaxTriangleArea(float area)
+{
+    if(area == 0)
+    {
+        deleteParameter("a");
+        return;
+    }
+    setParameter("a", area);
+}
+
+void triangleCommand::setMinTriangleAngle(float angle)
+{
+    
 }

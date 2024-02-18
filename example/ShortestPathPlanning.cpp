@@ -51,7 +51,7 @@ public:
         display(false)
     {
         int command;
-        const char *optstring = "ha:df:ms:e:"; 
+        const char *optstring = "ha:Ddf:ms:e:"; 
         std::string parameter_string;
         while ((command = getopt(argc, argv, optstring)) != -1) {
             switch (command) {
@@ -61,6 +61,7 @@ public:
                               << "-h          : help\n"
                               << "-a area     : maximum area for the triangulation \n"
                               << "-d          : enable display \n"
+                              << "-D          : set conforming delaunary triangulation \n"
                               << "-f filepath : set the map path \n"
                               << "-m          : add the middle points to the map \n"
                               << "-s          : set the start point \n"
@@ -123,7 +124,8 @@ int main(int argc, char** argv)
     // call the triangle
     triangleCommand triangle(TrianglePath);
 
-    triangle.setParameter("a", commandInput.areaSet);
+    // triangle.setParameter("a", commandInput.areaSet);
+    triangle.setMaxTriangleArea(commandInput.areaSet);
 
     triangle.call(commandInput.MapPath + "/" + commandInput.MapName +".poly");
 

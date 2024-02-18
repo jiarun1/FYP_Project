@@ -28,8 +28,12 @@ public:
     void setParameter(std::string parameter_marker, double value);
     void setParameter(std::string parameter_marker, std::string value);
 
-    void setMinTriangleArea(float area);
+    void deleteParameter(std::string parameter_marker);
+
+    void setMaxTriangleArea(float area);
     void setMinTriangleAngle(float angle);
+    /// @brief set CDT
+    void setConformingDelaunaryTriangle();
 
 
 private:
