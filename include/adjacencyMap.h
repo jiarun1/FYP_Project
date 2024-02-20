@@ -44,6 +44,11 @@ public:
     */
     void addMiddlePoints();
 
+    /**
+     * @brief used to add the middle(centriod) point of the triangle
+    */
+    void addMiddlePoints_triangle();
+
 
     /**
      * @brief add the fermat point to all the edges

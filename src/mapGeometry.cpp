@@ -168,7 +168,7 @@ point_c* segment_c::getAnotherNode(point_c* current_node)
 // CLASS: triangle c
 //--------------------------------------------------------------
 triangle_c::triangle_c(point_c* node_1, point_c* node_2, point_c* node_3):
-    fermatPoint(nullptr)
+    fermatPoint(nullptr), middlePoint(nullptr)
 {
     nodes[0] = node_1;
     nodes[1] = node_2;
@@ -267,6 +267,16 @@ ACCURACY triangle_c::getArea()
 }
 
 
+/// This algorithm is used to calculate the tc used to calculate the Fermat point
+ACCURACY triangle_c::tc_Fermat(ACCURACY area, ACCURACY s, ACCURACY t, ACCURACY u)
+{
+    /// sqrt(3) use 1.73205
+    ACCURACY m = 4*area + SQRT_3*(s*s + t*t - u*u);
+    ACCURACY n = 4*area + SQRT_3*(s*s - t*t + u*u);
+    ACCURACY v = 8*area*(12*area + SQRT_3*(s*s + t*t + u*u));
+    return (m*n)/v;
+}
+
 point_c* triangle_c::getFermatPoint()
 {
     if(fermatPoint != nullptr){
@@ -320,12 +330,17 @@ point_c* triangle_c::getFermatPoint()
 }
 
 
-
-ACCURACY triangle_c::tc_Fermat(ACCURACY area, ACCURACY s, ACCURACY t, ACCURACY u)
+point_c* triangle_c::getMiddlePoint()
 {
-    /// sqrt(3) use 1.73205
-    ACCURACY m = 4*area + SQRT_3*(s*s + t*t - u*u);
-    ACCURACY n = 4*area + SQRT_3*(s*s - t*t + u*u);
-    ACCURACY v = 8*area*(12*area + SQRT_3*(s*s + t*t + u*u));
-    return (m*n)/v;
+    if(middlePoint != nullptr)
+    {
+        return middlePoint;
+    }
+
+    ACCURACY x_middle = (nodes[0]->x + nodes[1]->x + nodes[2]->x)/3;
+    ACCURACY y_middle = (nodes[0]->y + nodes[1]->y + nodes[2]->y)/3;
+
+    middlePoint = new point_c(x_middle, y_middle, 0, point_c::middle_point);
+
+    return middlePoint;
 }

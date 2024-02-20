@@ -68,25 +68,38 @@ set_3_defaultColor = ['#b49e89', '#47254b']
 plot.rc('font',family='Arial')
 #plot.ion()
 plot.figure("Mapping Plot",figsize=(21/2.54,9/2.54),dpi=200)
-# Data Set 1
-plot.scatter(data_1_x,data_1_y, label = data_set_1_version_string + " Test Result", s = 3, color = set_1_defaultColor[0])
-plot.plot(data_1_x, data_1_fitResult, label = data_set_1_version_string + " Curve Fitted Result",color = set_1_defaultColor[1])
+
+# # Data Set 1
+# plot.scatter(data_1_x,data_1_y, label = data_set_1_version_string + " Test Result", s = 3, color = set_1_defaultColor[0])
+# plot.plot(data_1_x, data_1_fitResult, label = data_set_1_version_string + " Curve Fitted Result",color = set_1_defaultColor[1])
+
+# # Data Set 2
+# plot.scatter(data_2_x,data_2_y, label = data_set_2_version_string + " Test Result", s = 3, color = set_2_defaultColor[0])
+# plot.plot(data_2_x, data_2_fitResult, label = data_set_2_version_string + " Curve Fitted Result",color = set_2_defaultColor[1])
+
+# # Data Set 3
+# plot.scatter(data_3_x,data_3_y, label = data_set_3_version_string + " Test Result", s = 3, color = set_3_defaultColor[0])
+# plot.plot(data_3_x, data_3_fitResult, label = data_set_3_version_string + " Curve Fitted Result",color = set_3_defaultColor[1])
+# # Data Set 1
+plot.scatter(data_1_x,data_1_y, label = data_set_1_version_string, s = 3, color = set_1_defaultColor[0])
+plot.plot(data_1_x, data_1_fitResult,color = set_1_defaultColor[1])
 
 # Data Set 2
-plot.scatter(data_2_x,data_2_y, label = data_set_2_version_string + " Test Result", s = 3, color = set_2_defaultColor[0])
-plot.plot(data_2_x, data_2_fitResult, label = data_set_2_version_string + " Curve Fitted Result",color = set_2_defaultColor[1])
+plot.scatter(data_2_x,data_2_y, label = data_set_2_version_string , s = 3, color = set_2_defaultColor[0])
+plot.plot(data_2_x, data_2_fitResult,color = set_2_defaultColor[1])
 
 # Data Set 3
-plot.scatter(data_3_x,data_3_y, label = data_set_3_version_string + " Test Result", s = 3, color = set_3_defaultColor[0])
-plot.plot(data_3_x, data_3_fitResult, label = data_set_3_version_string + " Curve Fitted Result",color = set_3_defaultColor[1])
+plot.scatter(data_3_x,data_3_y, label = data_set_3_version_string, s = 3, color = set_3_defaultColor[0])
+plot.plot(data_3_x, data_3_fitResult,color = set_3_defaultColor[1])
 
-plot.title('Point Number Vs Shortest Path Execution Time',size=11)
-plot.legend(prop={'size': 10})
-plot.xlabel('Point Number',size=11)
-plot.ylabel('Cost time ($ \mu s $)',size=11)
+plot.title('Point Number Vs Shortest Path Execution Time',fontsize=10)
+plot.legend(fontsize = 10)
+plot.xlabel('Point Number',fontsize=10)
+plot.ylabel('Cost time ($ \mu s $)',fontsize=10)
 plot.grid()
 plot.xlim([0,3e4])
 plot.ylim([0,5e6])
+plot.tight_layout()
 
 #################### PLOT IN LOGLOG
 data_1_log_x = np.log10(data_1_x)

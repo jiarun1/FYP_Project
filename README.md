@@ -5,6 +5,9 @@ My undergraduate project
 1. This version of the code would not be able to input polygon that is not triangle anymore
 
 ## Version Selection
+### V4.3
+1. use the middle point (centroid) to improve accuracy
+
 ### V4.2
 1. use middle point to improve accuracy (connect middle point with correspond nodes)
 

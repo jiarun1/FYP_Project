@@ -138,7 +138,10 @@ public:
     point_c* nodes[3];
     segment_c* connections[3];
 
+    /// some special points in the triangle
+
     point_c* fermatPoint;
+    point_c* middlePoint; /// or the centroid of the triangel
 public:
     triangle_c(point_c* node_1, point_c* node_2, point_c* node_3);
     ~triangle_c();
@@ -177,6 +180,10 @@ public:
     /// @return the address of the fermat point
     /// @retval nullptr: the fermat point does not exist
     point_c* getFermatPoint();
+
+    /// @brief Used to get the middle(centroid) point of the triangle
+    /// @return the address of the middle point
+    point_c* getMiddlePoint();
 
 
 private:

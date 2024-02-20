@@ -139,7 +139,7 @@ int main(int argc, char** argv)
 
     // triangle.setParameter("a", commandInput.areaSet);
     triangle.setMaxTriangleArea(commandInput.areaSet);
-    triangle.setConformingDelaunaryTriangle()
+    triangle.setConformingDelaunaryTriangle(commandInput.enableCDT);
 
     triangle.call(commandInput.MapPath + "/" + commandInput.MapName +".poly");
 
