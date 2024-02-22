@@ -43,7 +43,8 @@ public:
     typedef enum{
         normal_point = 0,
         middle_point = 1,
-        fermat_point = 2
+        fermat_point = 2,
+        circumcenter = 3
     }proporities_e;
 
     proporities_e proporities;
@@ -142,6 +143,8 @@ public:
 
     point_c* fermatPoint;
     point_c* middlePoint; /// or the centroid of the triangel
+    point_c* circumCenter;
+
 public:
     triangle_c(point_c* node_1, point_c* node_2, point_c* node_3);
     ~triangle_c();
@@ -179,11 +182,17 @@ public:
     /// @brief Used to get the fermat point of the triangle
     /// @return the address of the fermat point
     /// @retval nullptr: the fermat point does not exist
+    /// @note no angle in the triangle is larger than 120 degree
     point_c* getFermatPoint();
 
     /// @brief Used to get the middle(centroid) point of the triangle
     /// @return the address of the middle point
     point_c* getMiddlePoint();
+
+    /// @brief Used to get the circumcenter point of the triangle
+    /// @return the address of the circumcenter
+    /// @note no angle in the triangle is larger than 90 degree
+    point_c* getCircumCenter();
 
 
 private:
@@ -191,6 +200,10 @@ private:
     /// @brief This algorithm is used to calculate the tc used to calculate the Fermat point
     /// @return tc
     ACCURACY tc_Fermat(ACCURACY area, ACCURACY s, ACCURACY t, ACCURACY u);
+
+    /// @brief calculate the cos value of the maximum angle
+    /// @return the cos value of the maximum value for the triangle
+    ACCURACY maximumAngleCos();
 
 
 

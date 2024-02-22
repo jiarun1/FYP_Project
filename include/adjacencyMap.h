@@ -55,6 +55,11 @@ public:
     */
     void addFermatPoints();
 
+    /**
+     * @brief add the circumcenter to all the edges
+    */
+    void addCircumcenter();
+
 
     /** @} */ // end of accuracy improvement functions
 

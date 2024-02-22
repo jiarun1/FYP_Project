@@ -41,6 +41,9 @@ public:
     /// @brief decide if added the fermat points to the map
     bool fermatPoint;
 
+    /// @brief add the circumcenter to the map
+    bool circumcenter; 
+
 
     /// settings for the output data
     /// @brief decide if the software need to use python for display
@@ -53,11 +56,11 @@ public:
         MapPath(DefaultMapPath),MapName(DefaultMapName),
         startPoint(START_POINT),endPoint(END_POINT),
         areaSet(DefaultAreaSet),enableCDT(false),
-        middlePoint(false),fermatPoint(false),
+        middlePoint(false),fermatPoint(false),circumcenter(false),
         display(false)
     {
         int command;
-        const char *optstring = "ha:Ddf:ms:e:F"; 
+        const char *optstring = "ha:Ddf:ms:e:FC"; 
         std::string parameter_string;
         while ((command = getopt(argc, argv, optstring)) != -1) {
             switch (command) {
@@ -71,6 +74,7 @@ public:
                               << "-f filepath : set the map path \n"
                               << "-m          : add the middle points to the map \n"
                               << "-F          : add the fermat points to the map \n"
+                              << "-C          : (upper letter) add the circumcenter \n"
                               << "-s          : set the start point \n"
                               << "-e          : set the end point \n"
                               << std::endl;
@@ -95,6 +99,9 @@ public:
                     break;
                 case 'F':
                     fermatPoint = true;
+                    break;
+                case 'C':
+                    circumcenter = true;
                     break;
                 case 's':
                     parameter_string = std::string(optarg);
@@ -155,6 +162,12 @@ int main(int argc, char** argv)
     {
         std::cout << "add middle points" << std::endl;
         map.addMiddlePoints();
+    }
+
+    if(commandInput.circumcenter == true)
+    {
+        std::cout << "add circumcenter" << std::endl;
+        map.addCircumcenter();
     }
 
     if(commandInput.fermatPoint == true)

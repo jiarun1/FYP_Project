@@ -20,6 +20,7 @@ class pointColour(Enum):
     SHORTEST_POINT = '#FFA500'
     MIDDLE_POINT = '#6495ED'
     FERMAT_POINT = '#00F000'
+    CIRCUMCENTER = '#6495ED'
 
 class lineColour(Enum):
     NORMAL_Line = "#C0C0C0"
@@ -218,12 +219,16 @@ def main(polyPath):
     # plot vertices
     for i in range(len(vertices)):
         # print(vertices[i])
+    
         if(vertices[i][verticleParam_e.PROPORITIES.value][verticleProporityParam_e.POINT_TYPE.value] == 1):
+            # display the middle point
             plt.plot(vertices[i][verticleParam_e.COORDINATE.value][0], vertices[i][verticleParam_e.COORDINATE.value][1],'o', color = pointColour.MIDDLE_POINT.value, markersize='3')
-        # elif(vertices[i][verticleParam_e.PROPORITIES.value][verticleProporityParam_e.IS_PATH.value] == 1):
-        #     plt.plot(vertices[i][verticleParam_e.COORDINATE.value][0], vertices[i][verticleParam_e.COORDINATE.value][1],'o', color = pointAndConnectionColour.SHORTEST_POINT.value, markersize='3')
         elif(vertices[i][verticleParam_e.PROPORITIES.value][verticleProporityParam_e.POINT_TYPE.value] == 2):
+            # display the fermat point
             plt.plot(vertices[i][verticleParam_e.COORDINATE.value][0], vertices[i][verticleParam_e.COORDINATE.value][1],'o', color = pointColour.FERMAT_POINT.value, markersize='3')
+        elif(vertices[i][verticleParam_e.PROPORITIES.value][verticleProporityParam_e.POINT_TYPE.value] == 3):
+            # display the circumcenter point
+            plt.plot(vertices[i][verticleParam_e.COORDINATE.value][0], vertices[i][verticleParam_e.COORDINATE.value][1],'o', color = pointColour.CIRCUMCENTER.value, markersize='3')
         else:
             plt.plot(vertices[i][verticleParam_e.COORDINATE.value][0], vertices[i][verticleParam_e.COORDINATE.value][1],'o', color = pointColour.NORMAL_POINT.value, markersize='3')
 

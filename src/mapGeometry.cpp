@@ -277,13 +277,8 @@ ACCURACY triangle_c::tc_Fermat(ACCURACY area, ACCURACY s, ACCURACY t, ACCURACY u
     return (m*n)/v;
 }
 
-point_c* triangle_c::getFermatPoint()
+ACCURACY triangle_c::maximumAngleCos()
 {
-    if(fermatPoint != nullptr){
-        return fermatPoint;
-    }
-
-    // find the maximum border
     ACCURACY edges[3]; /// made edges[0] be the maxmimum edge in the triangle
 
     edges[0] = connections[0]->distance; // initialize the maximum edge
@@ -298,13 +293,48 @@ point_c* triangle_c::getFermatPoint()
         }
     }
 
+    ACCURACY maximum_angle_cos = (edges[1]*edges[1] + edges[2]*edges[2] - edges[0]*edges[0])/(2*edges[1]*edges[2]);
+
+    return maximum_angle_cos;
+}
+
+point_c* triangle_c::getFermatPoint()
+{
+    if(fermatPoint != nullptr){
+        return fermatPoint;
+    }
+
+    // // find the maximum border
+    // ACCURACY edges[3]; /// made edges[0] be the maxmimum edge in the triangle
+
+    // edges[0] = connections[0]->distance; // initialize the maximum edge
+    // for(int i = 1; i < 3; i++)
+    // {
+    //     if(connections[i]->distance > edges[0])
+    //     {
+    //         edges[i] = edges[0];
+    //         edges[0] = connections[i]->distance;
+    //     } else {
+    //         edges[i] = connections[i]->distance;
+    //     }
+    // }
+
+    // // decide if the fermat point is exist or not (has angle >= 120)
+    // // use cos(C) = (a^2+b^2-c^2)/(2ab)
+    // if( (- 0.5) > (edges[1]*edges[1] + edges[2]*edges[2] - edges[0]*edges[0])/(2*edges[1]*edges[2]))
+    // {
+    //     // std::cout << "Do not has fermat point" << std::endl;
+    //     return nullptr;
+    // }
+
     // decide if the fermat point is exist or not (has angle >= 120)
     // use cos(C) = (a^2+b^2-c^2)/(2ab)
-    if( (- 0.5) > (edges[1]*edges[1] + edges[2]*edges[2] - edges[0]*edges[0])/(2*edges[1]*edges[2]))
+    if( (- 0.5) > maximumAngleCos())
     {
-        // std::cout << "Do not has fermat point" << std::endl;
+        std::cout << "Do not has fermat point" << std::endl;
         return nullptr;
     }
+
     
     // calculate the fermat point
     ACCURACY area = getArea();
@@ -343,4 +373,38 @@ point_c* triangle_c::getMiddlePoint()
     middlePoint = new point_c(x_middle, y_middle, 0, point_c::middle_point);
 
     return middlePoint;
+}
+
+point_c* triangle_c::getCircumCenter()
+{
+    if(circumCenter != nullptr)
+    {
+        return circumCenter;
+    }
+    // decide if the decide if the circumcenter is inside the triangle or not
+    // use cos(90) = 0 = (a^2+b^2-c^2)/(2ab)
+    if( (0) > maximumAngleCos())
+    {
+        std::cout << "circumcenter not inside triangle" << std::endl;
+        return nullptr;
+    }
+
+
+    ACCURACY x1 = nodes[0]->x;
+    ACCURACY x2 = nodes[1]->x;
+    ACCURACY x3 = nodes[2]->x;
+    ACCURACY y1 = nodes[0]->y;
+    ACCURACY y2 = nodes[1]->y;
+    ACCURACY y3 = nodes[2]->y;
+
+    ACCURACY x_circ = (  x1*x1*y2 - x1*x1*y3 - x2*x2*y1 + x2*x2*y3 + x3*x3*y1 - x3*x3*y2 + y1*y1*y2 - y1*y1*y3 - y1*y2*y2 + y1*y3*y3 + y2*y2*y3 - y2*y3*y3)
+                            /(2*(x1*y2 - x2*y1 - x1*y3 + x3*y1 + x2*y3 - x3*y2));
+    ACCURACY y_circ = (- x1*x1*x2 + x1*x1*x3 + x1*x2*x2 - x1*x3*x3 + x1*y2*y2 - x1*y3*y3 - x2*x2*x3 + x2*x3*x3 - x2*y1*y1 + x2*y3*y3 + x3*y1*y1 - x3*y2*y2)
+                            /(2*(x1*y2 - x2*y1 - x1*y3 + x3*y1 + x2*y3 - x3*y2));
+
+
+    circumCenter = new point_c(x_circ, y_circ, 0, point_c::circumcenter);
+
+    return circumCenter;
+
 }
