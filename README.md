@@ -7,6 +7,7 @@ My undergraduate project
 ## Version Selection
 ### V4.3
 1. use the middle point (centroid) to improve accuracy
+2. tried the circumcenter to improve accuracy 
 
 ### V4.2
 1. use middle point to improve accuracy (connect middle point with correspond nodes)
