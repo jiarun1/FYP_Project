@@ -168,7 +168,7 @@ point_c* segment_c::getAnotherNode(point_c* current_node)
 // CLASS: triangle c
 //--------------------------------------------------------------
 triangle_c::triangle_c(point_c* node_1, point_c* node_2, point_c* node_3):
-    fermatPoint(nullptr), middlePoint(nullptr), circumCenter(nullptr), orthoCenter(nullptr)
+    fermatPoint(nullptr), middlePoint(nullptr), circumCenter(nullptr), orthoCenter(nullptr),inCenter(nullptr)
 {
     nodes[0] = node_1;
     nodes[1] = node_2;
@@ -440,5 +440,29 @@ point_c* triangle_c::getOrthoCenter()
     orthoCenter = new point_c(x_ortho, y_ortho, 0, point_c::orthocenter);
 
     return orthoCenter;
+
+}
+
+
+point_c* triangle_c::getInCenter()
+{
+    if(inCenter != nullptr)
+    {
+        return inCenter;
+    }
+
+    // the length of each segments for the triangle
+    ACCURACY a = connections[0]->distance, b = connections[1]->distance, c = connections[2]->distance;
+
+    // the cooresponding nodes for the segments
+    point_c* A = getAnotherNode(connections[0]),* B = getAnotherNode(connections[1]),* C = getAnotherNode(connections[2]);
+
+
+    ACCURACY x = (a*A->x + b*B->x + c*C->x) / (a + b + c);
+    ACCURACY y = (a*A->y + b*B->y + c*C->y) / (a + b + c);
+
+    inCenter = new point_c(x, y, 0, point_c::incenter);
+
+    return inCenter;
 
 }

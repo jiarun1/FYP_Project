@@ -48,6 +48,13 @@ public:
     /// @brief decide if added the fermat points to the map
     bool circumcenter;
 
+    /// @brief add the orthocenter to the map
+    bool orthocenter; 
+
+    /// @brief add the incenter to the map
+    bool incenter; 
+
+
 
     /// settings for the output data
     /// @brief decide if the software need to use python for display
@@ -62,11 +69,11 @@ public:
         MapPath(DefaultMapPath),MapName(DefaultMapName),
         startPoint(START_POINT),endPoint(END_POINT),
         areaSet(DefaultAreaSet),
-        middlePoint(false),fermatPoint(false),circumcenter(false),
+        middlePoint(false),fermatPoint(false),circumcenter(false),orthocenter(false),incenter(false),
         display(false)
     {
         int command;
-        const char *optstring = "hf:ms:e:V:FC"; 
+        const char *optstring = "hf:s:e:V:MFCOI"; 
         std::string parameter_string;
         while ((command = getopt(argc, argv, optstring)) != -1) {
             switch (command) {
@@ -75,9 +82,11 @@ public:
                               << "Options and arguments:\n"
                               << "-h          : help\n"
                               << "-f filepath : set the map path \n"
-                              << "-m          : add the middle points to the map \n"
-                              << "-F          : add the fermat points to the map \n"
-                              << "-C          : add the circumcenter to the map \n"
+                              << "-M          : (upper letter) add the middle points to the map \n"
+                              << "-F          : (upper letter) add the fermat points to the map \n"
+                              << "-C          : (upper letter) add the circumcenter \n"
+                              << "-O          : (upper letter) add the orthocenter \n"
+                              << "-I          : (upper letter) add the incenter \n"
                               << "-s          : set the start point \n"
                               << "-e          : set the end point \n"
                               << "-V          : version number"
@@ -87,15 +96,6 @@ public:
                 case 'f':
                     MapPath = std::string(dirname(optarg));
                     MapName = std::string(basename(optarg));
-                    break;
-                case 'F':
-                    fermatPoint = true;
-                    break;
-                case 'C':
-                    circumcenter = true;
-                    break;
-                case 'm':
-                    middlePoint = true;
                     break;
                 case 's':
                     parameter_string = std::string(optarg);
@@ -111,6 +111,22 @@ public:
                 case '?':
                     printf("error optopt: %c\n", optopt);
                     printf("error opterr: %d\n", opterr);
+                    break;
+                // extra points
+                case 'M':
+                    middlePoint = true;
+                    break;
+                case 'F':
+                    fermatPoint = true;
+                    break;
+                case 'C':
+                    circumcenter = true;
+                    break;
+                case 'O':
+                    orthocenter = true;
+                    break;
+                case 'I':
+                    incenter = true;
                     break;
             }
         }
@@ -268,6 +284,16 @@ int main(int argc, char** argv)
         if(commandInput.circumcenter == true)
         {
             map.addCircumcenter();
+        }
+
+        if(commandInput.orthocenter == true)
+        {
+            map.addOrthocenter();
+        }
+
+        if(commandInput.incenter == true)
+        {
+            map.addIncenter();
         }
 
 

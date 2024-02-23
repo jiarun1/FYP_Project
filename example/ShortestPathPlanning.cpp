@@ -47,6 +47,8 @@ public:
     /// @brief add the orthocenter to the map
     bool orthocenter; 
 
+    /// @brief add the incenter to the map
+    bool incenter; 
 
     /// settings for the output data
     /// @brief decide if the software need to use python for display
@@ -59,11 +61,11 @@ public:
         MapPath(DefaultMapPath),MapName(DefaultMapName),
         startPoint(START_POINT),endPoint(END_POINT),
         areaSet(DefaultAreaSet),enableCDT(false),
-        middlePoint(false),fermatPoint(false),circumcenter(false),orthocenter(false),
+        middlePoint(false),fermatPoint(false),circumcenter(false),orthocenter(false),incenter(false),
         display(false)
     {
         int command;
-        const char *optstring = "ha:Ddf:s:e:MFCO"; 
+        const char *optstring = "ha:Ddf:s:e:MFCOI"; 
         std::string parameter_string;
         while ((command = getopt(argc, argv, optstring)) != -1) {
             switch (command) {
@@ -78,7 +80,8 @@ public:
                               << "-M          : (upper letter) add the middle points to the map \n"
                               << "-F          : (upper letter) add the fermat points to the map \n"
                               << "-C          : (upper letter) add the circumcenter \n"
-                              << "-O          : (upper letter) add the Orthocenter \n"
+                              << "-O          : (upper letter) add the orthocenter \n"
+                              << "-I          : (upper letter) add the incenter \n"
                               << "-s          : set the start point \n"
                               << "-e          : set the end point \n"
                               << "\n\n\n"
@@ -113,6 +116,9 @@ public:
                     break;
                 case 'O':
                     orthocenter = true;
+                    break;
+                case 'I':
+                    incenter = true;
                     break;
                 case 's':
                     parameter_string = std::string(optarg);
@@ -191,6 +197,12 @@ int main(int argc, char** argv)
     {
         std::cout << "add orthocenter" << std::endl;
         map.addOrthocenter();
+    }
+
+    if(commandInput.incenter == true)
+    {
+        std::cout << "add incenter" << std::endl;
+        map.addIncenter();
     }
 
 

@@ -22,6 +22,7 @@ class pointColour(Enum):
     FERMAT_POINT = '#00F000'
     CIRCUMCENTER = '#6495ED'
     ORTHOCENTER  = '#6495ED'
+    INCENTER     = '#6495ED'
 
 class lineColour(Enum):
     NORMAL_Line = "#C0C0C0"
@@ -233,6 +234,9 @@ def main(polyPath):
         elif(vertices[i][verticleParam_e.PROPORITIES.value][verticleProporityParam_e.POINT_TYPE.value] == 4):
             # display the orthocenter point
             plt.plot(vertices[i][verticleParam_e.COORDINATE.value][0], vertices[i][verticleParam_e.COORDINATE.value][1],'o', color = pointColour.ORTHOCENTER.value, markersize='3')
+        elif(vertices[i][verticleParam_e.PROPORITIES.value][verticleProporityParam_e.POINT_TYPE.value] == 5):
+            # display the orthocenter point
+            plt.plot(vertices[i][verticleParam_e.COORDINATE.value][0], vertices[i][verticleParam_e.COORDINATE.value][1],'o', color = pointColour.INCENTER.value, markersize='3')
         else:
             plt.plot(vertices[i][verticleParam_e.COORDINATE.value][0], vertices[i][verticleParam_e.COORDINATE.value][1],'o', color = pointColour.NORMAL_POINT.value, markersize='3')
 

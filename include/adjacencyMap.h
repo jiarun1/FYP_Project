@@ -65,6 +65,11 @@ public:
     */
     void addOrthocenter();
 
+    /**
+     * @brief add the incenter to all the triangles
+    */
+    void addIncenter();
+
 
 
     /** @} */ // end of accuracy improvement functions

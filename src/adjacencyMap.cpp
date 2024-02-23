@@ -570,6 +570,80 @@ void adjacencyMap::addOrthocenter()
 }
 
 
+void adjacencyMap::addIncenter()
+{
+    
+    /// get the fermat point for all the triangles
+    for(int i = 0; i < triangles.size(); i++)
+    {
+        // get the fermat point for all the triangles
+        auto incenter_new = triangles[i]->getInCenter();
+
+        // if the fermat point is not exist, just ignore the triangle
+        if(incenter_new == nullptr)
+        {
+            continue;   
+        }
+
+        incenter_new->num = points.size() + 1;
+        points.push_back(incenter_new);
+
+        // connected fermat point with the vertex
+        for(int j = 0; j < 3; j++)
+        {
+            auto connection_new = triangles[i]->nodes[j]->addConnection(incenter_new);
+            connections.push_back(connection_new);
+        }
+    }
+
+    /// connected adjacent fermat point
+    for(int i = 0; i < triangles.size(); i++)
+    {
+        auto current_incenter = triangles[i]->getInCenter();
+
+        // if the current triangle doesnot contain fermat point
+        if(current_incenter == nullptr)
+        {
+            continue;
+        }
+
+        for(int j = 0 ; j < 3; j++)
+        {
+            auto adjacent_triangles = triangles[i]->connections[j]->triangles;
+
+            // the segment are edge of only 1 triangle
+            if(adjacent_triangles.size() == 1)
+            {
+                continue;
+            }
+
+            // search all the adjacent triangles
+            for(int k = 0; k < adjacent_triangles.size(); k++)
+            {
+                // ignore the current triangle
+                if(adjacent_triangles.at(k) == triangles[i]){
+                    continue;
+                }
+
+                // if the fermat point is not exist for the other triangle
+                if(adjacent_triangles.at(k)->getInCenter() == nullptr)
+                {
+                    continue;
+                }
+
+                auto new_connection = adjacent_triangles.at(k)->getInCenter()->addConnection(current_incenter);
+
+                if(new_connection == nullptr)
+                {
+                    continue;
+                }
+
+                connections.push_back(new_connection);
+            }
+        }
+    }
+}
+
 
 
 

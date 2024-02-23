@@ -9,4 +9,13 @@
 6. V4_2_Code_Test.csv: use the middle point of the edges (connected middle point with corresponding vertexs)
 7. V4_3_Code_Test.csv: add the fermat point to the triangle
 8. V4_4_Code_Test.csv: add the middle point(centriod point) to the triangle
-9. V4_5_Code_Test.csv: add the circumcenter to the triangle
+   - Command Code
+     ```
+     ./PerformanceAnalysis -f "../tests/squareMapTest/squareMapTest.poly" -M -V V4_4
+     ```
+9.  V4_5_Code_Test.csv: add the circumcenter to the triangle
+   - Command Code
+     ```
+     ./PerformanceAnalysis -f ../tests/squareMapTest/squareMapTest.poly -V V4_5 -C
+     ```
+

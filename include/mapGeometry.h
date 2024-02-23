@@ -46,6 +46,7 @@ public:
         fermat_point = 2,
         circumcenter = 3,
         orthocenter  = 4,
+        incenter     = 5
     }proporities_e;
 
     proporities_e proporities;
@@ -146,6 +147,7 @@ public:
     point_c* middlePoint; /// or the centroid of the triangel
     point_c* circumCenter;
     point_c* orthoCenter;
+    point_c* inCenter;
 
 public:
     triangle_c(point_c* node_1, point_c* node_2, point_c* node_3);
@@ -204,6 +206,10 @@ public:
     /// @return the address of the orthocenter
     /// @note no angle in the triangle is larger than 90 degree (otherwise the point is out side the triangle)
     point_c* getOrthoCenter();
+
+    /// @brief Used to get the incenter of the triangle
+    /// @return the address of the incenter
+    point_c* getInCenter();
 
 private:
 
