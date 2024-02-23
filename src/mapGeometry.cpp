@@ -168,7 +168,7 @@ point_c* segment_c::getAnotherNode(point_c* current_node)
 // CLASS: triangle c
 //--------------------------------------------------------------
 triangle_c::triangle_c(point_c* node_1, point_c* node_2, point_c* node_3):
-    fermatPoint(nullptr), middlePoint(nullptr), circumCenter(nullptr)
+    fermatPoint(nullptr), middlePoint(nullptr), circumCenter(nullptr), orthoCenter(nullptr)
 {
     nodes[0] = node_1;
     nodes[1] = node_2;
@@ -406,5 +406,39 @@ point_c* triangle_c::getCircumCenter()
     circumCenter = new point_c(x_circ, y_circ, 0, point_c::circumcenter);
 
     return circumCenter;
+
+}
+
+point_c* triangle_c::getOrthoCenter()
+{
+    if(orthoCenter != nullptr)
+    {
+        return orthoCenter;
+    }
+    // decide if the decide if the circumcenter is inside the triangle or not
+    // use cos(90) = 0 = (a^2+b^2-c^2)/(2ab)
+    if( (0) > maximumAngleCos())
+    {
+        std::cout << "Orthocenter not inside triangle" << std::endl;
+        return nullptr;
+    }
+
+
+    ACCURACY x1 = nodes[0]->x;
+    ACCURACY x2 = nodes[1]->x;
+    ACCURACY x3 = nodes[2]->x;
+    ACCURACY y1 = nodes[0]->y;
+    ACCURACY y2 = nodes[1]->y;
+    ACCURACY y3 = nodes[2]->y;
+
+    ACCURACY x_ortho = (y1*y2*y2 - y1*y1*y2 - y1*y3*y3 + y1*y1*y3 + y2*y3*y3 - y2*y2*y3 - x1*x2*y1 + x1*x2*y2 + x1*x3*y1 - x1*x3*y3 - x2*x3*y2 + x2*x3*y3)
+                            /(x1*y2 - x2*y1 - x1*y3 + x3*y1 + x2*y3 - x3*y2);
+    ACCURACY y_ortho = -(x1*x2*x2 - x1*x1*x2 - x1*x3*x3 + x1*x1*x3 + x2*x3*x3 - x2*x2*x3 - x1*y1*y2 + x1*y1*y3 + x2*y1*y2 - x2*y2*y3 - x3*y1*y3 + x3*y2*y3)
+                            /(x1*y2 - x2*y1 - x1*y3 + x3*y1 + x2*y3 - x3*y2);
+
+
+    orthoCenter = new point_c(x_ortho, y_ortho, 0, point_c::orthocenter);
+
+    return orthoCenter;
 
 }

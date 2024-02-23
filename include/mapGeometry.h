@@ -44,7 +44,8 @@ public:
         normal_point = 0,
         middle_point = 1,
         fermat_point = 2,
-        circumcenter = 3
+        circumcenter = 3,
+        orthocenter  = 4,
     }proporities_e;
 
     proporities_e proporities;
@@ -144,6 +145,7 @@ public:
     point_c* fermatPoint;
     point_c* middlePoint; /// or the centroid of the triangel
     point_c* circumCenter;
+    point_c* orthoCenter;
 
 public:
     triangle_c(point_c* node_1, point_c* node_2, point_c* node_3);
@@ -177,6 +179,10 @@ public:
     /// @brief Used to get the area of the triangle
     /// @return the area of the triangle
     ACCURACY getArea();
+    
+    /// @brief calculate the cos value of the maximum angle
+    /// @return the cos value of the maximum value for the triangle
+    ACCURACY maximumAngleCos();
 
 
     /// @brief Used to get the fermat point of the triangle
@@ -189,11 +195,15 @@ public:
     /// @return the address of the middle point
     point_c* getMiddlePoint();
 
-    /// @brief Used to get the circumcenter point of the triangle
+    /// @brief Used to get the circumcenter of the triangle
     /// @return the address of the circumcenter
-    /// @note no angle in the triangle is larger than 90 degree
+    /// @note no angle in the triangle is larger than 90 degree (otherwise the point is out side the triangle)
     point_c* getCircumCenter();
 
+    /// @brief Used to get the orthocenter of the triangle
+    /// @return the address of the orthocenter
+    /// @note no angle in the triangle is larger than 90 degree (otherwise the point is out side the triangle)
+    point_c* getOrthoCenter();
 
 private:
 
@@ -201,9 +211,6 @@ private:
     /// @return tc
     ACCURACY tc_Fermat(ACCURACY area, ACCURACY s, ACCURACY t, ACCURACY u);
 
-    /// @brief calculate the cos value of the maximum angle
-    /// @return the cos value of the maximum value for the triangle
-    ACCURACY maximumAngleCos();
 
 
 

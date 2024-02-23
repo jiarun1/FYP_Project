@@ -18,7 +18,7 @@ static const std::string DefaultMapName = "squareMapTest";
 static const int START_POINT = 2;
 static const int END_POINT = 4;
 
-static const double DefaultAreaSet = 0.1;
+static const double DefaultAreaSet = 3;
 
 class inputParameters
 {
@@ -44,6 +44,9 @@ public:
     /// @brief add the circumcenter to the map
     bool circumcenter; 
 
+    /// @brief add the orthocenter to the map
+    bool orthocenter; 
+
 
     /// settings for the output data
     /// @brief decide if the software need to use python for display
@@ -56,11 +59,11 @@ public:
         MapPath(DefaultMapPath),MapName(DefaultMapName),
         startPoint(START_POINT),endPoint(END_POINT),
         areaSet(DefaultAreaSet),enableCDT(false),
-        middlePoint(false),fermatPoint(false),circumcenter(false),
+        middlePoint(false),fermatPoint(false),circumcenter(false),orthocenter(false),
         display(false)
     {
         int command;
-        const char *optstring = "ha:Ddf:ms:e:FC"; 
+        const char *optstring = "ha:Ddf:s:e:MFCO"; 
         std::string parameter_string;
         while ((command = getopt(argc, argv, optstring)) != -1) {
             switch (command) {
@@ -72,11 +75,16 @@ public:
                               << "-d          : enable display \n"
                               << "-D          : set conforming delaunary triangulation \n"
                               << "-f filepath : set the map path \n"
-                              << "-m          : add the middle points to the map \n"
-                              << "-F          : add the fermat points to the map \n"
+                              << "-M          : (upper letter) add the middle points to the map \n"
+                              << "-F          : (upper letter) add the fermat points to the map \n"
                               << "-C          : (upper letter) add the circumcenter \n"
+                              << "-O          : (upper letter) add the Orthocenter \n"
                               << "-s          : set the start point \n"
                               << "-e          : set the end point \n"
+                              << "\n\n\n"
+                              << "********************************************************************"
+                              << "Example: \n"
+                              << "1.  ./ShortestPathPlanning -f ../tests/squareMapTest/squareMapTest.poly -a 3 -d -O"
                               << std::endl;
                     exit(0);
                     break;
@@ -94,7 +102,7 @@ public:
                     MapPath = std::string(dirname(optarg));
                     MapName = std::string(basename(optarg));
                     break;
-                case 'm':
+                case 'M':
                     middlePoint = true;
                     break;
                 case 'F':
@@ -102,6 +110,9 @@ public:
                     break;
                 case 'C':
                     circumcenter = true;
+                    break;
+                case 'O':
+                    orthocenter = true;
                     break;
                 case 's':
                     parameter_string = std::string(optarg);
@@ -164,16 +175,22 @@ int main(int argc, char** argv)
         map.addMiddlePoints();
     }
 
+    if(commandInput.fermatPoint == true)
+    {
+        std::cout << "add fermat points" << std::endl;
+        map.addFermatPoints();
+    }
+
     if(commandInput.circumcenter == true)
     {
         std::cout << "add circumcenter" << std::endl;
         map.addCircumcenter();
     }
 
-    if(commandInput.fermatPoint == true)
+    if(commandInput.orthocenter == true)
     {
-        std::cout << "add fermat points" << std::endl;
-        map.addFermatPoints();
+        std::cout << "add orthocenter" << std::endl;
+        map.addOrthocenter();
     }
 
 

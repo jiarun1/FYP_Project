@@ -51,14 +51,20 @@ public:
 
 
     /**
-     * @brief add the fermat point to all the edges
+     * @brief add the fermat point to all the triangles
     */
     void addFermatPoints();
 
     /**
-     * @brief add the circumcenter to all the edges
+     * @brief add the circumcenter (inside the triangle) to all the triangles 
     */
     void addCircumcenter();
+
+    /**
+     * @brief add the orthocenter (inside the triangle) to all the triangles
+    */
+    void addOrthocenter();
+
 
 
     /** @} */ // end of accuracy improvement functions
