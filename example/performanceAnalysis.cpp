@@ -45,6 +45,9 @@ public:
     /// @brief decide if added the fermat points to the map
     bool fermatPoint;
 
+    /// @brief decide if added the fermat points to the map
+    bool circumcenter;
+
 
     /// settings for the output data
     /// @brief decide if the software need to use python for display
@@ -59,11 +62,11 @@ public:
         MapPath(DefaultMapPath),MapName(DefaultMapName),
         startPoint(START_POINT),endPoint(END_POINT),
         areaSet(DefaultAreaSet),
-        middlePoint(false),fermatPoint(false),
+        middlePoint(false),fermatPoint(false),circumcenter(false),
         display(false)
     {
         int command;
-        const char *optstring = "hf:ms:e:V:F"; 
+        const char *optstring = "hf:ms:e:V:FC"; 
         std::string parameter_string;
         while ((command = getopt(argc, argv, optstring)) != -1) {
             switch (command) {
@@ -74,6 +77,7 @@ public:
                               << "-f filepath : set the map path \n"
                               << "-m          : add the middle points to the map \n"
                               << "-F          : add the fermat points to the map \n"
+                              << "-C          : add the circumcenter to the map \n"
                               << "-s          : set the start point \n"
                               << "-e          : set the end point \n"
                               << "-V          : version number"
@@ -86,6 +90,9 @@ public:
                     break;
                 case 'F':
                     fermatPoint = true;
+                    break;
+                case 'C':
+                    circumcenter = true;
                     break;
                 case 'm':
                     middlePoint = true;
@@ -256,6 +263,13 @@ int main(int argc, char** argv)
         {
             map.addFermatPoints();
         }
+
+
+        if(commandInput.circumcenter == true)
+        {
+            map.addCircumcenter();
+        }
+
 
         dataImportConvertion_time = std::chrono::high_resolution_clock::now();
         // Dijkstra algorithm start

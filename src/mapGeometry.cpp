@@ -168,7 +168,7 @@ point_c* segment_c::getAnotherNode(point_c* current_node)
 // CLASS: triangle c
 //--------------------------------------------------------------
 triangle_c::triangle_c(point_c* node_1, point_c* node_2, point_c* node_3):
-    fermatPoint(nullptr), middlePoint(nullptr)
+    fermatPoint(nullptr), middlePoint(nullptr), circumCenter(nullptr)
 {
     nodes[0] = node_1;
     nodes[1] = node_2;
