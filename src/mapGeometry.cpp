@@ -331,7 +331,7 @@ point_c* triangle_c::getFermatPoint()
     // use cos(C) = (a^2+b^2-c^2)/(2ab)
     if( (- 0.5) > maximumAngleCos())
     {
-        std::cout << "Do not has fermat point" << std::endl;
+        // std::cout << "Do not has fermat point" << std::endl;
         return nullptr;
     }
 
@@ -385,7 +385,7 @@ point_c* triangle_c::getCircumCenter()
     // use cos(90) = 0 = (a^2+b^2-c^2)/(2ab)
     if( (0) > maximumAngleCos())
     {
-        std::cout << "circumcenter not inside triangle" << std::endl;
+        // std::cout << "circumcenter not inside triangle" << std::endl;
         return nullptr;
     }
 
@@ -419,7 +419,7 @@ point_c* triangle_c::getOrthoCenter()
     // use cos(90) = 0 = (a^2+b^2-c^2)/(2ab)
     if( (0) > maximumAngleCos())
     {
-        std::cout << "Orthocenter not inside triangle" << std::endl;
+        // std::cout << "Orthocenter not inside triangle" << std::endl;
         return nullptr;
     }
 

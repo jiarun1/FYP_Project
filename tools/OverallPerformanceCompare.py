@@ -12,8 +12,8 @@ from tkinter.filedialog import askopenfilename
 # data class
 
 # read the first set of data
-data_set_1 = pd.read_csv("../tests/squareMapTest/V3_1_Code_Test.csv")
-data_set_2 = pd.read_csv("../tests/squareMapTest/V4_5_Code_Test.csv")
+data_set_1 = pd.read_csv("../tests/squareMapTest/V4_3_Code_Test.csv")
+data_set_2 = pd.read_csv("../tests/squareMapTest/V4_6_Code_Test.csv")
 
 data_set_1_version_string = "No extra point"
 data_set_2_version_string = "Circumcenter"
