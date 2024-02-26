@@ -5,6 +5,10 @@ My undergraduate project
 1. This version of the code would not be able to input polygon that is not triangle anymore
 
 ## Version Selection
+### V4-release
+1. tried the incenter to improve the accuracy
+2. analysis and compare the function for all extra points
+
 ### V4.3
 1. use the middle point (centroid) to improve accuracy
 2. tried the circumcenter to improve accuracy 
