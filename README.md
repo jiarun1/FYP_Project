@@ -1,7 +1,20 @@
 # FYP_Project
 My undergraduate project
 
-## Description
+## File Structure
+- bin: the execution files
+- example: the example code for the system (contain the standard output program)
+- src: the source code (for C++)
+- include: the head file (for C++)
+- tests: the example test map with the result for different version
+  - [Detail information for different test result files](tests/testCollections.md)
+- ThirdParty: the thirdparty software used in this project
+- tools: the python script and matlab code for data processing
+  - algorithm: the scipts for verify the result
+  - resultAnalysis: the scripts for data analysis
+
+
+## Note
 1. This version of the code would not be able to input polygon that is not triangle anymore
 
 ## Version Selection
