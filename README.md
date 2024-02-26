@@ -24,10 +24,9 @@ My undergraduate project
 ## Third Party Softwares for this project
 
 ### Triangle
-
+1. used to get the delaunary triangulation
 
 
 ### veeMeshViewer
-
 1. Used to view the poly format image
 2. only for windows platform
