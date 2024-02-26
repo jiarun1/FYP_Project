@@ -178,7 +178,7 @@ int main(int argc, char** argv)
     if(commandInput.middlePoint == true)
     {
         std::cout << "add middle points" << std::endl;
-        map.addMiddlePoints();
+        map.addMiddlePoints_triangle();
     }
 
     if(commandInput.fermatPoint == true)
