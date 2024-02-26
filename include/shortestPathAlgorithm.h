@@ -32,10 +32,21 @@ public:
 
     ACCURACY getPathCost();
 
+    /**
+     * @brief export the shortest path with all the point in the map to .poly file
+     * @param file_path the path of the .poly file 
+    */
     void exportToPolyFile(std::string file_path);
 
+    
     /**
-     * @brief: Display the shprtest path through the cout
+     * @brief export the shortest path with only adjacent triangle to the .poly file
+     * @param file_path the path of the .poly file 
+     */
+    void exportAdjacentToPolyFile(std::string file_path);
+
+    /**
+     * @brief: Display the shortest path through the cout
     */
     friend std::ostream& operator<< (std::ostream & out,const shortestPathAlgorithm &outPath);
 

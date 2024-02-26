@@ -232,6 +232,26 @@ point_c* triangle_c::getAnotherNode(segment_c* connection)
     return getAnotherNode(connection->node1, connection->node2);
 }
 
+segment_c* triangle_c::getAnotherSegments(point_c* node)
+{
+    for(int i = 0; i < 3; i++)
+    {
+        if(node == nodes[i])
+        {
+            for(int j = 0; j < 3; j++)
+            {
+                if((connections[j]->node1 != node) && (connections[j]->node2 != node))
+                {
+                    return connections[j];
+                }
+            }
+        }
+    }
+
+    std::cerr << "triangle_c::getAnotherNode() : the input node is not part of triangle" << std::endl;
+    return NULL;
+}   
+
 
 triangle_c* triangle_c::getAdjacentTriangle(segment_c* connection)
 {

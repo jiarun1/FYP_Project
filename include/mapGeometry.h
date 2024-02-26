@@ -167,6 +167,11 @@ public:
     /// @param connection the edge in the triangle
     /// @return the address of the another node
     point_c* getAnotherNode(segment_c* connection);
+    
+    /// @brief get the cooresponding nodes of the another segements
+    /// @param node the node in the triangle
+    /// @return the address of the cooresponding segments
+    segment_c* getAnotherSegments(point_c* node);
 
     /// @brief used to get the adjacent triangle of the current triangle
     /// @param connection the shared edge with the adjacent triangle

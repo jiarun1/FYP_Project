@@ -29,7 +29,7 @@ class lineColour(Enum):
     FERMAT_Line = '#00F000'
 
 #polyFilePath = "/home/jiarun/FYP_Project/code/tests/squareMapTest/Result.poly"
-defaultFilePath = "/home/jiarun/Desktop/FYP/code/tests/squareMapTest/Result.poly"
+defaultFilePath = "../tests/squareMapTest/Result.poly"
 
 def remove_comments(line):
     comments_start = line.strip().find('#')
