@@ -136,65 +136,88 @@ void shortestPathAlgorithm::exportAdjacentToPolyFile(std::string file_path)
 		return;
 	}
 
+    std::vector<triangle_c*> adjacentTriangles;
     std::vector<point_c*> adjacentPoints;
     std::vector<segment_c*> boundarys; //< every boundary can only be exist in one adjacent triangle
 
-    // put the start point at the index of 1 and destination of 2
+    // let the start and end point become the first and second point in the adjacentPoints list
     adjacentPoints.push_back(cost_map->findPoint(path[0]));
     adjacentPoints.push_back(cost_map->findPoint(path[path_point_num - 1]));
 
-    // doesn't count the start and destination points here
-    for(int i = 1 ; i < path_point_num - 1; i++)
+    // find all the adjacent triangle (not has repeat one)
+    for(int i = 0; i < path_point_num; i++)
     {
         point_c* current_path_point = cost_map->findPoint(path[i]);
         std::vector<triangle_c* > current_triangle_list = current_path_point->triangles;
 
-        for(int triangle_index = 0; triangle_index < current_triangle_list.size(); triangle_index ++)
+        for(int j = 0; j < current_triangle_list.size(); j++)
         {
-            // add the points
-            triangle_c* current_triangle = current_triangle_list.at(triangle_index);
-            for(int point_index = 0; point_index < 3; point_index ++)
-            {
-                // code to add the point in the triangle to the final one
-                point_c* current_adjacent_point = current_triangle->nodes[point_index];
-
-                // find if the point is exist or not (if exist do nothing, if not add to the list)
-                int k = 0;
-                for(k = 0; k < adjacentPoints.size(); k++)
-                {
-                    if(current_adjacent_point == adjacentPoints.at(k))
-                    {
-                        break;
-                    }
-                }
-                if(k >= adjacentPoints.size())
-                {
-                    adjacentPoints.push_back(current_adjacent_point);
-                }
-            }
-
-            /// BUG: when one of the point is boundary it doesnot work
-            // add the segments
-            // search the corresponding segments in the triangle
-            segment_c* possible_boundary = current_triangle->getAnotherSegments(current_path_point);
-
-            // if the segments contain the node of one of the path then neglect it
             int k = 0;
-            for(k = 1; k < path_point_num-1; k++) //< doesn't count the start and destination point
+            for(k = 0; k < adjacentTriangles.size(); k++)
             {
-                if((possible_boundary->node1 == cost_map->findPoint(path[k])) || (possible_boundary->node2 == cost_map->findPoint(path[k])))
+                if(adjacentTriangles[k] == current_triangle_list[j])
                 {
                     break;
                 }
             }
-            if(k >= path_point_num - 1) //< the start and end point is not considered
-            {
-                boundarys.push_back(possible_boundary);
-            }
 
+            if(k >= adjacentTriangles.size())
+            {
+                adjacentTriangles.push_back(current_triangle_list[j]);
+            }
+        }
+    }
+
+    // 
+    for(int i = 0; i < adjacentTriangles.size(); i++)
+    {
+        triangle_c* current_triangle = adjacentTriangles.at(i);
+
+        // add the points
+        for(int point_index = 0; point_index < 3; point_index ++)
+        {
+            // code to add the point in the triangle to the final one
+            point_c* current_adjacent_point = current_triangle->nodes[point_index];
+
+            // find if the point is exist or not (if exist do nothing, if not add to the list)
+            int k = 0;
+            for(k = 0; k < adjacentPoints.size(); k++)
+            {
+                if(current_adjacent_point == adjacentPoints.at(k))
+                {
+                    break;
+                }
+            }
+            if(k >= adjacentPoints.size())
+            {
+                adjacentPoints.push_back(current_adjacent_point);
+            }
         }
 
+        // add the segments
+        for(int segment_index = 0; segment_index < 3; segment_index ++)
+        {
+            segment_c* current_segment = current_triangle->connections[segment_index];
+
+            // only add the segment exist once in the adjacent connections
+            int k = 0, boundary_size_tmp = boundarys.size();
+            for( k = 0; k < boundary_size_tmp; k++)
+            {
+                // note: 1 segment can maximum exist in 2 triangle
+                if(boundarys[k] == current_segment)
+                {
+                    boundarys.erase(boundarys.begin()+k);
+                    k = 0;
+                    break;
+                }
+            }
+            if(k >= boundary_size_tmp)
+            {
+                boundarys.push_back(current_segment);
+            }
+        }
     }
+
 
     /******************************************************/
     // Point Section

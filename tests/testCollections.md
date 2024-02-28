@@ -28,3 +28,8 @@
      ```
      ./PerformanceAnalysis -f ../tests/squareMapTest/squareMapTest.poly -V V4_7 -I
      ```
+12. V5_1_Code_Test.csv: add the second stage to improve the time performance
+    1.  Command Code
+     ```
+     ./multiStageperformanceAnalysis -f ../tests/squareMapTest/squareMapTest.poly -V V5_1
+     ```
