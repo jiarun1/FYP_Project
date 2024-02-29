@@ -22,11 +22,23 @@ print(data_set_1.head)
 
 #########################
 ## Plot:
+title = "Area Set Vs Shortest Path Time"
 # Datas
-data_1_x = data_set_1.loc[:,'Points Num'].values
-data_2_x = data_set_2.loc[:,'Points Num'].values
-data_1_y = data_set_1.loc[:,'Shorest Path Time(us)'].values
-data_2_y = data_set_2.loc[:,'Shorest Path Time(us)'].values
+## plot the x axis as set area for map
+x_axis_label = "Area Set"
+data_1_x = data_set_1.loc[:,'Area Set'].values
+data_2_x = data_set_2.loc[:,'Area Set'].values
+# data_1_x = data_set_1.loc[:,'Points Num'].values
+# data_2_x = data_set_2.loc[:,'Points Num'].values
+
+
+
+y_axis_label = "Cost Time ($\mu s$)"
+# data_1_y = data_set_1.loc[:,'Shorest Path Time(us)'].values
+# data_2_y = data_set_2.loc[:,'Shorest Path Time(us)'].values
+
+data_1_y = data_set_1.loc[:,'Shorest Path Time(us)'].values + data_set_1.loc[:,'Mapping Time(us)'].values + data_set_1.loc[:,'Convertion Time(us)'].values
+data_2_y = data_set_2.loc[:,'Shorest Path Time(us)'].values + data_set_2.loc[:,'Mapping Time(us)'].values + data_set_2.loc[:,'Convertion Time(us)'].values
 
 ######### NORMAL PLOT IN CARTESIAN
 # Data Fitting Perform
@@ -65,10 +77,10 @@ plot.plot(data_1_x, data_1_fitResult, label = data_set_1_version_string + "Curve
 plot.scatter(data_2_x,data_2_y, label = data_set_2_version_string + "Test Result", s = 10, color = set_2_defaultColor[0])
 plot.plot(data_2_x, data_2_fitResult, label = data_set_2_version_string + "Curve Fitted Result",color = set_2_defaultColor[1])
 
-plot.title('Point Number Vs Shortest Path Execution Time',size=11)
+plot.title(title,size=11)
 plot.legend()
-plot.xlabel('Point Number',size=11)
-plot.ylabel('Cost time ($ \mu s $)',size=11)
+plot.xlabel(x_axis_label,size=11)
+plot.ylabel(y_axis_label,size=11)
 plot.grid()
 
 #################### PLOT IN LOGLOG
@@ -108,20 +120,11 @@ plot.plot(data_1_log_x, data_1_log_fitResult, label = data_1_log_fitFunction,col
 plot.scatter(data_2_log_x,data_2_log_y, label= data_set_2_version_string + "Test Result" , s = 10, color = set_2_defaultColor[0])
 plot.plot(data_2_log_x, data_2_log_fitResult, label = data_2_log_fitFunction,color = set_2_defaultColor[1])
 
-plot.title('Point Number Vs Shortest Path Execution Time',size=11)
+plot.title(title,size=11)
 plot.legend()
-plot.xlabel('Point Number (dB)',size=11)
-plot.ylabel('Cost time ($ dB $)',size=11)
+plot.xlabel(x_axis_label,size=11)
+plot.ylabel(y_axis_label,size=11)
 plot.grid()
-
-
-
-
-
-
-
-
-
 
 
 

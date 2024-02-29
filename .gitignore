@@ -6,5 +6,6 @@
 *.*.poly
 Result.poly
 Stage1.poly
+stage1.poly
 
 *.ini
