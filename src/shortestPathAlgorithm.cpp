@@ -13,7 +13,7 @@
 
 shortestPathAlgorithm::shortestPathAlgorithm()
 {
-
+    path_point_num = 0;
 }
 
 

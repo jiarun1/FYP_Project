@@ -24,7 +24,7 @@ public:
     virtual void calculateShortestPath();
     virtual void calculateShortestPath(POINT_NUM_MAX startPoint, POINT_NUM_MAX endPoint);
 
-    void setAdjacencyMap(adjacencyMap* map);
+    virtual void setAdjacencyMap(adjacencyMap* map);
     adjacencyMap* getAdjacencyMap();
 
     PATH_POINT_NUM_MAX* getPath();
