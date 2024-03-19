@@ -249,8 +249,8 @@ int main(int argc, char** argv)
     float angle_minius = 1.0;
     int count_loop = 0;
     float max_area = 20;
-    float min_area = 1e-3;
-    float area_divide = 1.0/100.0+1;
+    float min_area = 3e-3;
+    float area_divide = 1.0/50.0+1;
 
     auto start_time = std::chrono::high_resolution_clock::now();
     auto triangle_time = std::chrono::high_resolution_clock::now();
