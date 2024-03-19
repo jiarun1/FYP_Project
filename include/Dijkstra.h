@@ -13,10 +13,13 @@
 #include "shortestPathAlgorithm.h"
 #include "boost/heap/fibonacci_heap.hpp"
 
+using namespace boost::heap;
+
 class pointInfoContainer
 {
 public:
     POINT_NUM_MAX label;
+    
     fibonacci_heap<pointInfoContainer>::handle_type handle;
     double minDistance;
     pointInfoContainer* prePoint;

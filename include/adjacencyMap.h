@@ -33,6 +33,12 @@ public:
     void readNodes(std::string nodefile);
     void readEles(std::string elefile);
 
+    /// @brief Used to makesure the map has imported successful before the algorithm start
+    /// @return if the map has been imported.
+    ///     @retval true : the import is successful
+    ///     @retval true : the import is unsuccessful
+    bool isMapExist();
+
     /**
      * @defgroup accuracy improvement functions
      * This is a group of function that used to improve the performance of the distance
@@ -100,8 +106,7 @@ protected:
 
 
 private:
-
-
+        
     std::vector<point_c*> points;
     std::vector<segment_c*> connections;
     std::vector<triangle_c*> triangles;   

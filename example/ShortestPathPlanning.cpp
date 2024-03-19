@@ -19,6 +19,7 @@ static const int START_POINT = 2;
 static const int END_POINT = 4;
 
 static const double DefaultAreaSet = 3;
+static const double DefaultAngleSet = 0;
 
 class inputParameters
 {
@@ -31,6 +32,10 @@ public:
     /// Settings for the area mappings
     /// @brief the maximum area set for the triangle
     double areaSet;
+
+    /// Settings for the minimum angle for triangle
+    /// @brief the minimum angle set for the triangle
+    double angleSet;
 
     /// @brief enable the CDT (only the constrain the triangle included)
     bool enableCDT;
@@ -60,12 +65,12 @@ public:
     inputParameters(int argc = 0, char** argv = nullptr):
         MapPath(DefaultMapPath),MapName(DefaultMapName),
         startPoint(START_POINT),endPoint(END_POINT),
-        areaSet(DefaultAreaSet),enableCDT(false),
+        areaSet(DefaultAreaSet),enableCDT(false),angleSet(DefaultAngleSet),
         middlePoint(false),fermatPoint(false),circumcenter(false),orthocenter(false),incenter(false),
         display(false)
     {
         int command;
-        const char *optstring = "ha:Ddf:s:e:MFCOI"; 
+        const char *optstring = "ha:q:Ddf:s:e:MFCOI"; 
         std::string parameter_string;
         while ((command = getopt(argc, argv, optstring)) != -1) {
             switch (command) {
@@ -74,6 +79,7 @@ public:
                               << "Options and arguments:\n"
                               << "-h          : help\n"
                               << "-a area     : maximum area for the triangulation \n"
+                              << "-q          : minimum angle for the triangulation \n"
                               << "-d          : enable display \n"
                               << "-D          : set conforming delaunary triangulation \n"
                               << "-f filepath : set the map path \n"
@@ -84,7 +90,7 @@ public:
                               << "-I          : (upper letter) add the incenter \n"
                               << "-s          : set the start point \n"
                               << "-e          : set the end point \n"
-                              << "\n\n\n"
+                              << "\n"
                               << "********************************************************************"
                               << "Example: \n"
                               << "1.  ./ShortestPathPlanning -f ../tests/squareMapTest/squareMapTest.poly -a 3 -d -O"
@@ -94,6 +100,10 @@ public:
                 case 'a':
                     parameter_string = std::string(optarg);    
                     areaSet = std::stod(parameter_string);
+                    break;
+                case 'q':
+                    parameter_string = std::string(optarg);    
+                    angleSet = std::stod(parameter_string);
                     break;
                 case 'd':
                     display = true;
@@ -139,9 +149,10 @@ public:
     friend std::ostream& operator<< (std::ostream & out,const inputParameters &out_paraneter)
     {
         out << "Parameters Settings List:" << std::endl
-            << "  - maximum area: " << out_paraneter.areaSet << std::endl
-            << "  - display     : " << ((out_paraneter.display)? std::string("true"):std::string("false")) << std::endl
-            << "  - map file    : " << out_paraneter.MapPath + "/" + out_paraneter.MapName << std::endl
+            << "  - maximum area : "  << out_paraneter.areaSet << std::endl
+            << "  - minimum angle: "  << out_paraneter.angleSet << std::endl
+            << "  - display      : "  << ((out_paraneter.display)? std::string("true"):std::string("false")) << std::endl
+            << "  - map file     : "  << out_paraneter.MapPath + "/" + out_paraneter.MapName << std::endl
             << std::endl;
         return out;
     }
@@ -163,6 +174,7 @@ int main(int argc, char** argv)
 
     // triangle.setParameter("a", commandInput.areaSet);
     triangle.setMaxTriangleArea(commandInput.areaSet);
+    triangle.setMinTriangleAngle(commandInput.angleSet);
     triangle.setConformingDelaunaryTriangle(commandInput.enableCDT);
 
     triangle.call(commandInput.MapPath + "/" + commandInput.MapName +".poly");
@@ -234,6 +246,8 @@ int main(int argc, char** argv)
         std::cout << path_planing;
         system((std::string("/bin/python3 ../tools/displayPath.py -f ") + resultFile).c_str());
     }
+
+    // triangle.cleanTmpFiles(commandInput.MapPath + "/" + commandInput.MapName +".poly");
 
     return 0;
 }

@@ -713,6 +713,19 @@ std::vector<point_c*> adjacencyMap::getAllPoints()
     return points;
 }
 
+bool adjacencyMap::isMapExist()
+{
+    if(points.size() == 0)
+    {
+        return false;
+    }
+    if(connections.size() == 0)
+    {
+        return false;
+    }
+    return true;
+}
+
 
 
 

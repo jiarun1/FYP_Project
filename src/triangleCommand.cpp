@@ -12,7 +12,6 @@
 #include "iostream"
 #include "string"
 
-
 triangleCommand::triangleCommand(std::string software_path):
     softwarePath(software_path)
 {
@@ -23,6 +22,36 @@ triangleCommand::triangleCommand(std::string software_path):
 triangleCommand::~triangleCommand()
 {
 
+}
+
+bool triangleCommand::cleanTmpFiles(std::string poly_path, bool verification)
+{
+    auto index_extention = poly_path.find_last_of(".");
+    std::string filePath_Name = poly_path.substr(0, index_extention);
+    std::string node_file = filePath_Name + ".1.node";
+    std::string ele_file = filePath_Name + ".1.ele";
+    std::string poly_file = filePath_Name + ".1.poly";
+
+
+    if(verification == true)
+    {
+        std::cout << "Please verify the following files would be deleted (y for yes)" << std::endl;
+        std::cout << "Node File: " << node_file << std::endl;
+        std::cout << "Ele File : " << ele_file << std::endl;
+        std::cout << "Poly File: " << poly_file << std::endl;
+
+        char input;
+        std::cin >> input;
+        if(input != 'y')
+        {
+            return false;
+        }
+    }
+
+    std::remove(node_file.c_str());
+    std::remove(ele_file.c_str());
+    std::remove(poly_file.c_str());
+    return true;
 }
 
 void triangleCommand::clearParameter()
@@ -134,25 +163,40 @@ void triangleCommand::deleteParameter(std::string parameter_marker)
 void triangleCommand::call(std::string poly_path)
 {
     std::string command = softwarePath + " ";
-    std::string parameter_data;
+    
+    // std::string parameter_data;
+    // parameter_data.clear();
+    // auto parameter_tmp = parameters;
+    // while (parameter_tmp != nullptr)
+    // {
+    //     parameter_data.append(parameter_tmp->marker).append(" ").append(parameter_tmp->value);
 
-    parameter_data.clear();
+    //     if(parameter_tmp->nextParameter==nullptr)
+    //     {
+    //         break;
+    //     }
+    //     parameter_tmp = parameter_tmp->nextParameter;
+    // }
+    
+    // if(parameter_data.size() != 0)
+    // {
+    //     command.append("-").append(parameter_data).append(" ");
+    // }
+
     auto parameter_tmp = parameters;
     while (parameter_tmp != nullptr)
     {
-        parameter_data.append(parameter_tmp->marker).append(parameter_tmp->value);
+        command.append("-").append(parameter_tmp->marker).append(parameter_tmp->value).append(" ");
 
         if(parameter_tmp->nextParameter==nullptr)
         {
             break;
         }
         parameter_tmp = parameter_tmp->nextParameter;
+        
     }
     
-    if(parameter_data.size() != 0)
-    {
-        command.append("-").append(parameter_data).append(" ");
-    }
+
 
     command.append(poly_path);
 
@@ -173,7 +217,12 @@ void triangleCommand::setMaxTriangleArea(float area)
 
 void triangleCommand::setMinTriangleAngle(float angle)
 {
-    
+    if(angle == 0)
+    {
+        // deleteParameter("q");
+        return;
+    }
+    setParameter("q", angle);
 }
 
 

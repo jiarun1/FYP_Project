@@ -185,14 +185,14 @@ void Dijkstra::calculateShortestPathInParallel()
 {
     //TODO: add the code to enable the algorithm run multiple times
 
-    pointInfos[start_point - 1].reachedBy = start_point;
-    pointInfos[end_point - 1].reachedBy = end_point;
+    // pointInfos[start_point - 1].reachedBy = start_point;
+    // pointInfos[end_point - 1].reachedBy = end_point;
     
-    std::thread startThread(findPathFrom, start_point);
-    std::thread endThread(findPathFrom, end_point);
+    // std::thread startThread(findPathFrom, start_point);
+    // std::thread endThread(findPathFrom, end_point);
 
-    startThread.join();
-    endThread.join();
+    // startThread.join();
+    // endThread.join();
 
 
 
