@@ -119,108 +119,112 @@ plot.rc('font',family='Arial')
 
 ##########################################################################################
 # Plot 1 plot the minimum distance without Conforming (3D)
+def plot_1_display():
+    fig = plot.figure("Minimum Distance (No Conforming)",figsize=(10.5/2.54,9/2.54),dpi=200)
+    ax = fig.add_subplot(111,projection='3d')
+    ax.plot_surface(Area_log, Angle, Result_smooth, cmap='viridis', vmin= result_min, vmax= result_max) 
 
-fig = plot.figure("Minimum Distance (No Conforming)",figsize=(10.5/2.54,9/2.54),dpi=200)
-ax = fig.add_subplot(111,projection='3d')
-ax.plot_surface(Area_log, Angle, Result_smooth, cmap='viridis', vmin= result_min, vmax= result_max) 
+    ax.set_xticks(np.log10([1e1, 1e0, 1e-1, 1e-2,1e-3])) 
+    ax.set_xticklabels(['$10^1$', '$10^0$', '$10^{-1}$','$10^{-2}$', '$10^{-3}$']) 
 
-ax.set_xticks(np.log10([1e1, 1e0, 1e-1, 1e-2,1e-3])) 
-ax.set_xticklabels(['$10^1$', '$10^0$', '$10^{-1}$','$10^{-2}$', '$10^{-3}$']) 
-
-ax.set_xlabel('Area Setting ',fontsize=10)
-ax.set_ylabel('Angle Setting',fontsize=10)
-ax.set_zlabel('Minimum Distance (%)',fontsize=10)
-ax.view_init(azim=-130, elev = 20)
-ax.set_zlim([104,108])
+    ax.set_xlabel('Area Setting ',fontsize=10)
+    ax.set_ylabel('Angle Setting',fontsize=10)
+    ax.set_zlabel('Minimum Distance (%)',fontsize=10)
+    ax.view_init(azim=-130, elev = 20)
+    ax.set_zlim([104,108])
 
 
-plot.subplots_adjust(top=0.9, bottom=0.1, left=0.1, right=1, hspace=0.4, wspace=0.4)
+    plot.subplots_adjust(top=0.9, bottom=0.1, left=0.1, right=1, hspace=0.4, wspace=0.4)
 
 
 ##########################################################################################
 # Plot 2 plot the number of point without Conforming (3D)
-fig = plot.figure("Number of Points (No Conforming)",figsize=(10.5/2.54,9/2.54),dpi=200)
-ax = fig.add_subplot(111,projection='3d')
-ax.plot_surface(Area_log, Angle, PointsNum, cmap='viridis', vmin= PointNum_min, vmax= PointNum_max)  
+def plot_2_display():
+    fig = plot.figure("Number of Points (No Conforming)",figsize=(10.5/2.54,9/2.54),dpi=200)
+    ax = fig.add_subplot(111,projection='3d')
+    ax.plot_surface(Area_log, Angle, PointsNum, cmap='viridis', vmin= PointNum_min, vmax= PointNum_max)  
 
-ax.set_xticks(np.log10([1e1, 1e0, 1e-1, 1e-2,1e-3])) 
-ax.set_xticklabels(['$10^1$', '$10^0$', '$10^{-1}$','$10^{-2}$', '$10^{-3}$']) 
+    ax.set_xticks(np.log10([1e1, 1e0, 1e-1, 1e-2,1e-3])) 
+    ax.set_xticklabels(['$10^1$', '$10^0$', '$10^{-1}$','$10^{-2}$', '$10^{-3}$']) 
 
-ax.set_xlabel('Area Setting',fontsize=10)
-ax.set_ylabel('Angle Setting',fontsize=10)
-ax.set_zlabel('Number of Points (dB)',fontsize=10)
+    ax.set_xlabel('Area Setting',fontsize=10)
+    ax.set_ylabel('Angle Setting',fontsize=10)
+    ax.set_zlabel('Number of Points (dB)',fontsize=10)
 
-ax.view_init(azim=50, elev = 20)
-plot.subplots_adjust(top=0.9, bottom=0.1, left=0.1, right=1, hspace=0.4, wspace=0.4)
+    ax.view_init(azim=50, elev = 20)
+    plot.subplots_adjust(top=0.9, bottom=0.1, left=0.1, right=1, hspace=0.4, wspace=0.4)
 ##########################################################################################
 # Plot 3 plot the triangle time without Conforming (3D)
-fig = plot.figure("Triangle Time (No Conforming)",figsize=(10.5/2.54,9/2.54),dpi=200)
-ax = fig.add_subplot(111,projection='3d')
-ax.plot_surface(Area_log, Angle, TriangleTime, cmap='viridis', vmin= TriangleTime_min, vmax= TriangleTime_max) 
+def plot_3_display():
+    fig = plot.figure("Triangle Time (No Conforming)",figsize=(10.5/2.54,9/2.54),dpi=200)
+    ax = fig.add_subplot(111,projection='3d')
+    ax.plot_surface(Area_log, Angle, TriangleTime, cmap='viridis', vmin= TriangleTime_min, vmax= TriangleTime_max) 
 
-ax.set_xticks(np.log10([1e1, 1e0, 1e-1, 1e-2,1e-3])) 
-ax.set_xticklabels(['$10^1$', '$10^0$', '$10^{-1}$','$10^{-2}$', '$10^{-3}$']) 
+    ax.set_xticks(np.log10([1e1, 1e0, 1e-1, 1e-2,1e-3])) 
+    ax.set_xticklabels(['$10^1$', '$10^0$', '$10^{-1}$','$10^{-2}$', '$10^{-3}$']) 
 
-ax.set_xlabel('Area Setting',fontsize=10)
-ax.set_ylabel('Angle Setting',fontsize=10)
-ax.set_zlabel('Triangulation Time(dB$\mu s$)',fontsize=10)
+    ax.set_xlabel('Area Setting',fontsize=10)
+    ax.set_ylabel('Angle Setting',fontsize=10)
+    ax.set_zlabel('Triangulation Time(dB$\mu s$)',fontsize=10)
 
-ax.view_init(azim=50, elev = 20)
-ax.set_zlim([0,900000])
-plot.subplots_adjust(top=0.9, bottom=0.1, left=0.1, right=1, hspace=0.4, wspace=0.4)
+    ax.view_init(azim=50, elev = 20)
+    ax.set_zlim([0,900000])
+    plot.subplots_adjust(top=0.9, bottom=0.1, left=0.1, right=1, hspace=0.4, wspace=0.4)
 
 
 ##########################################################################################
 ################             (With Conforming)
 ##########################################################################################
 # Plot 4 plot the minimum distance with Conforming (3D)
+def plot_4_display():
+    fig = plot.figure("Minimum Distance (With Conforming)",figsize=(10.5/2.54,9/2.54),dpi=200)
+    ax = fig.add_subplot(111,projection='3d')
+    ax.plot_surface(Area_log, Angle, Result_smooth_conforming, cmap='viridis', vmin= result_min, vmax= result_max)
 
-fig = plot.figure("Minimum Distance (With Conforming)",figsize=(10.5/2.54,9/2.54),dpi=200)
-ax = fig.add_subplot(111,projection='3d')
-ax.plot_surface(Area_log, Angle, Result_smooth_conforming, cmap='viridis', vmin= result_min, vmax= result_max)
+    ax.set_xticks(np.log10([1e1, 1e0, 1e-1, 1e-2,1e-3])) 
+    ax.set_xticklabels(['$10^1$', '$10^0$', '$10^{-1}$','$10^{-2}$', '$10^{-3}$']) 
 
-ax.set_xticks(np.log10([1e1, 1e0, 1e-1, 1e-2,1e-3])) 
-ax.set_xticklabels(['$10^1$', '$10^0$', '$10^{-1}$','$10^{-2}$', '$10^{-3}$']) 
-
-ax.set_xlabel('Area Setting',fontsize=10)
-ax.set_ylabel('Angle Setting',fontsize=10)
-ax.set_zlabel('Minimum Distance (%)',fontsize=10)
-ax.view_init(azim=-130, elev = 20)
-ax.set_zlim([104,108])
-plot.subplots_adjust(top=0.9, bottom=0.1, left=0.1, right=1, hspace=0.4, wspace=0.4)
+    ax.set_xlabel('Area Setting',fontsize=10)
+    ax.set_ylabel('Angle Setting',fontsize=10)
+    ax.set_zlabel('Minimum Distance (%)',fontsize=10)
+    ax.view_init(azim=-130, elev = 20)
+    ax.set_zlim([104,108])
+    plot.subplots_adjust(top=0.9, bottom=0.1, left=0.1, right=1, hspace=0.4, wspace=0.4)
 
 
 ##########################################################################################
 # Plot 5 plot the number of point with Conforming (3D)
-fig = plot.figure("Number of Points (With Conforming)",figsize=(10.5/2.54,9/2.54),dpi=200)
-ax = fig.add_subplot(111,projection='3d')
-ax.plot_surface(Area_log, Angle, PointsNum_conforming, cmap='viridis', vmin= PointNum_min, vmax= PointNum_max) 
+def plot_5_display():
+    fig = plot.figure("Number of Points (With Conforming)",figsize=(10.5/2.54,9/2.54),dpi=200)
+    ax = fig.add_subplot(111,projection='3d')
+    ax.plot_surface(Area_log, Angle, PointsNum_conforming, cmap='viridis', vmin= PointNum_min, vmax= PointNum_max) 
 
-ax.set_xticks(np.log10([1e1, 1e0, 1e-1, 1e-2,1e-3])) 
-ax.set_xticklabels(['$10^1$', '$10^0$', '$10^{-1}$','$10^{-2}$', '$10^{-3}$']) 
+    ax.set_xticks(np.log10([1e1, 1e0, 1e-1, 1e-2,1e-3])) 
+    ax.set_xticklabels(['$10^1$', '$10^0$', '$10^{-1}$','$10^{-2}$', '$10^{-3}$']) 
 
-ax.set_xlabel('Area Setting',fontsize=10)
-ax.set_ylabel('Angle Setting',fontsize=10)
-ax.set_zlabel('Number of Points (dB)',fontsize=10)
+    ax.set_xlabel('Area Setting',fontsize=10)
+    ax.set_ylabel('Angle Setting',fontsize=10)
+    ax.set_zlabel('Number of Points (dB)',fontsize=10)
 
-ax.view_init(azim=50, elev = 20)
-plot.subplots_adjust(top=0.9, bottom=0.1, left=0.1, right=1, hspace=0.4, wspace=0.4)
+    ax.view_init(azim=50, elev = 20)
+    plot.subplots_adjust(top=0.9, bottom=0.1, left=0.1, right=1, hspace=0.4, wspace=0.4)
 ##########################################################################################
 # Plot 6 plot the triangle time with Conforming (3D)
-fig = plot.figure("Triangle Time (With Conforming)",figsize=(10.5/2.54,9/2.54),dpi=200)
-ax = fig.add_subplot(111,projection='3d')
-ax.plot_surface(Area_log, Angle, TriangleTime_conforming, cmap='viridis', vmin= TriangleTime_min, vmax= TriangleTime_max) 
+def plot_6_display():
+    fig = plot.figure("Triangle Time (With Conforming)",figsize=(10.5/2.54,9/2.54),dpi=200)
+    ax = fig.add_subplot(111,projection='3d')
+    ax.plot_surface(Area_log, Angle, TriangleTime_conforming, cmap='viridis', vmin= TriangleTime_min, vmax= TriangleTime_max) 
 
-ax.set_xticks(np.log10([1e1, 1e0, 1e-1, 1e-2,1e-3])) 
-ax.set_xticklabels(['$10^1$', '$10^0$', '$10^{-1}$','$10^{-2}$', '$10^{-3}$']) 
+    ax.set_xticks(np.log10([1e1, 1e0, 1e-1, 1e-2,1e-3])) 
+    ax.set_xticklabels(['$10^1$', '$10^0$', '$10^{-1}$','$10^{-2}$', '$10^{-3}$']) 
 
-ax.set_xlabel('Area Setting',fontsize=10)
-ax.set_ylabel('Angle Setting',fontsize=10)
-ax.set_zlabel('Triangulation Time(dB$\mu s$)',fontsize=10)
+    ax.set_xlabel('Area Setting',fontsize=10)
+    ax.set_ylabel('Angle Setting',fontsize=10)
+    ax.set_zlabel('Triangulation Time(dB$\mu s$)',fontsize=10)
 
-ax.view_init(azim=50, elev = 20)
-ax.set_zlim([0,900000])
-plot.subplots_adjust(top=0.9, bottom=0.1, left=0.1, right=1, hspace=0.4, wspace=0.4)
+    ax.view_init(azim=50, elev = 20)
+    ax.set_zlim([0,900000])
+    plot.subplots_adjust(top=0.9, bottom=0.1, left=0.1, right=1, hspace=0.4, wspace=0.4)
 
 
 ##########################################################################################
@@ -252,94 +256,180 @@ x_data = Area_log[1,:]
 y1_data = Result[1,:]
 y2_data = Result_conforming[1,:]
 
-fig = plot.figure("Mapping Area Vs Result",figsize=(21/2.54,9/2.54),dpi=200)
-ax = fig.add_subplot(111)
 Area_log_Average, Result_average, Result_Std = findAverage(x_data, y1_data, 1e-1)
 Area_log_Average_conforming, Result_average_conforming, Result_Std_conforming = findAverage(x_data, y2_data, 1e-1)
 
 
-
-line1_handle = ax.scatter(x_data, y1_data,label="Without Conforming",s=1, color = "#6CB0D6")
-line2_handle, = ax.plot(Area_log_Average, Result_average, color="#0D4A70",label = "Without Conforming Average")
-line3_handle = ax.fill_between(Area_log_Average, np.array(Result_average) - Result_Std, np.array(Result_average) + Result_Std, color="#0D4A70", alpha=0.2, label='Standard Deviation')
-
-
-line4_handle = ax.scatter(x_data, y2_data,label="With Conforming",s=1, color = "#FD8D3C")
-line5_handle, = ax.plot(Area_log_Average_conforming, Result_average_conforming, color="#810026",label = "With Conforming Average")
-line6_handle = ax.fill_between(Area_log_Average_conforming, np.array(Result_average_conforming) - Result_Std_conforming, np.array(Result_average_conforming) + Result_Std_conforming, color="#FAB3A9", alpha=0.2, label='Standard Deviation')
+##### Display plot 7
+def plot_7_display():
+    fig = plot.figure("Mapping Area Vs Result",figsize=(21/2.54,9/2.54),dpi=200)
+    ax = fig.add_subplot(111)
 
 
-lines_handle = [line1_handle, line2_handle, line3_handle, line4_handle, line5_handle, line6_handle]
-lines_label  = ["No Conforming Data", "No Conforming Average", "No Conforming Standard Divation","Conforming Data", "Conforming Average", "Conforming Standard Divation"]
 
-plot.title('Setted Maximum Area Vs Mapping Result',size=11)
-# plot.legend(ncol=3, loc = 'upper left')
-plot.legend(lines_handle, lines_label, ncol=2, loc = 'upper left')
-plot.xlabel('Max area settings',size=11)
-plot.ylabel('Minimum Distance (%)',size=11)
+    line1_handle = ax.scatter(x_data, y1_data,label="Without Conforming",s=1, color = "#6CB0D6")
+    line2_handle, = ax.plot(Area_log_Average, Result_average, color="#0D4A70",label = "Without Conforming Average")
+    line3_handle = ax.fill_between(Area_log_Average, np.array(Result_average) - Result_Std, np.array(Result_average) + Result_Std, color="#0D4A70", alpha=0.2, label='Standard Deviation')
 
-ax.set_xticks(([-2.5, -2, -1.5, -1, -0.5, 0, 0.5])) 
-ax.set_xticklabels(['$10^{-2.5}$', '$10^{-2}$', '$10^{-1.5}$','$10^{-1}$', '$10^{-0.5}$', '$10^{ 0}$', '$10^{0.5}$']) 
-plot.grid()
-plot.tight_layout()
+    # line4_handle = ax.scatter(x_data, y2_data,label="With Conforming",s=1, color = "#CB181D")
+    # line5_handle, = ax.plot(Area_log_Average_conforming, Result_average_conforming, color="#FB6A4A",label = "With Conforming Average")
+    # line6_handle = ax.fill_between(Area_log_Average_conforming, np.array(Result_average_conforming) - Result_Std_conforming, np.array(Result_average_conforming) + Result_Std_conforming, color="#FCAE91", alpha=0.2, label='Standard Deviation')
+
+    line4_handle = ax.scatter(x_data, y2_data,label="With Conforming",s=1, color = "#FD8D3C")
+    line5_handle, = ax.plot(Area_log_Average_conforming, Result_average_conforming, color="#810026",label = "With Conforming Average")
+    line6_handle = ax.fill_between(Area_log_Average_conforming, np.array(Result_average_conforming) - Result_Std_conforming, np.array(Result_average_conforming) + Result_Std_conforming, color="#FAB3A9", alpha=0.2, label='Standard Deviation')
+
+
+    lines_handle = [line1_handle, line2_handle, line3_handle, line4_handle, line5_handle, line6_handle]
+    lines_label  = ["No Conforming Data", "No Conforming Average", "No Conforming Standard Divation","Conforming Data", "Conforming Average", "Conforming Standard Divation"]
+
+    plot.title('Setted Maximum Area Vs Mapping Result',size=11)
+    # plot.legend(ncol=3, loc = 'upper left')
+    plot.legend(lines_handle, lines_label, ncol=2, loc = 'upper left')
+    plot.xlabel('Max area settings',size=11)
+    plot.ylabel('Minimum Distance (%)',size=11)
+
+    ax.set_xticks(([-2.5, -2, -1.5, -1, -0.5, 0, 0.5])) 
+    ax.set_xticklabels(['$10^{-2.5}$', '$10^{-2}$', '$10^{-1.5}$','$10^{-1}$', '$10^{-0.5}$', '$10^{ 0}$', '$10^{0.5}$']) 
+    plot.grid()
+    plot.tight_layout()
 
 ##### Plot 8 
 #TODO: add the code for area vs point number
 def area_vs_point_fitting(x, a, b): # function for the fitting
-    return a/x + b
+    return a*x + b
 
-a,b = op.curve_fit(area_vs_point_fitting, Area_log[1,:].T, PointsNum_log[1,:].T)[0]
-area_pointNum_fit = [area_vs_point_fitting(x,a,b) for x in Area_log[1,:].T]
-area_pointNum_fit_function = str((a))+"/x+" +str(b)
-print("Mapping area vs point information:", area_pointNum_fit_function)
+angle_0_index = angle_data.index(0)
+area_small_0_index = [i for i, v in enumerate(Area_log[angle_0_index,:]) if v < 0]
+a,b = op.curve_fit(area_vs_point_fitting, Area_log[angle_0_index,area_small_0_index].T, PointsNum_log[angle_0_index,area_small_0_index].T)[0]
+PointsNum_log_fit = [area_vs_point_fitting(x,a,b) for x in Area_log[angle_0_index,:].T]
+a,b = op.curve_fit(area_vs_point_fitting, Area_log[angle_0_index,area_small_0_index].T, PointsNum_log_conforming[angle_0_index,area_small_0_index].T)[0]
+PointsNum_log_conforming_fit = [area_vs_point_fitting(x,a,b) for x in Area_log[angle_0_index,:].T]
+
+def plot_8_display():
+    fig = plot.figure("Mapping Area Vs Point Number",figsize=(21/2.54,9/2.54),dpi=200)
+
+    ax = fig.add_subplot(111)
+    ax.scatter(Area_log[angle_0_index,:], PointsNum_log[angle_0_index,:], label = "Without Conforming", color = "#6CB0D6", s = 2)
+    ax.plot(Area_log[angle_0_index,:], PointsNum_log_fit, label = "Without Conforming Fitting", color = "#0D4A70")
 
 
-fig = plot.figure("Mapping Area Vs Point Number",figsize=(21/2.54,9/2.54),dpi=200)
+    ax.scatter(Area_log[angle_0_index,:], PointsNum_log_conforming[angle_0_index,:], label = "With Conforming", color = "#FD8D3C", s = 2)
+    ax.plot(Area_log[angle_0_index,:], PointsNum_log_conforming_fit, label = "With Conforming Fitting", color = "#810026")
+    ax.legend()
 
+    plot.xlabel('Max area settings',size=11)
+    plot.ylabel('Points Number ($dBs$)',size=11)
+
+    ax.set_xticks(([-2.5, -2, -1.5, -1, -0.5, 0, 0.5])) 
+    ax.set_xticklabels(['$10^{-2.5}$', '$10^{-2}$', '$10^{-1.5}$','$10^{-1}$', '$10^{-0.5}$', '$10^{ 0}$', '$10^{0.5}$']) 
+    plot.grid()
+    plot.tight_layout()
 
 
 
 
 ##### Plot 9
 #TODO: add the code for angle settings vs point number
-def area_vs_point_fitting(x, a, b): # function for the fitting
-    return a/x + b
+def angle_vs_point_fitting(x, a, b): # function for the fitting
+    return a*x + b
 
-a,b = op.curve_fit(area_vs_point_fitting, Area_log[1,:].T, PointsNum_log[1,:].T)[0]
-area_pointNum_fit = [area_vs_point_fitting(x,a,b) for x in Area_log[1,:].T]
-area_pointNum_fit_function = str((a))+"/x+" +str(b)
-print("Mapping area vs point information:", area_pointNum_fit_function)
+
+area_data_0_3 = area_data.index(0.300201)
+a,b = op.curve_fit(angle_vs_point_fitting, Angle[:,area_data_0_3].T, PointsNum_log[:,area_data_0_3].T)[0]
+TriangleTime_log_fit_angle = [angle_vs_point_fitting(x,a,b) for x in Angle[:,area_data_0_3].T]
+a,b = op.curve_fit(angle_vs_point_fitting, Angle[:,area_data_0_3].T, PointsNum_log_conforming[:,area_data_0_3].T)[0]
+TriangleTime_log_conforming_fit_angle = [angle_vs_point_fitting(x,a,b) for x in Angle[:,area_data_0_3].T]
+
+def plot_9_display():
+    fig = plot.figure("Mapping Angle Vs Point Number",figsize=(21/2.54,9/2.54),dpi=200)
+    ax = fig.add_subplot(111)
+    ax.scatter(Angle[:,area_data_0_3], PointsNum_log[:,area_data_0_3], label = "Without Conforming", color = "#6CB0D6", s = 7)
+    # ax.plot(Angle[:,area_data_0_3], TriangleTime_log_fit_angle, label = "Without Conforming Fitting", color = "#0D4A70")
+
+    ax.scatter(Angle[:,area_data_0_3], PointsNum_log[:,area_data_0_3], label = "With Conforming", color = "#FD8D3C", s = 3)
+    # ax.plot(Angle[:,area_data_0_3], TriangleTime_log_conforming_fit_angle, label = "With Conforming Fitting", color = "#810026")
+    ax.legend()
+
+    plot.xlabel('Mapping Angle Settings',size=11)
+    plot.ylabel('Point Number (dB)',size=11)
+
+    plot.grid()
+    plot.tight_layout()
 
 
 ##### Plot 10
-#TODO: add the code for area vs triangle time
-def area_vs_point_fitting(x, a, b): # function for the fitting
-    return a/x + b
+def area_vs_triangleTime_log_fitting(x, a, b): # function for the fitting
+    return a*x + b
 
-a,b = op.curve_fit(area_vs_point_fitting, Area_log[1,:].T, PointsNum_log[1,:].T)[0]
-area_pointNum_fit = [area_vs_point_fitting(x,a,b) for x in Area_log[1,:].T]
-area_pointNum_fit_function = str((a))+"/x+" +str(b)
-print("Mapping area vs point information:", area_pointNum_fit_function)
+angle_0_index = angle_data.index(0)
+area_small_0_index = [i for i, v in enumerate(Area_log[angle_0_index,:]) if v < 0]
+a,b = op.curve_fit(area_vs_triangleTime_log_fitting, Area_log[angle_0_index,area_small_0_index].T, TriangleTime_log[angle_0_index,area_small_0_index].T)[0]
+TriangleTime_log_fit = [area_vs_triangleTime_log_fitting(x,a,b) for x in Area_log[angle_0_index,:].T]
+a,b = op.curve_fit(area_vs_triangleTime_log_fitting, Area_log[angle_0_index,area_small_0_index].T, TriangleTime_log_conforming[angle_0_index,area_small_0_index].T)[0]
+TriangleTime_log_conforming_fit = [area_vs_triangleTime_log_fitting(x,a,b) for x in Area_log[angle_0_index,:].T]
+# area_pointNum_fit_function = str((a))+"/x+" +str(b)
+# print("Mapping area vs point information:", area_pointNum_fit_function)
+
+def plot_10_display():
+    fig = plot.figure("Mapping Area Vs Triangle Time",figsize=(21/2.54,9/2.54),dpi=200)
+    ax = fig.add_subplot(111)
+    ax.scatter(Area_log[angle_0_index,:], TriangleTime_log[angle_0_index,:], label = "Without Conforming", color = "#6CB0D6", s = 1)
+    ax.plot(Area_log[angle_0_index,:], TriangleTime_log_fit, label = "Without Conforming Fitting", color = "#0D4A70")
 
 
-fig = plot.figure("Mapping Area Vs Point Number",figsize=(21/2.54,9/2.54),dpi=200)
+    ax.scatter(Area_log[angle_0_index,:], TriangleTime_log_conforming[angle_0_index,:], label = "With Conforming", color = "#FD8D3C", s = 1)
+    ax.plot(Area_log[angle_0_index,:], TriangleTime_log_conforming_fit, label = "With Conforming Fitting", color = "#810026")
+    ax.legend()
 
+    plot.xlabel('Max area settings',size=11)
+    plot.ylabel('Triangle Time ($dB \mu s$)',size=11)
 
+    ax.set_xticks(([-2.5, -2, -1.5, -1, -0.5, 0, 0.5])) 
+    ax.set_xticklabels(['$10^{-2.5}$', '$10^{-2}$', '$10^{-1.5}$','$10^{-1}$', '$10^{-0.5}$', '$10^{ 0}$', '$10^{0.5}$']) 
+    plot.grid()
+    plot.tight_layout()
 
 
 
 ##### Plot 11
 #TODO: add the code for angle settings vs triangle time
-def area_vs_point_fitting(x, a, b): # function for the fitting
-    return a/x + b
-
-a,b = op.curve_fit(area_vs_point_fitting, Area_log[1,:].T, PointsNum_log[1,:].T)[0]
-area_pointNum_fit = [area_vs_point_fitting(x,a,b) for x in Area_log[1,:].T]
-area_pointNum_fit_function = str((a))+"/x+" +str(b)
-print("Mapping area vs point information:", area_pointNum_fit_function)
+def angle_vs_triangleTime_log_fitting(x, a, b): # function for the fitting
+    return a*x + b
 
 
+area_data_0_3 = area_data.index(0.300201)
+a,b = op.curve_fit(angle_vs_triangleTime_log_fitting, Angle[:,area_data_0_3].T, TriangleTime_log[:,area_data_0_3].T)[0]
+TriangleTime_log_fit_angle = [angle_vs_triangleTime_log_fitting(x,a,b) for x in Angle[:,area_data_0_3].T]
+a,b = op.curve_fit(angle_vs_triangleTime_log_fitting, Angle[:,area_data_0_3].T, TriangleTime_log_conforming[:,area_data_0_3].T)[0]
+TriangleTime_log_conforming_fit_angle = [angle_vs_triangleTime_log_fitting(x,a,b) for x in Angle[:,area_data_0_3].T]
+
+def plot_11_display():
+    fig = plot.figure("Mapping Angle Vs Triangle Time",figsize=(21/2.54,9/2.54),dpi=200)
+    ax = fig.add_subplot(111)
+    ax.plot(Angle[:,area_data_0_3], TriangleTime_log[:,area_data_0_3], label = "Without Conforming", color = "#6CB0D6")#, s = 3)
+    # ax.plot(Angle[:,area_data_0_3], TriangleTime_log_fit_angle, label = "Without Conforming Fitting", color = "#0D4A70")
+
+
+    ax.plot(Angle[:,area_data_0_3], TriangleTime_log_conforming[:,area_data_0_3], label = "With Conforming", color = "#FD8D3C")#, s = 3)
+    # ax.plot(Angle[:,area_data_0_3], TriangleTime_log_conforming_fit_angle, label = "With Conforming Fitting", color = "#810026")
+    ax.legend()
+
+    plot.xlabel('Mapping Angle Settings',size=11)
+    plot.ylabel('Triangle Time ($dB \mu s$)',size=11)
+
+    plot.grid()
+    plot.tight_layout()
 
 
 
-plot.show()
+
+if __name__ == "__main__":
+    plot_7_display()
+    plot_8_display()
+    plot_9_display()
+    plot_10_display()
+    plot_11_display()
+
+
+    plot.show()
