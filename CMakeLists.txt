@@ -42,7 +42,7 @@ FILE(GLOB_RECURSE CURRENT_SOURCES src/*.cpp)
     # add_executable(PerformanceAnalysis ./example/performanceAnalysis.cpp ${CURRENT_INCLUDE} ${CURRENT_SOURCES})
     add_executable(PerformanceAnalysis_All ./example/performanceAnalysis_All.cpp ${CURRENT_INCLUDE} ${CURRENT_SOURCES})
     add_executable(multiStageperformanceAnalysis ./example/multiStageperformanceAnalysis.cpp ${CURRENT_INCLUDE} ${CURRENT_SOURCES})
-    # add_executable(Test_Geometry ./example/test_geometry.cpp ${CURRENT_INCLUDE} ${CURRENT_SOURCES})
+    add_executable(Test_Geometry ./example/test_geometry.cpp ${CURRENT_INCLUDE} ${CURRENT_SOURCES})
 ###########################################################
 
 # Link librarys

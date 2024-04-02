@@ -182,9 +182,9 @@ plot.fill_between(point_num, (mapping_time+convertion_time)/total_time, 1 , colo
 plot.title('Time cost for each function',size=11)
 plot.legend()
 plot.xlabel('Point Number',size=11)
-plot.ylabel(r'Cost time in percentage (%)',size=11)
+plot.ylabel('Cost time in percentage (%)',size=11)
 plot.grid()
-plot.xlim([0,1000])
+plot.xlim([0,1e5])
 
 
 plot.tight_layout()

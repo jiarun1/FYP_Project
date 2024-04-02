@@ -71,22 +71,51 @@ def findEnvelop(x, y, interval):
 
     return x_modified, y_modified
 
+def findAverage(x, y, interval):
+    x_modified = list()
+    y_average = list()
+    y_std = list()
+    for i in range(int((max(x) - min(x))/interval)):
+        mask = (x >= (i*interval + min(x))) & (x < ((i+1)*interval + min(x)))
+        if((np.count_nonzero(mask)) == 0):
+            continue
+        x_range = x[mask]
+        y_range = y[mask]
+        
+
+        x_modified.append((i+1)*interval + min(x))
+        y_average.append(np.mean(y_range))
+        y_std.append(np.std(y_range))
+
+    return x_modified, y_average, y_std
+
+
 time_envelops = list()
 distance_envelops = list()
+time_avereage = list()
+distance_average = list()
+distance_std = list()
 distance_smooths = list()
 distance_smooths_percentage = list()
 for i in range(len(distances)):
     time_envelop_tmp , distance_envelop_tmp = findEnvelop(overalltimes[i], distances[i], 5e3)
+    time_average_tmp , distance_average_tmp, distance_std_tmp = findAverage(overalltimes[i], distances[i], 5e3)
+    
     distance_envelop_smooth_tmp = savgol_filter(distance_envelop_tmp, 10, 3)
     time_envelops.append(time_envelop_tmp)
     distance_envelops.append(distance_envelop_tmp)
     distance_smooths.append(distance_envelop_smooth_tmp)
     distance_smooths_percentage.append(distance_envelop_smooth_tmp * 100 / realDistance)
 
+    time_avereage.append(time_average_tmp)
+    distance_average.append(distance_average_tmp)
+    distance_std.append(distance_std_tmp)
+    
+
 
 
 # ###########################
-
+##### Plot 1 for envelop
 # Plot Setup
 plot.rc('font',family='Arial')
 
@@ -104,6 +133,23 @@ plot.grid()
 plot.xlim([0,6e5])
 
 plot.tight_layout()
-plot.show()
 
-wait = input("Press Enter to continue.")
+
+# ###########################
+##### Plot 2 for average
+#### plot in envelop with percentage
+plot.figure("Average of accuracy percentage",figsize=(21/2.54,9/2.54),dpi=200)
+
+for i in range(len(time_avereage)):
+    plot.plot(time_avereage[i], distance_average[i], label = data_titles[i], color = data_colors[i])
+
+plot.title('Overall Cost Time Vs Performance',size=11)
+plot.legend()
+plot.xlabel('Overall Cost Time ($\mu s$)',size=11)
+plot.ylabel('Accuracy Percentage (%)',size=11)
+plot.grid()
+plot.xlim([0,6e5])
+
+plot.tight_layout()
+
+plot.show()
