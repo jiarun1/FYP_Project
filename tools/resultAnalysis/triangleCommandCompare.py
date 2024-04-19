@@ -96,8 +96,8 @@ PointNum_max = 175000
 ###### Triangle Time
 TriangleTime = triangle_time_data.T
 TriangleTime_conforming = triangle_time_data_conforming.T
-TriangleTime_log = np.log(TriangleTime)
-TriangleTime_log_conforming = np.log(TriangleTime_conforming)
+TriangleTime_log = np.log10(TriangleTime)
+TriangleTime_log_conforming = np.log10(TriangleTime_conforming)
 
 
 TriangleTime_min = 0
@@ -422,14 +422,35 @@ def plot_11_display():
     plot.tight_layout()
 
 
+######## Plot 12
+# Triangle Time vs Point number
+def plot_12_display():
+    fig = plot.figure("Points Number Vs Triangle Time",figsize=(21/2.54,9/2.54),dpi=200)
+    ax = fig.add_subplot(111)
+    ax.scatter(PointsNum_log[angle_0_index,:], TriangleTime_log[angle_0_index,:], s= 1, label = "Without Conforming", color = "#6CB0D6")#, s = 3)
+    # ax.plot(Angle[:,area_data_0_3], TriangleTime_log_fit_angle, label = "Without Conforming Fitting", color = "#0D4A70")
+
+
+    ax.scatter(PointsNum_log[angle_0_index,:], TriangleTime_log_conforming[angle_0_index,:],s= 1,  label = "With Conforming", color = "#FD8D3C")#, s = 3)
+    # ax.plot(Angle[:,area_data_0_3], TriangleTime_log_conforming_fit_angle, label = "With Conforming Fitting", color = "#810026")
+    ax.legend()
+
+    plot.xlabel('Points number in dB',size=11)
+    plot.ylabel('Triangle Time ($dB \mu s$)',size=11)
+
+    plot.grid()
+    plot.tight_layout()
+
+
 
 
 if __name__ == "__main__":
-    plot_7_display()
-    plot_8_display()
-    plot_9_display()
+    # plot_7_display()
+    # plot_8_display()
+    # plot_9_display()
+    # plot_10_display()
+    # plot_11_display()
     plot_10_display()
-    plot_11_display()
 
 
     plot.show()

@@ -6,39 +6,70 @@
 
 using namespace std;
 
+uint64_t test_count = 100000;
 
 int main(int argv, char** argc)
 {
-    point_c A(6,0),B(0,0),C(3,5.19);
+    // point_c A(6,0),B(0,0),C(3,5.19);
 
-    
+    // triangle_c triangle(&A,&B,&C);
+    // triangle.initConnections();
 
-    triangle_c triangle(&A,&B,&C);
-    triangle.initConnections();
+    triangle_c* triangles[test_count];
+    for(int i = 0; i < test_count; i ++)
+    {
+        point_c* A = new point_c(6,0);
+        point_c* B = new point_c(0,0);
+        point_c* C = new point_c(3.5,19);
+
+        triangles[i] = new triangle_c(A,B,C);
+        triangles[i]->initConnections();
+    }
+
+    auto triangle = *triangles[0];
     
     cout << "Area          : " << triangle.getArea() << endl;
     cout << "Maximum angle : " << cosh(triangle.maximumAngleCos()) << " radium OR " << cosh(triangle.maximumAngleCos())*360 / 2 / M_PI << " degree" << endl;
 
+
+    point_c *fermat_point, *centroid, *circumcenter, *orthocenter, *incenter;
+
     auto start_time = std::chrono::high_resolution_clock::now();
-    point_c* fermat_point = triangle.getFermatPoint();
+    for(int i = 0; i < test_count; i++)
+    {
+        fermat_point = triangles[i]->getFermatPoint();
+    }
     auto fermat_time = std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::high_resolution_clock::now() - start_time);
 
     start_time = std::chrono::high_resolution_clock::now();
-    point_c* centroid     = triangle.getMiddlePoint();
+    for(int i = 0; i < test_count; i++)
+    {
+        centroid = triangles[i]->getMiddlePoint();
+    }
     auto centroid_time = std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::high_resolution_clock::now() - start_time);
 
     start_time = std::chrono::high_resolution_clock::now();
-    point_c* circumcenter = triangle.getCircumCenter();
+    for(int i = 0; i < test_count; i++)
+    {
+        circumcenter = triangles[i]->getCircumCenter();
+    }
     auto circumcenter_time = std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::high_resolution_clock::now() - start_time);
 
     start_time = std::chrono::high_resolution_clock::now();
-    point_c* orthocenter  = triangle.getOrthoCenter();
+    for(int i = 0; i < test_count; i++)
+    {
+        orthocenter = triangles[i]->getOrthoCenter();
+    }
     auto orthocenter_time = std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::high_resolution_clock::now() - start_time);
 
     start_time = std::chrono::high_resolution_clock::now();
-    point_c* incenter     = triangle.getInCenter();
+    for(int i = 0; i < test_count; i++)
+    {
+        incenter = triangles[i]->getInCenter();
+    }
     auto incenter_time = std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::high_resolution_clock::now() - start_time);
 
+    cout << "The Time is for calcultion of " << test_count << " points in triangle\n";
 
     if(fermat_point != nullptr)
     {

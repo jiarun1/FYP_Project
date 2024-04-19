@@ -358,21 +358,36 @@ point_c* triangle_c::getFermatPoint()
     
     // calculate the fermat point
     ACCURACY area = getArea();
+    
+    ACCURACY tc_Fermat_abc = tc_Fermat(area, connections[0]->distance, connections[1]->distance, connections[2]->distance);
+    ACCURACY tc_Fermat_bca = tc_Fermat(area, connections[1]->distance, connections[2]->distance, connections[0]->distance);
+    ACCURACY tc_Fermat_cab = tc_Fermat(area, connections[2]->distance, connections[0]->distance, connections[1]->distance);
+
+
+    // calculate teh x and y
+    ACCURACY x_fermat =  tc_Fermat_abc * getAnotherNode(connections[0])->x + 
+                         tc_Fermat_bca * getAnotherNode(connections[1])->x +
+                         tc_Fermat_cab * getAnotherNode(connections[2])->x;
+    
+    ACCURACY y_fermat =  tc_Fermat_abc * getAnotherNode(connections[0])->y + 
+                         tc_Fermat_bca * getAnotherNode(connections[1])->y +
+                         tc_Fermat_cab * getAnotherNode(connections[2])->y;
+
 
     // can use the matrix to improve the efficiency
-    ACCURACY x_fermat = tc_Fermat(area, connections[0]->distance, connections[1]->distance, connections[2]->distance) 
-                            * getAnotherNode(connections[0])->x + 
-                        tc_Fermat(area, connections[1]->distance, connections[2]->distance, connections[0]->distance) 
-                            * getAnotherNode(connections[1])->x +
-                        tc_Fermat(area, connections[2]->distance, connections[0]->distance, connections[1]->distance) 
-                            * getAnotherNode(connections[2])->x;
+    // ACCURACY x_fermat = tc_Fermat(area, connections[0]->distance, connections[1]->distance, connections[2]->distance) 
+    //                         * getAnotherNode(connections[0])->x + 
+    //                     tc_Fermat(area, connections[1]->distance, connections[2]->distance, connections[0]->distance) 
+    //                         * getAnotherNode(connections[1])->x +
+    //                     tc_Fermat(area, connections[2]->distance, connections[0]->distance, connections[1]->distance) 
+    //                         * getAnotherNode(connections[2])->x;
     
-    ACCURACY y_fermat = tc_Fermat(area, connections[0]->distance, connections[1]->distance, connections[2]->distance) 
-                            * getAnotherNode(connections[0])->y + 
-                        tc_Fermat(area, connections[1]->distance, connections[2]->distance, connections[0]->distance) 
-                            * getAnotherNode(connections[1])->y +
-                        tc_Fermat(area, connections[2]->distance, connections[0]->distance, connections[1]->distance) 
-                            * getAnotherNode(connections[2])->y;
+    // ACCURACY y_fermat = tc_Fermat(area, connections[0]->distance, connections[1]->distance, connections[2]->distance) 
+    //                         * getAnotherNode(connections[0])->y + 
+    //                     tc_Fermat(area, connections[1]->distance, connections[2]->distance, connections[0]->distance) 
+    //                         * getAnotherNode(connections[1])->y +
+    //                     tc_Fermat(area, connections[2]->distance, connections[0]->distance, connections[1]->distance) 
+    //                         * getAnotherNode(connections[2])->y;
 
     fermatPoint = new point_c(x_fermat, y_fermat, 0, point_c::fermat_point);
 
@@ -387,8 +402,19 @@ point_c* triangle_c::getMiddlePoint()
         return middlePoint;
     }
 
-    ACCURACY x_middle = (nodes[0]->x + nodes[1]->x + nodes[2]->x)/3;
-    ACCURACY y_middle = (nodes[0]->y + nodes[1]->y + nodes[2]->y)/3;
+    ACCURACY x1 = nodes[0]->x;
+    ACCURACY x2 = nodes[1]->x;
+    ACCURACY x3 = nodes[2]->x;
+    ACCURACY y1 = nodes[0]->y;
+    ACCURACY y2 = nodes[1]->y;
+    ACCURACY y3 = nodes[2]->y;
+
+
+    ACCURACY x_middle = (x1 + x2 + x3)/3;
+    ACCURACY y_middle = (y1 + y2 + y3)/3;
+
+    // ACCURACY x_middle = (nodes[0]->x + nodes[1]->x + nodes[2]->x)/3;
+    // ACCURACY y_middle = (nodes[0]->y + nodes[1]->y + nodes[2]->y)/3;
 
     middlePoint = new point_c(x_middle, y_middle, 0, point_c::middle_point);
 

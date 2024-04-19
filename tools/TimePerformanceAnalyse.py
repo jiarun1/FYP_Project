@@ -9,7 +9,7 @@ from tkinter.filedialog import askopenfilename
 # Data Processing
 
 # data = pd.read_csv("../tests/squareMapTest/log-2.csv")
-data = pd.read_csv("../tests/squareMapTest/V3_1_Code_Test.csv")
+data = pd.read_csv("../tests/squareMapTest/V3_3_Code_Test.csv")
 data_col = data.columns.values
 print(data_col)
 
@@ -24,7 +24,9 @@ line_num = data.loc[:,'Path Num'].values
 result_dif = data.loc[:,'Result Distance'].values
 
 point_num_log = np.log10(point_num)
+mapping_time_log = np.log10(mapping_time)
 shortestpath_time_log = np.log10(shortestpath_time)
+convertion_time_log = np.log10(convertion_time)
 
 print(area_set)
 
@@ -62,14 +64,15 @@ mapping_point_fit_funtion = str((a))+"/x+" +str(b)
 print("Mapping area vs point information:", mapping_point_fit_funtion)
 
 #-------------------------------------------------------------
-# mapping points vs time fitting
+# mapping points vs time fitting (dB)
 def mapping_point_vs_time_fitting(x, a, b): # function for the fitting
     return a*x + b
 
-a,b = op.curve_fit(mapping_point_vs_time_fitting, point_num, mapping_time)[0]
-mapping_point_vs_time_fit_result = [mapping_point_vs_time_fitting(x,a,b) for x in point_num]
+
+a,b = op.curve_fit(mapping_point_vs_time_fitting, point_num_log, mapping_time_log)[0]
+mapping_point_vs_time_fit_result = [mapping_point_vs_time_fitting(x,a,b) for x in point_num_log]
 mapping_point_vs_time_fit_funtion = str((a))+"/x+" +str(b)
-print("Mapping Points vs time information:", mapping_point_vs_time_fit_funtion)
+print("Mapping Points vs mapping time information:", mapping_point_vs_time_fit_funtion)
 
 
 #-------------------------------------------------------------
@@ -77,8 +80,8 @@ print("Mapping Points vs time information:", mapping_point_vs_time_fit_funtion)
 def convertion_fitting(x, a, b): # function for the fitting
     return a*x +b
 
-a,b = op.curve_fit(convertion_fitting, point_num, convertion_time)[0]
-convertion_fit_result = [convertion_fitting(x,a,b) for x in point_num]
+a,b = op.curve_fit(convertion_fitting, point_num_log, convertion_time_log)[0]
+convertion_fit_result = [convertion_fitting(x,a,b) for x in point_num_log]
 convertion_fit_function = str((a))+"x +" +str(b)
 print("Convertion Fixed Result:", convertion_fit_function)
 
@@ -134,8 +137,8 @@ plot.tight_layout()
 
 # plot 3
 plot.figure("Mapping Points Vs Time",figsize=(21/2.54,9/2.54),dpi=200)
-plot.scatter(point_num, mapping_time,label="Test Result",s=10)
-plot.plot(point_num, mapping_point_vs_time_fit_result, color="red",label = "Curve Fitted Result")
+plot.scatter(point_num_log, mapping_time_log,label="Test Result",s=10)
+plot.plot(point_num_log, mapping_point_vs_time_fit_result, color="red",label = "Curve Fitted Result")
 plot.title('Mapping points Vs Mapping Time',size=11)
 plot.legend()
 plot.xlabel('Mapping Points Result',size=11)
@@ -145,8 +148,8 @@ plot.tight_layout()
 
 # plot 4
 plot.figure("Convertion Plot",figsize=(21/2.54,9/2.54),dpi=200)
-plot.scatter(point_num, convertion_time ,label="Test Result")
-plot.plot(point_num, convertion_fit_result, color="red",label = "Curve Fitted Result")
+plot.scatter(point_num_log, convertion_time_log ,label="Test Result")
+plot.plot(point_num_log, convertion_fit_result, color="red",label = "Curve Fitted Result")
 plot.title('Point Number Vs Convertion Execution Time',size=11)
 plot.legend()
 plot.xlabel('Point Number',size=11)
