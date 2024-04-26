@@ -35,6 +35,8 @@ public:
     unsigned int startPoint;
     unsigned int endPoint;
 
+    int parallel;
+
     /// Settings for the area mappings
     /// @brief the maximum area set for the triangle
     double areaSet;
@@ -54,7 +56,7 @@ public:
     /// @brief add the incenter to the map
     bool incenter; 
 
-
+    
 
     /// settings for the output data
     /// @brief decide if the software need to use python for display
@@ -66,6 +68,7 @@ public:
 public:
     /// @brief Enter the data from the command lines
     inputParameters(int argc = 0, char** argv = nullptr):
+        parallel(1),
         MapPath(DefaultMapPath),MapName(DefaultMapName),
         startPoint(START_POINT),endPoint(END_POINT),
         areaSet(DefaultAreaSet),
@@ -73,7 +76,7 @@ public:
         display(false)
     {
         int command;
-        const char *optstring = "hf:s:e:V:MFCOI"; 
+        const char *optstring = "hp:f:s:e:V:MFCOI"; 
         std::string parameter_string;
         while ((command = getopt(argc, argv, optstring)) != -1) {
             switch (command) {
@@ -81,6 +84,7 @@ public:
                     std::cout << "usage: ./ShortestPathPlanning [option] [arg] ... \n"
                               << "Options and arguments:\n"
                               << "-h          : help\n"
+                              << "-p          : number of parallel thread \n"
                               << "-f filepath : set the map path \n"
                               << "-M          : (upper letter) add the middle points to the map \n"
                               << "-F          : (upper letter) add the fermat points to the map \n"
@@ -96,6 +100,10 @@ public:
                 case 'f':
                     MapPath = std::string(dirname(optarg));
                     MapName = std::string(basename(optarg));
+                    break;
+                case 'p':
+                    parameter_string = std::string(optarg);
+                    parallel = std::stoi(parameter_string);
                     break;
                 case 's':
                     parameter_string = std::string(optarg);
@@ -141,6 +149,7 @@ public:
             << "  - maximum area: " << out_paraneter.areaSet << std::endl
             << "  - display     : " << ((out_paraneter.display)? std::string("true"):std::string("false")) << std::endl
             << "  - map file    : " << out_paraneter.MapPath + "/" + out_paraneter.MapName << std::endl
+            << "  - parallel    : " << out_paraneter.parallel << std::endl
             << std::endl;
         return out;
     }
@@ -216,7 +225,14 @@ public:
 
 int main(int argc, char** argv)
 {
+
     inputParameters commandInput(argc, argv);
+
+    std::cout << commandInput;
+
+    // //TODO: bug test
+    commandInput.parallel = 2;
+    commandInput.Version = std::string("V6_2");
 
     // call the triangle with parameters
     triangleCommand triangle(TrianglePath);
@@ -329,9 +345,17 @@ int main(int argc, char** argv)
                 dataImportConvertion_time = std::chrono::high_resolution_clock::now();
                 // Dijkstra algorithm start
 
-                Dijkstra path_planing;
-                path_planing.setAdjacencyMap(&map);
-                path_planing.calculateShortestPath(START_POINT, END_POINT);
+                Dijkstra* path_planing = new Dijkstra;
+                path_planing->setAdjacencyMap(&map);
+
+                if(commandInput.parallel == 1)
+                {
+                    path_planing->calculateShortestPath(START_POINT, END_POINT);
+                } else if (commandInput.parallel == 2)
+                {
+                    path_planing->calculateShortestPath_Bidirectional(START_POINT, END_POINT);
+                }
+
 
                 shortestPathAlgorithm_time = std::chrono::high_resolution_clock::now();
 
@@ -340,9 +364,19 @@ int main(int argc, char** argv)
                 auto convertion_duration = std::chrono::duration_cast<std::chrono::microseconds>(dataImportConvertion_time - triangle_time);
                 auto shortestPathAlgorithm_duration = std::chrono::duration_cast<std::chrono::microseconds>(shortestPathAlgorithm_time - dataImportConvertion_time);
 
-                log.write(test_area, test_angle, if_conforming, mapping_duration, convertion_duration ,shortestPathAlgorithm_duration, map.getPointNum(), map.getPathNum(), path_planing.getPathCost());
+                log.write(test_area, 
+                          test_angle, 
+                          if_conforming, 
+                          mapping_duration, 
+                          convertion_duration ,
+                          shortestPathAlgorithm_duration, 
+                          map.getPointNum(), 
+                          map.getPathNum(), 
+                          path_planing->getPathCost());
 
                 triangle.cleanTmpFiles(commandInput.MapPath + "/" + commandInput.MapName +".poly", false);
+
+                delete path_planing;
             }
         }
     }

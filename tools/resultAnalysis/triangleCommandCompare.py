@@ -445,12 +445,17 @@ def plot_12_display():
 
 
 if __name__ == "__main__":
-    # plot_7_display()
-    # plot_8_display()
-    # plot_9_display()
-    # plot_10_display()
-    # plot_11_display()
+    plot_1_display()
+    plot_2_display()
+    plot_3_display()
+    plot_4_display()
+    plot_5_display()
+    plot_6_display()
+    plot_7_display()
+    plot_8_display()
+    plot_9_display()
     plot_10_display()
+    plot_11_display()
 
 
     plot.show()

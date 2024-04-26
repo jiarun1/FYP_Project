@@ -153,6 +153,7 @@ def main(polyPath):
 
     plt.rc('font',family='Arial')
     plt.figure("Map Display",figsize=(9/2.54,9/2.54),dpi=200)
+    # plt.figure("Map Display",figsize=(18/2.54,9/2.54),dpi=200)
 
     plt.axis("off")
 

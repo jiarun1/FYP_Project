@@ -32,7 +32,7 @@ FILE(GLOB_RECURSE CURRENT_SOURCES src/*.cpp)
 # note: commont all the other execution files when debugging one of it
     # Generate the execution files
     add_executable(ShortestPathPlanning ./example/ShortestPathPlanning.cpp ${CURRENT_INCLUDE} ${CURRENT_SOURCES})
-    add_executable(MultiStagePlanning   ./example/multiStagePlanning.cpp ${CURRENT_INCLUDE} ${CURRENT_SOURCES})
+    # add_executable(MultiStagePlanning   ./example/multiStagePlanning.cpp ${CURRENT_INCLUDE} ${CURRENT_SOURCES})
 
     # generate the example execution files
     # add_executable(Test_AdjacencyMap ./example/test_adjacencyMap.cpp ${CURRENT_INCLUDE} ${CURRENT_SOURCES})
@@ -41,8 +41,8 @@ FILE(GLOB_RECURSE CURRENT_SOURCES src/*.cpp)
     #add_executable(Test_Performance ./example/test_performance.cpp ${CURRENT_INCLUDE} ${CURRENT_SOURCES})
     # add_executable(PerformanceAnalysis ./example/performanceAnalysis.cpp ${CURRENT_INCLUDE} ${CURRENT_SOURCES})
     add_executable(PerformanceAnalysis_All ./example/performanceAnalysis_All.cpp ${CURRENT_INCLUDE} ${CURRENT_SOURCES})
-    add_executable(multiStageperformanceAnalysis ./example/multiStageperformanceAnalysis.cpp ${CURRENT_INCLUDE} ${CURRENT_SOURCES})
-    add_executable(Test_Geometry ./example/test_geometry.cpp ${CURRENT_INCLUDE} ${CURRENT_SOURCES})
+    # add_executable(multiStageperformanceAnalysis ./example/multiStageperformanceAnalysis.cpp ${CURRENT_INCLUDE} ${CURRENT_SOURCES})
+    # add_executable(Test_Geometry ./example/test_geometry.cpp ${CURRENT_INCLUDE} ${CURRENT_SOURCES})
 ###########################################################
 
 # Link librarys

@@ -52,22 +52,17 @@ class pointInfoContainer
 public:
     int thread_number;
     pointInfoHeap* heap_data;
-    POINT_NUM_MAX label;
+    // POINT_NUM_MAX label;next_point_container
+    point_c* point;
     POINT_NUM_MAX reachedBy; ///< use -1 to indicate the point has not reached by any start points
 
-    pointInfoContainer():
-        heap_data(nullptr)
+    pointInfoContainer()
     {
 
     }
 
     ~pointInfoContainer(){
-        // prevent delete twice
-        // if(heap_data != nullptr)
-        // {
-        //     delete[] heap_data;
-        //     heap_data = nullptr;
-        // }
+        delete heap_data;
     }
 
 
@@ -76,11 +71,6 @@ public:
         thread_number = (num_thread);
         heap_data = new pointInfoHeap[num_thread];
         std::fill(heap_data, heap_data+num_thread, this);
-    }
-
-    void release()
-    {
-        delete[] heap_data;
     }
 };
 

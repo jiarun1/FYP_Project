@@ -11,8 +11,8 @@ from tkinter.filedialog import askopenfilename
 # data class
 
 # read the first set of data
-data_set_1 = pd.read_csv("../tests/squareMapTest/V3_1_Code_Test.csv")
-data_set_2 = pd.read_csv("../tests/squareMapTest/V5_1_Code_Test.csv")
+data_set_1 = pd.read_csv("../tests/squareMapTest/V3_3_1_Code_Test.csv")
+data_set_2 = pd.read_csv("../tests/squareMapTest/V6_1_Code_Test.csv")
 
 data_set_1_version_string = "V3"
 data_set_2_version_string = "V5"
@@ -26,10 +26,10 @@ title = "Area Set Vs Shortest Path Time"
 # Datas
 ## plot the x axis as set area for map
 x_axis_label = "Area Set"
-data_1_x = data_set_1.loc[:,'Area Set'].values
-data_2_x = data_set_2.loc[:,'Area Set'].values
-# data_1_x = data_set_1.loc[:,'Points Num'].values
-# data_2_x = data_set_2.loc[:,'Points Num'].values
+# data_1_x = data_set_1.loc[:,'Area Set'].values
+# data_2_x = data_set_2.loc[:,'Area Set'].values
+data_1_x = data_set_1.loc[:,'Points Num'].values
+data_2_x = data_set_2.loc[:,'Points Num'].values
 
 
 
@@ -125,7 +125,6 @@ plot.legend()
 plot.xlabel(x_axis_label,size=11)
 plot.ylabel(y_axis_label,size=11)
 plot.grid()
-
 
 
 

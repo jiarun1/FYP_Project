@@ -18,7 +18,7 @@ static const std::string DefaultMapName = "squareMapTest";
 static const int START_POINT = 2;
 static const int END_POINT = 4;
 
-static const double DefaultAreaSet = 3;
+static const double DefaultAreaSet = 10;
 static const double DefaultAngleSet = 0;
 
 class inputParameters
@@ -28,6 +28,8 @@ public:
     std::string MapName;
     unsigned int startPoint;
     unsigned int endPoint;
+
+    unsigned int parallel;
 
     /// Settings for the area mappings
     /// @brief the maximum area set for the triangle
@@ -63,6 +65,7 @@ public:
 public:
     /// @brief Enter the data from the command lines
     inputParameters(int argc = 0, char** argv = nullptr):
+        parallel(1),
         MapPath(DefaultMapPath),MapName(DefaultMapName),
         startPoint(START_POINT),endPoint(END_POINT),
         areaSet(DefaultAreaSet),enableCDT(false),angleSet(DefaultAngleSet),
@@ -70,7 +73,7 @@ public:
         display(false)
     {
         int command;
-        const char *optstring = "ha:q:Ddf:s:e:MFCOI"; 
+        const char *optstring = "hp:a:q:Ddf:s:e:MFCOI"; 
         std::string parameter_string;
         while ((command = getopt(argc, argv, optstring)) != -1) {
             switch (command) {
@@ -78,6 +81,7 @@ public:
                     std::cout << "usage: ./ShortestPathPlanning [option] [arg] ... \n"
                               << "Options and arguments:\n"
                               << "-h          : help\n"
+                              << "-p          : start parallel\n"
                               << "-a area     : maximum area for the triangulation \n"
                               << "-q          : minimum angle for the triangulation \n"
                               << "-d          : enable display \n"
@@ -100,6 +104,10 @@ public:
                 case 'a':
                     parameter_string = std::string(optarg);    
                     areaSet = std::stod(parameter_string);
+                    break;
+                case 'p':
+                    parameter_string = std::string(optarg);    
+                    parallel = std::stoi(parameter_string);
                     break;
                 case 'q':
                     parameter_string = std::string(optarg);    
@@ -165,6 +173,10 @@ int main(int argc, char** argv)
 {
     inputParameters commandInput(argc, argv);
 
+    // //TODO: bug test
+    // commandInput.parallel = 2;
+    // commandInput.areaSet = 10;
+    // commandInput.angleSet = 9;
 
 
     std::cout << commandInput << std::endl;
@@ -224,8 +236,12 @@ int main(int argc, char** argv)
     path_planing.setAdjacencyMap(&map);
 
 
+    if(commandInput.parallel == 1){
+        path_planing.calculateShortestPath(commandInput.startPoint, commandInput.endPoint);
+    } else if (commandInput.parallel == 2) {
+        path_planing.calculateShortestPath_Bidirectional(commandInput.startPoint, commandInput.endPoint);
+    }
 
-    path_planing.calculateShortestPath(commandInput.startPoint, commandInput.endPoint);
 
 #ifndef NDEBUG
     HeapProfilerDump("");

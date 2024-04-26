@@ -290,10 +290,15 @@ ACCURACY triangle_c::getArea()
 /// This algorithm is used to calculate the tc used to calculate the Fermat point
 ACCURACY triangle_c::tc_Fermat(ACCURACY area, ACCURACY s, ACCURACY t, ACCURACY u)
 {
+    ACCURACY s_2 = s*s;
+    ACCURACY t_2 = t*t;
+    ACCURACY u_2 = u*u;
+
+
     /// sqrt(3) use 1.73205
-    ACCURACY m = 4*area + SQRT_3*(s*s + t*t - u*u);
-    ACCURACY n = 4*area + SQRT_3*(s*s - t*t + u*u);
-    ACCURACY v = 8*area*(12*area + SQRT_3*(s*s + t*t + u*u));
+    ACCURACY m = 4*area + SQRT_3*(s_2 + t_2 - u_2);
+    ACCURACY n = 4*area + SQRT_3*(s_2 - t_2 + u_2);
+    ACCURACY v = 8*area*(12*area + SQRT_3*(s_2 + t_2 + u_2));
     return (m*n)/v;
 }
 

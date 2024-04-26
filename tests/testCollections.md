@@ -36,3 +36,8 @@
      ```
      ./multiStageperformanceAnalysis -f ../tests/squareMapTest/squareMapTest.poly -V V5_1
      ```
+16. V6_1_Code_Test.csv: add the bidirectional dijkstra algorithm to improve time performance
+    1.  Command Code
+     ```
+     ./PerformanceAnalysis_All -f ../tests/squareMapTest/squareMapTest.poly -V V6_1 -p 2
+     ```
