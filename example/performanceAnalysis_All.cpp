@@ -231,8 +231,11 @@ int main(int argc, char** argv)
     std::cout << commandInput;
 
     // //TODO: bug test
-    commandInput.parallel = 2;
-    commandInput.Version = std::string("V6_2");
+    commandInput.parallel = 1;
+    commandInput.Version = std::string("V3_3_1");
+    commandInput.MapName = "largeSquareMapTest";
+    commandInput.MapPath = "../tests/largeSquareMapTest";
+    commandInput.LogPathAndName = commandInput.MapPath + "/" + commandInput.Version + "_Code_Test.csv";  
 
     // call the triangle with parameters
     triangleCommand triangle(TrianglePath);
