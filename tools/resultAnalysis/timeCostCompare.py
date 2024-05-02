@@ -20,7 +20,6 @@ data_set_2_version_string = "Fabonacci heap"
 data_set_3_version_string = "Structure improvement"
 
 
-
 #########################
 ## Plot:
 # Datas
@@ -32,28 +31,43 @@ data_2_y = data_set_2.loc[:,'Shorest Path Time(us)'].values
 data_3_y = data_set_3.loc[:,'Shorest Path Time(us)'].values
 
 ######### NORMAL PLOT IN CARTESIAN
+FitUse_PointNumRange = [500,19000]
+
 # Data Fitting Perform
-def dataSet_1_Fit(x, a, b, c):
-    return a*(np.square(x)) + b*x + c
+def dataSet_1_Fit(x, a, c):
+    return a*(np.square(x)) + c
 
 def dataSet_2_Fit(x, a, b, c):
-    return a*(np.square(x)) + b*x + c
+    return a*(np.square(x)) + b*x*np.log10(x) + c
 
-def dataSet_3_Fit(x, a, b, c):
-    return a*(np.square(x)) + b*x + c
+def dataSet_3_Fit(x, a, c):
+    return a*x*np.log10(x) + c
 
 # Data set 1 fitting
-a_1,b_1,c_1 = op.curve_fit(dataSet_1_Fit, data_1_x, data_1_y)[0]
-a_2,b_2,c_2 = op.curve_fit(dataSet_2_Fit, data_2_x, data_2_y)[0]
-a_3,b_3,c_3 = op.curve_fit(dataSet_3_Fit, data_3_x, data_3_y)[0]
+data_1_x_fitinput = [x for x in data_1_x if FitUse_PointNumRange[0] <= x <= FitUse_PointNumRange[1]]
+data_2_x_fitinput = [x for x in data_1_x if FitUse_PointNumRange[0] <= x <= FitUse_PointNumRange[1]]
+data_3_x_fitinput = [x for x in data_1_x if FitUse_PointNumRange[0] <= x <= FitUse_PointNumRange[1]]
 
-data_1_fitResult = [dataSet_1_Fit(x,a_1,b_1,c_1) for x in data_1_x]
+data_1_y_fitinput = [data_1_y[i] for i in range(len(data_1_x)) if FitUse_PointNumRange[0] <= data_1_x[i] <= FitUse_PointNumRange[1]]
+data_2_y_fitinput = [data_2_y[i] for i in range(len(data_2_x)) if FitUse_PointNumRange[0] <= data_2_x[i] <= FitUse_PointNumRange[1]]
+data_3_y_fitinput = [data_3_y[i] for i in range(len(data_3_x)) if FitUse_PointNumRange[0] <= data_3_x[i] <= FitUse_PointNumRange[1]]
+
+
+a_1,c_1 = op.curve_fit(dataSet_1_Fit, data_1_x_fitinput, data_1_y_fitinput)[0]
+a_2,b_2,c_2 = op.curve_fit(dataSet_2_Fit, data_2_x_fitinput, data_2_y_fitinput)[0]
+a_3,c_3 = op.curve_fit(dataSet_3_Fit, data_3_x_fitinput, data_3_y_fitinput)[0]
+
+# a_1,b_1,c_1 = op.curve_fit(dataSet_1_Fit, data_1_x, data_1_y)[0]
+# a_2,b_2,c_2 = op.curve_fit(dataSet_2_Fit, data_2_x, data_2_y)[0]
+# a_3,c_3 = op.curve_fit(dataSet_3_Fit, data_3_x, data_3_y)[0]
+
+data_1_fitResult = [dataSet_1_Fit(x,a_1,c_1) for x in data_1_x]
 data_2_fitResult = [dataSet_2_Fit(x,a_2,b_2,c_2) for x in data_2_x]
-data_3_fitResult = [dataSet_3_Fit(x,a_3,b_3,c_3) for x in data_3_x]
+data_3_fitResult = [dataSet_3_Fit(x,a_3,c_3) for x in data_3_x]
 
-data_1_fitFunction =  str(a_1)+"x^2 +" + str(b_1) + "x+" + str(c_1)
-data_2_fitFunction =  str(a_2)+"x^2 +" + str(b_2) + "x+" + str(c_2)
-data_3_fitFunction =  str(a_3)+"x^2 +" + str(b_3) + "x+" + str(c_3)
+data_1_fitFunction =  str(a_1)+"x^2 +" + str(c_1)
+data_2_fitFunction =  str(a_2)+"x^2 +" + str(b_2) + "xlog(x)+" + str(c_2)
+data_3_fitFunction =  str(a_3)+"xlog(x) +" + str(c_3)
 
 print("Data 1: " , data_1_fitFunction)
 print("Data 2: " , data_2_fitFunction)
@@ -99,6 +113,8 @@ plot.ylabel('Cost time ($ \mu s $)',fontsize=10)
 plot.grid()
 plot.xlim([0,3e4])
 plot.ylim([0,5e6])
+# plot.xlim([0,5e3])
+# plot.ylim([0,1.5e5])
 plot.tight_layout()
 
 #################### PLOT IN LOGLOG
