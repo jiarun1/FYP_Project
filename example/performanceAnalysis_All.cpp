@@ -235,7 +235,9 @@ int main(int argc, char** argv)
     commandInput.Version = std::string("V3_3_1");
     commandInput.MapName = "largeSquareMapTest";
     commandInput.MapPath = "../tests/largeSquareMapTest";
-    commandInput.LogPathAndName = commandInput.MapPath + "/" + commandInput.Version + "_Code_Test.csv";  
+    commandInput.LogPathAndName = commandInput.MapPath + "/" + commandInput.Version + "_Code_Test.csv";
+    commandInput.startPoint = 5;
+    commandInput.endPoint = 6;  
 
     // call the triangle with parameters
     triangleCommand triangle(TrianglePath);
@@ -353,10 +355,10 @@ int main(int argc, char** argv)
 
                 if(commandInput.parallel == 1)
                 {
-                    path_planing->calculateShortestPath(START_POINT, END_POINT);
+                    path_planing->calculateShortestPath(commandInput.startPoint, commandInput.endPoint);
                 } else if (commandInput.parallel == 2)
                 {
-                    path_planing->calculateShortestPath_Bidirectional(START_POINT, END_POINT);
+                    path_planing->calculateShortestPath_Bidirectional(commandInput.startPoint, commandInput.endPoint);
                 }
 
 

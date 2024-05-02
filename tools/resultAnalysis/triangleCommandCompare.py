@@ -265,8 +265,6 @@ def plot_7_display():
     fig = plot.figure("Mapping Area Vs Result",figsize=(21/2.54,9/2.54),dpi=200)
     ax = fig.add_subplot(111)
 
-
-
     line1_handle = ax.scatter(x_data, y1_data,label="Without Conforming",s=1, color = "#6CB0D6")
     line2_handle, = ax.plot(Area_log_Average, Result_average, color="#0D4A70",label = "Without Conforming Average")
     line3_handle = ax.fill_between(Area_log_Average, np.array(Result_average) - Result_Std, np.array(Result_average) + Result_Std, color="#0D4A70", alpha=0.2, label='Standard Deviation')
