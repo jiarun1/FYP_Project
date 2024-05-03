@@ -110,7 +110,9 @@ for i in range(len(data_results)):
 
     current_data["area_log_settled"] = current_data["area_log"][setted_angle_index,:]
     current_data["shortest_path_time_settled"] = current_data["shortest_path_time"][setted_angle_index,:]
+    current_data["shortest_path_time_settled_log"] = np.log10(current_data["shortest_path_time_settled"])
     current_data["points_num_settled"] = current_data["points_num"][setted_angle_index,:]
+    current_data["points_num_settled_log"] = np.log10(current_data["points_num_settled"])
 
     x_tmp = [x for x in current_data["points_num_settled"] if points_num_range[0] < x < points_num_range[1]]
     y_tmp = [current_data["shortest_path_time_settled"][i] for i in range(len(current_data["points_num_settled"])) if points_num_range[0] < current_data["points_num_settled"][i] < points_num_range[1]]
@@ -121,6 +123,7 @@ for i in range(len(data_results)):
     current_data["shortest_path_time_vs_points_fit"] = [data_fit_functions[i](x, a, b) for x in current_data["points_num_settled"]]
     current_data["shortest_path_time_vs_points_fit_fun"] = "$" + "{0:.2f}".format(a)+ "xlog(x) + " + "{0:.2f}".format(b) + "$"
     print(current_data["shortest_path_time_vs_points_fit_fun"])
+
 
 # ###########################
 ##### Plot 1 for average
@@ -151,6 +154,35 @@ def plot_1():
     ax.set_ylim([0,8e4])
     plot.tight_layout()
 
+# ###########################
+##### Plot 1 for average
+# Plot Setup
+def plot_2():
+
+    #### plot in average with percentage
+    fig = plot.figure("Paralle compare in log",figsize=(21/2.54,9/2.54),dpi=200)
+    ax = fig.add_subplot(111)
+    
+
+    # print(Datas[0]["result_average"])
+
+    for i in range(len(data_results)):
+        plot.scatter(Datas[i]["points_num_settled_log"], Datas[i]["shortest_path_time_settled_log"], label = data_titles[i], color = data_colors[i], s = 3)
+
+
+    # plot.title('Average path length differences with different extra points',size=11)
+    plot.legend()
+    plot.xlabel('Number of Points',size=11)
+    plot.ylabel('Cost Time ($ \mu s$)',size=11)
+    plot.grid()
+
+    # ax.set_xticks(([-2.5, -2, -1.5, -1, -0.5, 0, 0.5])) 
+    # ax.set_xticklabels(['$10^{-2.5}$', '$10^{-2}$', '$10^{-1.5}$','$10^{-1}$', '$10^{-0.5}$', '$10^{ 0}$', '$10^{0.5}$']) 
+    # ax.set_xlim([0,3e4])
+    # ax.set_ylim([0,8e4])
+    plot.tight_layout()
+
 
 plot_1()
+plot_2()
 plot.show()
