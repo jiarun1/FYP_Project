@@ -283,8 +283,8 @@ int main(int argc, char** argv)
     float angle_minius = 1.0;
     int count_loop = 0;
     float max_area = 20;
-    // float min_area = 3e-3;
-    float min_area = 0.2;
+    float min_area = 3e-3;
+    // float min_area = 0.2;
     float area_divide = 1.0/50.0+1;
 
     auto start_time = std::chrono::high_resolution_clock::now();
