@@ -4,6 +4,7 @@ import matplotlib.pyplot as plot
 import numpy as np
 import scipy.optimize as op 
 from mpl_toolkits.mplot3d import Axes3D
+from mpl_toolkits.axes_grid1.inset_locator import inset_axes
 from scipy.ndimage import gaussian_filter
 
 
@@ -11,6 +12,7 @@ from scipy.ndimage import gaussian_filter
 
 # read the first set of data
 data_set = pd.read_csv("../../tests/squareMapTest/V3_3_Code_Test.csv")
+# data_set = pd.read_csv("../../tests/RuggedMapTest/V6_3_1_Code_Test.csv")
 
 minimum_distance = 20*np.sqrt(2)
 
@@ -27,6 +29,7 @@ is_conforming = data_set.loc[:,'If Conforming'].values
 area_data = sorted(list(set(area_Set)))
 area_data = [x for x in area_data if x < 5]
 angle_data = sorted(list(set(angle_Set)))
+angle_data = [x for x in angle_data if x < 30]
 results_data = np.zeros([len(area_data), len(angle_data)])
 results_data_conforming = np.zeros([len(area_data), len(angle_data)])
 points_num_data = np.zeros([len(area_data), len(angle_data)])
@@ -293,7 +296,6 @@ def plot_7_display():
     plot.tight_layout()
 
 ##### Plot 8 
-#TODO: add the code for area vs point number
 def area_vs_point_fitting(x, a, b): # function for the fitting
     return a*x + b
 
@@ -301,6 +303,7 @@ angle_0_index = angle_data.index(0)
 area_small_0_index = [i for i, v in enumerate(Area_log[angle_0_index,:]) if v < 0]
 a,b = op.curve_fit(area_vs_point_fitting, Area_log[angle_0_index,area_small_0_index].T, PointsNum_log[angle_0_index,area_small_0_index].T)[0]
 PointsNum_log_fit = [area_vs_point_fitting(x,a,b) for x in Area_log[angle_0_index,:].T]
+PointsNum_log_fit_fun =  '$' +'{:.4}'.format(a)+"x " + '{:+.4}'.format(b)+ '$'
 a,b = op.curve_fit(area_vs_point_fitting, Area_log[angle_0_index,area_small_0_index].T, PointsNum_log_conforming[angle_0_index,area_small_0_index].T)[0]
 PointsNum_log_conforming_fit = [area_vs_point_fitting(x,a,b) for x in Area_log[angle_0_index,:].T]
 
@@ -324,7 +327,57 @@ def plot_8_display():
     plot.grid()
     plot.tight_layout()
 
+def plot_8_1_display():
+    fig = plot.figure("Mapping Area Vs Point Number",figsize=(9/2.54,7/2.54),dpi=200)
 
+    ax = fig.add_subplot(111)
+    ax.scatter(Area_log[angle_0_index,:], PointsNum_log[angle_0_index,:], label = "Without Conforming", color = "#6CB0D6", s = 2)
+    # ax.plot(Area_log[angle_0_index,:], PointsNum_log_fit, label = "Without Conforming Fitting", color = "#0D4A70")
+    ax.plot(Area_log[angle_0_index,:], PointsNum_log_fit, color = "#0D4A70")
+    print(PointsNum_log_fit_fun)
+
+    print(a)
+
+
+    ax.scatter(Area_log[angle_0_index,:], PointsNum_log_conforming[angle_0_index,:], label = "With Conforming", color = "#FD8D3C", s = 2)
+    # ax.plot(Area_log[angle_0_index,:], PointsNum_log_conforming_fit, label = "With Conforming Fitting", color = "#810026")
+    ax.plot(Area_log[angle_0_index,:], PointsNum_log_conforming_fit, color = "#810026")
+    ax.legend(prop={'size':9})
+
+    ax.grid()
+
+
+    plot.xlabel('Max area settings',size=11)
+    plot.ylabel('Points Number ($dB$)',size=11)
+
+    # ax.set_xticks(([-2.5, -2, -1.5, -1, -0.5, 0, 0.5])) 
+    # ax.set_xticklabels(['$10^{-2.5}$', '$10^{-2}$', '$10^{-1.5}$','$10^{-1}$', '$10^{-0.5}$', '$10^{ 0}$', '$10^{0.5}$']) 
+    ax.set_xticks(([-2.5, -1.5,-0.5,0.5])) 
+    ax.set_xticklabels(['$10^{-2.5}$', '$10^{-1.5}$', '$10^{-0.5}$', '$10^{0.5}$']) 
+
+    axins = inset_axes(ax, width="30%", height="30%",loc='lower left')
+    axins.scatter(Area_log[angle_0_index,:], PointsNum_log[angle_0_index,:], label = "Zoom", color = "#6CB0D6", s = 5)
+    axins.plot(Area_log[angle_0_index,:], PointsNum_log_fit, label = "Zoom", color = "#0D4A70")
+    axins.scatter(Area_log[angle_0_index,:], PointsNum_log_conforming[angle_0_index,:], label = "Zoom", color = "#FD8D3C", s = 5)
+    axins.plot(Area_log[angle_0_index,:], PointsNum_log_conforming_fit, label = "Zoom", color = "#810026")
+
+    axins.set_xlim([-1.005,-0.995])
+    axins.set_ylim([3.505,3.515])
+
+    axins.xaxis.set_visible(False)
+    axins.yaxis.set_visible(False)
+    axins.grid()
+
+    from mpl_toolkits.axes_grid1.inset_locator import mark_inset
+
+    mark_inset(ax, axins, loc1=2, loc2=4, fc="none", ec= "0.5")
+
+
+
+
+
+    plot.grid()
+    plot.tight_layout()
 
 
 ##### Plot 9
@@ -333,7 +386,9 @@ def angle_vs_point_fitting(x, a, b): # function for the fitting
     return a*x + b
 
 
-area_data_0_3 = area_data.index(0.300201)
+area_data_0_3 = area_data.index(0.0029084)
+
+# area_data_0_3 = area_data.index(0.300466)
 a,b = op.curve_fit(angle_vs_point_fitting, Angle[:,area_data_0_3].T, PointsNum_log[:,area_data_0_3].T)[0]
 TriangleTime_log_fit_angle = [angle_vs_point_fitting(x,a,b) for x in Angle[:,area_data_0_3].T]
 a,b = op.curve_fit(angle_vs_point_fitting, Angle[:,area_data_0_3].T, PointsNum_log_conforming[:,area_data_0_3].T)[0]
@@ -342,7 +397,7 @@ TriangleTime_log_conforming_fit_angle = [angle_vs_point_fitting(x,a,b) for x in 
 def plot_9_display():
     fig = plot.figure("Mapping Angle Vs Point Number",figsize=(21/2.54,9/2.54),dpi=200)
     ax = fig.add_subplot(111)
-    ax.scatter(Angle[:,area_data_0_3], PointsNum_log[:,area_data_0_3], label = "Without Conforming", color = "#6CB0D6", s = 7)
+    ax.scatter(Angle[:,area_data_0_3], PointsNum_log[:,area_data_0_3], label = "Without Conforming", color = "#6CB0D6", s = 10)
     # ax.plot(Angle[:,area_data_0_3], TriangleTime_log_fit_angle, label = "Without Conforming Fitting", color = "#0D4A70")
 
     ax.scatter(Angle[:,area_data_0_3], PointsNum_log[:,area_data_0_3], label = "With Conforming", color = "#FD8D3C", s = 3)
@@ -356,11 +411,54 @@ def plot_9_display():
     plot.tight_layout()
 
 
+def plot_9_1_display():
+    fig = plot.figure("Mapping Angle Vs Point Number",figsize=(9/2.54,7/2.54),dpi=200)
+    ax = fig.add_subplot(111)
+    ax.scatter(Angle[:,area_data_0_3], PointsNum_log[:,area_data_0_3], label = "Without Conforming", color = "#6CB0D6", s = 10)
+    # ax.plot(Angle[:,area_data_0_3], TriangleTime_log_fit_angle, label = "Without Conforming Fitting", color = "#0D4A70")
+
+    ax.scatter(Angle[:,area_data_0_3], PointsNum_log[:,area_data_0_3], label = "With Conforming", color = "#FD8D3C", s = 3)
+    # ax.plot(Angle[:,area_data_0_3], TriangleTime_log_conforming_fit_angle, label = "With Conforming Fitting", color = "#810026")
+    ax.legend(prop={'size':9})
+
+    plot.xlabel('Mapping Angle Settings',size=11)
+    plot.ylabel('Point Number ($dB$)',size=11)
+
+    # ax.set_xlim([-2.5,32.5])
+    ax.set_ylim([5.0175,5.0425])
+    ax.set_yticks(np.arange(5.02,5.04,0.005))
+
+    plot.grid()
+    plot.tight_layout()
+
+def plot_9_2_display():
+    area_data_10 = area_data.index(0.0029084)
+    fig = plot.figure("Mapping Angle Vs Point Number (multiple area)",figsize=(9/2.54,7/2.54),dpi=200)
+    ax = fig.add_subplot(111)
+    ax.scatter(Angle[:,area_data_0_3], PointsNum_log[:,area_data_0_3], label = "Without Conforming", color = "#6CB0D6", s = 10)
+    # ax.plot(Angle[:,area_data_0_3], TriangleTime_log_fit_angle, label = "Without Conforming Fitting", color = "#0D4A70")
+
+    ax.scatter(Angle[:,area_data_0_3], PointsNum_log[:,area_data_0_3], label = "With Conforming", color = "#FD8D3C", s = 3)
+    # ax.plot(Angle[:,area_data_0_3], TriangleTime_log_conforming_fit_angle, label = "With Conforming Fitting", color = "#810026")
+    ax.legend(prop={'size':9})
+
+    plot.xlabel('Mapping Angle Settings',size=11)
+    plot.ylabel('Point Number ($dB$)',size=11)
+
+    # ax.set_xlim([-2.5,32.5])
+    ax.set_ylim([5.0175,5.0425])
+    ax.set_yticks(np.arange(5.02,5.04,0.005))
+
+    plot.grid()
+    plot.tight_layout()
+
+
 ##### Plot 10
 def area_vs_triangleTime_log_fitting(x, a, b): # function for the fitting
     return a*x + b
 
 angle_0_index = angle_data.index(0)
+angle_20_index = angle_data.index(20)
 area_small_0_index = [i for i, v in enumerate(Area_log[angle_0_index,:]) if v < 0]
 a,b = op.curve_fit(area_vs_triangleTime_log_fitting, Area_log[angle_0_index,area_small_0_index].T, TriangleTime_log[angle_0_index,area_small_0_index].T)[0]
 TriangleTime_log_fit = [area_vs_triangleTime_log_fitting(x,a,b) for x in Area_log[angle_0_index,:].T]
@@ -396,7 +494,7 @@ def angle_vs_triangleTime_log_fitting(x, a, b): # function for the fitting
     return a*x + b
 
 
-area_data_0_3 = area_data.index(0.300201)
+# area_data_0_3 = area_data.index(0.300201)
 a,b = op.curve_fit(angle_vs_triangleTime_log_fitting, Angle[:,area_data_0_3].T, TriangleTime_log[:,area_data_0_3].T)[0]
 TriangleTime_log_fit_angle = [angle_vs_triangleTime_log_fitting(x,a,b) for x in Angle[:,area_data_0_3].T]
 a,b = op.curve_fit(angle_vs_triangleTime_log_fitting, Angle[:,area_data_0_3].T, TriangleTime_log_conforming[:,area_data_0_3].T)[0]
@@ -407,7 +505,6 @@ def plot_11_display():
     ax = fig.add_subplot(111)
     ax.plot(Angle[:,area_data_0_3], TriangleTime_log[:,area_data_0_3], label = "Without Conforming", color = "#6CB0D6")#, s = 3)
     # ax.plot(Angle[:,area_data_0_3], TriangleTime_log_fit_angle, label = "Without Conforming Fitting", color = "#0D4A70")
-
 
     ax.plot(Angle[:,area_data_0_3], TriangleTime_log_conforming[:,area_data_0_3], label = "With Conforming", color = "#FD8D3C")#, s = 3)
     # ax.plot(Angle[:,area_data_0_3], TriangleTime_log_conforming_fit_angle, label = "With Conforming Fitting", color = "#810026")
@@ -422,18 +519,56 @@ def plot_11_display():
 
 ######## Plot 12
 # Triangle Time vs Point number
+def area_vs_triangleTime_log_fitting(x, a, b): # function for the fitting
+    return a*x + b
+
+
+point_small_2_index = [i for i, v in enumerate(PointsNum_log[angle_0_index,:]) if v > 3]
+a,b = op.curve_fit(area_vs_triangleTime_log_fitting, PointsNum_log[angle_0_index,point_small_2_index].T, TriangleTime_log[angle_0_index,point_small_2_index].T)[0]
+TriangleTime_log_fit_points_log = [area_vs_triangleTime_log_fitting(x,a,b) for x in PointsNum_log[angle_0_index,:].T]
+TriangleTime_log_fit_points_log_fun =  '$' +'{:.4}'.format(a)+"x " + '{:+.4}'.format(b)+ '$'
+a,b = op.curve_fit(area_vs_triangleTime_log_fitting, PointsNum_log[angle_0_index,point_small_2_index].T, TriangleTime_log_conforming[angle_0_index,point_small_2_index].T)[0]
+TriangleTime_log_conforming_fit_points_log = [area_vs_triangleTime_log_fitting(x,a,b) for x in PointsNum_log[angle_0_index,:].T]
+
+
+
 def plot_12_display():
-    fig = plot.figure("Points Number Vs Triangle Time",figsize=(21/2.54,9/2.54),dpi=200)
+    print(TriangleTime_log_fit_points_log_fun)
+
+    fig = plot.figure("Points Number Vs Triangle Time Log",figsize=(21/2.54,9/2.54),dpi=200)
     ax = fig.add_subplot(111)
     ax.scatter(PointsNum_log[angle_0_index,:], TriangleTime_log[angle_0_index,:], s= 1, label = "Without Conforming", color = "#6CB0D6")#, s = 3)
-    # ax.plot(Angle[:,area_data_0_3], TriangleTime_log_fit_angle, label = "Without Conforming Fitting", color = "#0D4A70")
-
-
+    ax.plot(PointsNum_log[angle_0_index,:], TriangleTime_log_fit_points_log, label = "Without Conforming Fitting", color = "#0D4A70")
+    # ax.scatter(PointsNum_log[angle_20_index,:], TriangleTime_log[angle_20_index,:], s= 1, label = "Without Conforming", color = "#6CB0D6")#, s = 3)
+ 
     ax.scatter(PointsNum_log[angle_0_index,:], TriangleTime_log_conforming[angle_0_index,:],s= 1,  label = "With Conforming", color = "#FD8D3C")#, s = 3)
-    # ax.plot(Angle[:,area_data_0_3], TriangleTime_log_conforming_fit_angle, label = "With Conforming Fitting", color = "#810026")
+    ax.plot(PointsNum_log[angle_0_index,:], TriangleTime_log_conforming_fit_points_log, label = "With Conforming Fitting", color = "#810026")
+    # ax.scatter(PointsNum_log[angle_20_index,:], TriangleTime_log_conforming[angle_20_index,:],s= 1,  label = "With Conforming", color = "#FD8D3C")#, s = 3)
+    
     ax.legend()
 
-    plot.xlabel('Points number in dB',size=11)
+    plot.xlabel('Points number (dB)',size=11)
+    plot.ylabel('Triangle Time ($dB \mu s$)',size=11)
+
+    plot.grid()
+    plot.tight_layout()
+
+
+def plot_12_1_display():
+    fig = plot.figure("Points Number Vs Triangle Time (With and Without Conforming)",figsize=(21/2.54,9/2.54),dpi=200)
+    ax = fig.add_subplot(111)
+
+    for i in range(20):
+        
+        angle_i_index = angle_data.index(i)
+        ax.scatter(PointsNum_log[angle_i_index,:], TriangleTime_log[angle_i_index,:], s= 1, label = "Without Conforming", color = "#6CB0D6")#, s = 3)
+        ax.scatter(PointsNum_log[angle_i_index,:], TriangleTime_log_conforming[angle_i_index,:],s= 1,  label = "With Conforming", color = "#FD8D3C")#, s = 3)
+
+    
+    
+    # ax.legend()
+
+    plot.xlabel('Points number (dB)',size=11)
     plot.ylabel('Triangle Time ($dB \mu s$)',size=11)
 
     plot.grid()
@@ -441,19 +576,65 @@ def plot_12_display():
 
 
 
+######## Plot 12
+# Triangle Time vs Point number
+def pointsNum_vs_triangleTime_fitting(x, a, b, c): # function for the fitting
+    return a*x*np.log10(x) + b * x + c
+
+
+# point_small_2_index = [i for i, v in enumerate(PointsNum_log[angle_0_index,:]) if v > 3]
+a,b,c = op.curve_fit(pointsNum_vs_triangleTime_fitting, PointsNum[angle_0_index,point_small_2_index].T, TriangleTime[angle_0_index,point_small_2_index].T)[0]
+TriangleTime_fit_points = [pointsNum_vs_triangleTime_fitting(x,a,b,c) for x in PointsNum[angle_0_index,:].T]
+TriangleTime_fit_points_fun =  '$' +'{:.4}'.format(a)+"x " + '{:+.4}'.format(b) + "x" + '{:+.4}'.format(c) + '$'
+a,b,c = op.curve_fit(pointsNum_vs_triangleTime_fitting, PointsNum[angle_0_index,point_small_2_index].T, TriangleTime_conforming[angle_0_index,point_small_2_index].T)[0]
+TriangleTime_conforming_fit_points = [pointsNum_vs_triangleTime_fitting(x,a,b,c) for x in PointsNum[angle_0_index,:].T]
+TriangleTime_conforming_fit_points_fun =  '$' +'{:.4}'.format(a)+"x " + '{:+.4}'.format(b) + "x" + '{:+.4}'.format(c) + '$'
+
+
+def plot_13_display():
+    print(TriangleTime_fit_points_fun)
+    print(TriangleTime_conforming_fit_points_fun)
+
+    fig = plot.figure("Points Number Vs Triangle Time",figsize=(21/2.54,9/2.54),dpi=200)
+    ax = fig.add_subplot(111)
+    ax.scatter(PointsNum[angle_0_index,:], TriangleTime[angle_0_index,:], s= 1, label = "Without Conforming", color = "#6CB0D6")#, s = 3)
+    # ax.plot(PointsNum[angle_0_index,:], TriangleTime_fit_points, label = "Without Conforming Fitting", color = "#0D4A70")
+    ax.plot(PointsNum[angle_0_index,:], TriangleTime_fit_points, color = "#0D4A70")
+    # ax.scatter(PointsNum_log[angle_20_index,:], TriangleTime_log[angle_20_index,:], s= 1, label = "Without Conforming", color = "#6CB0D6")#, s = 3)
+ 
+    ax.scatter(PointsNum[angle_0_index,:], TriangleTime_conforming[angle_0_index,:],s= 1,  label = "With Conforming", color = "#FD8D3C")#, s = 3)
+    # ax.plot(PointsNum[angle_0_index,:], TriangleTime_conforming_fit_points, label = "With Conforming Fitting", color = "#810026")
+    ax.plot(PointsNum[angle_0_index,:], TriangleTime_conforming_fit_points, color = "#810026")
+    # ax.scatter(PointsNum_log[angle_20_index,:], TriangleTime_log_conforming[angle_20_index,:],s= 1,  label = "With Conforming", color = "#FD8D3C")#, s = 3)
+    
+    ax.legend()
+
+    plot.xlabel('Points number',size=11)
+    plot.ylabel('Triangle Time ($ \mu s$)',size=11)
+
+    plot.grid()
+    plot.tight_layout()
 
 if __name__ == "__main__":
-    plot_1_display()
-    plot_2_display()
-    plot_3_display()
-    plot_4_display()
-    plot_5_display()
-    plot_6_display()
-    plot_7_display()
-    plot_8_display()
-    plot_9_display()
-    plot_10_display()
-    plot_11_display()
+    # plot_1_display()
+    # plot_2_display()
+    # plot_3_display()
+    # plot_4_display()
+    # plot_5_display()
+    # plot_6_display()
+    # plot_7_display()
+    # plot_8_display()
+    # plot_9_display()
+    # plot_10_display()
+    # plot_11_display()
 
+    # plots analysis the points number vs area | angle
+    plot_8_1_display()
+    plot_9_1_display()
+
+    # plots analysis the triangle vs time
+    # plot_12_1_display()
+    plot_12_display()
+    plot_13_display()
 
     plot.show()

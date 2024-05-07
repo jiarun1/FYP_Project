@@ -240,6 +240,7 @@ int main(int argc, char** argv)
         path_planing.calculateShortestPath(commandInput.startPoint, commandInput.endPoint);
     } else if (commandInput.parallel == 2) {
         path_planing.calculateShortestPath_Bidirectional(commandInput.startPoint, commandInput.endPoint);
+        // path_planing.calculateShortestPathInParallel(commandInput.startPoint, commandInput.endPoint);
     }
 
 

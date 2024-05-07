@@ -19,16 +19,20 @@ realDistance = 20*np.sqrt(2)
 
 # read the first set of data
 data_results = [pd.read_csv("../../tests/largeSquareMapTest/V3_3_1_Code_Test.csv"),
-                pd.read_csv("../../tests/largeSquareMapTest/V6_3_1_Code_Test.csv")]
+                pd.read_csv("../../tests/largeSquareMapTest/V6_3_1_Code_Test.csv"),
+                pd.read_csv("../../tests/largeSquareMapTest/V6_4_1_Code_Test.csv") ]
 
 data_titles = ["Normal Dijkstra's",
-               "Bidirectional Dijkstra's"]
+               "Bidirectional Dijkstra's",
+               "Parallel Bidirectional Dijkstra's"]
 
 data_colors = ["#6CB0D6",
-               "#FD8D3C"]
+               "#FD8D3C",
+               "#b49e89"]
 
 data_colors2 = ["#0D4A70",
-                "#810026"]
+                "#810026",
+                "#47254b"]
 
 
 def data_1_Fit(x, a, b):
@@ -37,6 +41,7 @@ def data_2_Fit(x, a, b):
     return a*x*x + b
 
 data_fit_functions = [data_1_Fit, 
+                      data_1_Fit,
                       data_1_Fit]
 
 
@@ -131,7 +136,7 @@ for i in range(len(data_results)):
 def plot_1():
 
     #### plot in average with percentage
-    fig = plot.figure("Paralle compare",figsize=(21/2.54,9/2.54),dpi=200)
+    fig = plot.figure("Bidirectional Analysis",figsize=(21/2.54,9/2.54),dpi=200)
     ax = fig.add_subplot(111)
     
 
@@ -160,7 +165,7 @@ def plot_1():
 def plot_2():
 
     #### plot in average with percentage
-    fig = plot.figure("Paralle compare in log",figsize=(21/2.54,9/2.54),dpi=200)
+    fig = plot.figure("Bidirectional Analysis in Log",figsize=(21/2.54,9/2.54),dpi=200)
     ax = fig.add_subplot(111)
     
 

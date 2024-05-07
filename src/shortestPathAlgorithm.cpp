@@ -19,7 +19,11 @@ shortestPathAlgorithm::shortestPathAlgorithm()
 
 shortestPathAlgorithm::~shortestPathAlgorithm()
 {
-
+    if((path_point_num != 0) && (path != nullptr))
+    {   
+        delete[] path;
+        path = nullptr;
+    }
 }
 
 

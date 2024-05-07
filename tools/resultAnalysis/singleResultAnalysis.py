@@ -9,8 +9,9 @@ from scipy.ndimage import gaussian_filter
 
 ################ Data reading ##############
 
-# read the first set of data
+# # read the first set of data
 data_set = pd.read_csv("../../tests/squareMapTest/V3_3_1_Code_Test.csv")
+# data_set = pd.read_csv("../../tests/RuggedMapTest/V6_4_1_Code_Test.csv")
 
 minimum_distance = 20*np.sqrt(2)
 

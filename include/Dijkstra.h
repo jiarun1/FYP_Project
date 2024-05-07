@@ -56,7 +56,7 @@ public:
     POINT_NUM_MAX reachedBy; ///< use -1 to indicate the point has not reached by any start points
 
     pointInfoContainer():
-        heap_data(nullptr)
+        heap_data(nullptr),reachedBy(0)
     {
 
     }
@@ -107,12 +107,14 @@ public:
 
 
 private:
+
     /// @brief find the shortest path from the central point to all other point in the map
     /// @param centralPoint the central point of Dijkstra algorithm
     /// @note  this function would stop immediately when finding a point that has been reached
-    void findPathFrom( POINT_NUM_MAX centralPoint);
+    void findPathFrom(pointInfoContainer* points_info, point_c* reached_point, POINT_NUM_MAX centralPoint, int thread_label);
 
-    pointInfoContainer* pointInfos;
+
+    // pointInfoContainer* pointInfos;
     
 };
 

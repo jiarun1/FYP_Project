@@ -178,6 +178,20 @@ triangle_c::triangle_c(point_c* node_1, point_c* node_2, point_c* node_3):
 
 triangle_c::~triangle_c()
 {
+    // if(fermatPoint!= nullptr)
+    // {delete fermatPoint;}
+
+    // if(middlePoint!= nullptr)
+    // {delete middlePoint;}
+
+    // if(circumCenter!= nullptr)
+    // {delete circumCenter;}
+
+    // if(orthoCenter!= nullptr)
+    // {delete orthoCenter;}
+
+    // if(inCenter!= nullptr)
+    // {delete inCenter;}
 }
 
 void triangle_c::initConnections()

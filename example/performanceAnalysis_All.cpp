@@ -36,6 +36,7 @@ public:
     unsigned int endPoint;
 
     int parallel;
+    bool bidirectional;
 
     /// Settings for the area mappings
     /// @brief the maximum area set for the triangle
@@ -68,7 +69,7 @@ public:
 public:
     /// @brief Enter the data from the command lines
     inputParameters(int argc = 0, char** argv = nullptr):
-        parallel(1),
+        parallel(1),bidirectional(false),
         MapPath(DefaultMapPath),MapName(DefaultMapName),
         startPoint(START_POINT),endPoint(END_POINT),
         areaSet(DefaultAreaSet),
@@ -76,7 +77,7 @@ public:
         display(false)
     {
         int command;
-        const char *optstring = "hp:f:s:e:V:MFCOI"; 
+        const char *optstring = "hp:bf:s:e:V:MFCOI"; 
         std::string parameter_string;
         while ((command = getopt(argc, argv, optstring)) != -1) {
             switch (command) {
@@ -85,6 +86,7 @@ public:
                               << "Options and arguments:\n"
                               << "-h          : help\n"
                               << "-p          : number of parallel thread \n"
+                              << "-b          : bidirectional dijkstra start \n"
                               << "-f filepath : set the map path \n"
                               << "-M          : (upper letter) add the middle points to the map \n"
                               << "-F          : (upper letter) add the fermat points to the map \n"
@@ -104,6 +106,9 @@ public:
                 case 'p':
                     parameter_string = std::string(optarg);
                     parallel = std::stoi(parameter_string);
+                    break;
+                case 'b':
+                    bidirectional = true;
                     break;
                 case 's':
                     parameter_string = std::string(optarg);
@@ -231,13 +236,21 @@ int main(int argc, char** argv)
     std::cout << commandInput;
 
     // //TODO: bug test
-    commandInput.parallel = 1;
-    commandInput.Version = std::string("V3_3_1");
-    commandInput.MapName = "largeSquareMapTest";
-    commandInput.MapPath = "../tests/largeSquareMapTest";
+    commandInput.parallel = 2;
+    // commandInput.Version = std::string("V6_3_3");
+    // commandInput.MapName = "largeSquareMapTest";
+    // commandInput.MapPath = "../tests/largeSquareMapTest";
+    // commandInput.MapName = "RuggedMapTest";
+    // commandInput.MapPath = "../tests/RuggedMapTest";
+    commandInput.Version = std::string("V10");
+    commandInput.MapName = "mazeMapTest";
+    commandInput.MapPath = "../tests/mazeMapTest";
     commandInput.LogPathAndName = commandInput.MapPath + "/" + commandInput.Version + "_Code_Test.csv";
-    commandInput.startPoint = 5;
-    commandInput.endPoint = 6;  
+    commandInput.startPoint = 1;
+    commandInput.endPoint = 22;  
+    // commandInput.startPoint = 6;
+    // commandInput.endPoint = 7;  
+    commandInput.middlePoint = true;
 
     // call the triangle with parameters
     triangleCommand triangle(TrianglePath);
@@ -270,7 +283,8 @@ int main(int argc, char** argv)
     float angle_minius = 1.0;
     int count_loop = 0;
     float max_area = 20;
-    float min_area = 3e-3;
+    // float min_area = 3e-3;
+    float min_area = 0.2;
     float area_divide = 1.0/50.0+1;
 
     auto start_time = std::chrono::high_resolution_clock::now();
@@ -358,7 +372,9 @@ int main(int argc, char** argv)
                     path_planing->calculateShortestPath(commandInput.startPoint, commandInput.endPoint);
                 } else if (commandInput.parallel == 2)
                 {
-                    path_planing->calculateShortestPath_Bidirectional(commandInput.startPoint, commandInput.endPoint);
+                    path_planing->calculateShortestPathInParallel(commandInput.startPoint, commandInput.endPoint);
+                // } else if (commandInput.bidirectional == true){
+                    // path_planing->calculateShortestPath_Bidirectional(commandInput.startPoint, commandInput.endPoint);
                 }
 
 
@@ -382,6 +398,8 @@ int main(int argc, char** argv)
                 triangle.cleanTmpFiles(commandInput.MapPath + "/" + commandInput.MapName +".poly", false);
 
                 delete path_planing;
+
+                // usleep(100000);
             }
         }
     }
