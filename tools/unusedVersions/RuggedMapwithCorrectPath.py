@@ -200,11 +200,13 @@ def main(polyPath):
     plt.axis("off")
 
 
-    h1, = plt.plot([-10, -8],[5, -3], color = "#B28DFF", linewidth = 2)
-    plt.plot([-6, -4],[-3, -1], color = "#B28DFF", linewidth = 2)
-    plt.plot([0, 2],[-1, -3], color = "#B28DFF", linewidth = 2)
-    plt.plot([4, 6],[-3, 3], color = "#B28DFF", linewidth = 2)
-    plt.plot([8, 10],[3, -5], color = "#B28DFF", linewidth = 2)
+    h1, = plt.plot([-7, -9],[0, 1], color = "#B28DFF", linewidth = 2)
+    h1, = plt.plot([-9, -9],[1, 2], color = "#B28DFF", linewidth = 2)
+    plt.plot([-9, -1],[2, 3], color = "#B28DFF", linewidth = 2)
+    plt.plot([-1, 3],[3, 1], color = "#B28DFF", linewidth = 2)
+    plt.plot([3, 7],[1, 1], color = "#B28DFF", linewidth = 2)
+    plt.plot([7, 8],[1, 0], color = "#B28DFF", linewidth = 2)
+    plt.plot([8, 9],[0, 0], color = "#B28DFF", linewidth = 2)
 
     # plot polygens
     for i in range(len(polygons)):
@@ -260,8 +262,8 @@ def main(polyPath):
 
 
 if __name__ == "__main__":
-    os.system("cd ../../bin && ./ShortestPathPlanning -f ../tests/mazeMapTest/mazeMapTest.poly -s 1 -e 22 -a 1 -M")
-    filepath = "../../tests/mazeMapTest/Result.poly"
+    os.system("cd ../../bin && ./ShortestPathPlanning -f ../tests/RuggedMapTest/RuggedMapTest.poly -M -s 5 -e 6 -a 0.9")
+    filepath = "../../tests/RuggedMapTest/Result.poly"
     main(filepath)
 
 

@@ -236,21 +236,35 @@ int main(int argc, char** argv)
     std::cout << commandInput;
 
     // //TODO: bug test
-    commandInput.parallel = 2;
+    // for ruggled map
+    // commandInput.Version = std::string("V10_1");    
+    // commandInput.MapName = "RuggedMapTest";
+    // commandInput.MapPath = "../tests/RuggedMapTest";
+    // commandInput.startPoint = 5;
+    // commandInput.endPoint = 6;  
+
+    // for large map
     // commandInput.Version = std::string("V6_3_3");
     // commandInput.MapName = "largeSquareMapTest";
     // commandInput.MapPath = "../tests/largeSquareMapTest";
-    // commandInput.MapName = "RuggedMapTest";
-    // commandInput.MapPath = "../tests/RuggedMapTest";
-    commandInput.Version = std::string("V10");
-    commandInput.MapName = "mazeMapTest";
-    commandInput.MapPath = "../tests/mazeMapTest";
-    commandInput.LogPathAndName = commandInput.MapPath + "/" + commandInput.Version + "_Code_Test.csv";
-    commandInput.startPoint = 1;
-    commandInput.endPoint = 22;  
     // commandInput.startPoint = 6;
     // commandInput.endPoint = 7;  
-    commandInput.middlePoint = true;
+
+    // for maze map
+    commandInput.Version = std::string("V10_1");
+    commandInput.MapName = "mazeMapTest";
+    commandInput.MapPath = "../tests/mazeMapTest";
+    commandInput.startPoint = 1;
+    commandInput.endPoint = 22;  
+
+
+    // commandInput.middlePoint = true;
+    commandInput.incenter = true;
+    commandInput.LogPathAndName = commandInput.MapPath + "/" + commandInput.Version + "_Code_Test.csv";
+    commandInput.parallel = 2;
+
+
+
 
     // call the triangle with parameters
     triangleCommand triangle(TrianglePath);

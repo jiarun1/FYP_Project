@@ -65,9 +65,15 @@ data_1_fitResult = [dataSet_1_Fit(x,a_1,c_1) for x in data_1_x]
 data_2_fitResult = [dataSet_2_Fit(x,a_2,b_2,c_2) for x in data_2_x]
 data_3_fitResult = [dataSet_3_Fit(x,a_3,c_3) for x in data_3_x]
 
-data_1_fitFunction =  str(a_1)+"x^2 +" + str(c_1)
-data_2_fitFunction =  str(a_2)+"x^2 +" + str(b_2) + "xlog(x)+" + str(c_2)
-data_3_fitFunction =  str(a_3)+"xlog(x) +" + str(c_3)
+# data_1_fitFunction =  str(a_1)+"x^2 +" + str(c_1)
+# data_2_fitFunction =  str(a_2)+"x^2 +" + str(b_2) + "xlog(x)+" + str(c_2)
+# data_3_fitFunction =  str(a_3)+"xlog(x) +" + str(c_3)
+
+
+data_1_fitFunction =  "$" + "{0:.2f}".format(a_1)+ "x^2 + " + "{0:.2f}".format(c_1) + "$"
+data_2_fitFunction =  "$" + "{0:.2}".format(a_2)+ "x^2 + " + "{0:.2f}".format(b_2) + "xlog(x) +"+ "{0:.2f}".format(c_2) + "$"
+data_3_fitFunction =  "$" + "{0:.2f}".format(a_3)+ "xlog(x) + " + "{0:.2f}".format(c_3) + "$"
+
 
 print("Data 1: " , data_1_fitFunction)
 print("Data 2: " , data_2_fitFunction)
@@ -96,15 +102,15 @@ plot.figure("Mapping Plot",figsize=(21/2.54,9/2.54),dpi=200)
 # plot.plot(data_3_x, data_3_fitResult, label = data_set_3_version_string + " Curve Fitted Result",color = set_3_defaultColor[1])
 # # Data Set 1
 plot.scatter(data_1_x,data_1_y, label = data_set_1_version_string, s = 3, color = set_1_defaultColor[0])
-plot.plot(data_1_x, data_1_fitResult,color = set_1_defaultColor[1])
+plot.plot(data_1_x, data_1_fitResult, label = data_1_fitFunction,color = set_1_defaultColor[1])
 
 # Data Set 2
 plot.scatter(data_2_x,data_2_y, label = data_set_2_version_string , s = 3, color = set_2_defaultColor[0])
-plot.plot(data_2_x, data_2_fitResult,color = set_2_defaultColor[1])
+plot.plot(data_2_x, data_2_fitResult, label = data_2_fitFunction,color = set_2_defaultColor[1])
 
 # Data Set 3
 plot.scatter(data_3_x,data_3_y, label = data_set_3_version_string, s = 3, color = set_3_defaultColor[0])
-plot.plot(data_3_x, data_3_fitResult,color = set_3_defaultColor[1])
+plot.plot(data_3_x, data_3_fitResult, label = data_3_fitFunction,color = set_3_defaultColor[1])
 
 plot.title('Point Number Vs Shortest Path Execution Time',fontsize=10)
 plot.legend(fontsize = 10)

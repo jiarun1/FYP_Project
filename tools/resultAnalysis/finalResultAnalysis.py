@@ -10,27 +10,37 @@ from mpl_toolkits.axes_grid1.inset_locator import inset_axes
 
 ################ Data reading ##############
 
-# # read the first set of data
-# data_set = pd.read_csv("../../tests/mazeMapTest/V10_Code_Test.csv")
-data_set = pd.read_csv("../../tests/squareMapTest/V3_3_1_Code_Test.csv")
-
-# minimum_distance = np.sqrt(np.square(2)+np.square(8)) + \
-#                    2 + \
-#                    np.sqrt(np.square(2)+np.square(2)) + \
-#                    4 + \
-#                    np.sqrt(np.square(2)+np.square(2)) + \
-#                    2 + \
-#                    np.sqrt(np.square(2)+np.square(6)) + \
-#                    2 + \
-#                    np.sqrt(np.square(2)+np.square(8))
+# read the first set of data
+data_set = pd.read_csv("../../tests/mazeMapTest/V10_1_Code_Test.csv")
+minimum_distance = np.sqrt(np.square(2)+np.square(8)) + \
+                   2 + \
+                   np.sqrt(np.square(2)+np.square(2)) + \
+                   4 + \
+                   np.sqrt(np.square(2)+np.square(2)) + \
+                   2 + \
+                   np.sqrt(np.square(2)+np.square(6)) + \
+                   2 + \
+                   np.sqrt(np.square(2)+np.square(8))
 
 
-minimum_distance = 20 * np.sqrt(2)
+# data_set = pd.read_csv("../../tests/RuggedMapTest/V10_1_Code_Test.csv")
+# minimum_distance = np.sqrt(np.square(2)+np.square(1)) + \
+#                    np.sqrt(np.square(0)+np.square(1)) + \
+#                    np.sqrt(np.square(8)+np.square(1)) + \
+#                    np.sqrt(np.square(4)+np.square(2)) + \
+#                    np.sqrt(np.square(4)+np.square(0)) + \
+#                    np.sqrt(np.square(1)+np.square(1)) + \
+#                    np.sqrt(np.square(1)+np.square(0))
+                   
+
+
+# data_set = pd.read_csv("../../tests/squareMapTest/V3_3_1_Code_Test.csv")
+# minimum_distance = 20 * np.sqrt(2)
 
 # Datas
 area_Set = data_set.loc[:,'Area Set'].values
 angle_Set = data_set.loc[:,'Angle Set'].values
-results = data_set.loc[:,'Result Distance'].values / minimum_distance * 100
+results = data_set.loc[:,'Result Distance'].values / minimum_distance * 100 - 100
 points_num = data_set.loc[:,'Points Num'].values
 triangle_time = data_set.loc[:,'Mapping Time(us)'].values
 conversion_time = data_set.loc[:,'Convertion Time(us)'].values
@@ -127,6 +137,19 @@ TriangleTime_log_conforming = np.log10(TriangleTime_conforming)
 TriangleTime_min = 0
 TriangleTime_max = 750000
 
+
+###### Conversion Time
+ConversionTime = conversion_time_data.T
+ConversionTime_conforming = conversion_time_data_conforming.T
+ConversionTime_log = np.log10(ConversionTime)
+ConversionTime_log_conforming = np.log10(ConversionTime_conforming)
+###### Triangle Time
+PathPlanningTime = pathplanning_time_data.T
+PathPlanningTime_conforming = pathplanning_time_data_conforming.T
+PathPlanningTime_log = np.log10(PathPlanningTime)
+PathPlanningTime_log_conforming = np.log10(PathPlanningTime_conforming)
+
+
 ###### Total Time
 
 
@@ -190,28 +213,28 @@ Area_log_Average_conforming, Result_average_conforming, Result_Std_conforming = 
 
 
 def plot_1_display():
-    fig = plot.figure("Mapping Area Vs Average Result",figsize=(9/2.54,9/2.54),dpi=200)
+    fig = plot.figure("Mapping Area Vs Average Result",figsize=(9/2.54,7/2.54),dpi=200)
     ax = fig.add_subplot(111)
 
     # line1_handle = ax.scatter(x_data, y1_data,label="Without Conforming",s=1, color = "#6CB0D6")
     ax.plot(Area_log_Average, Result_average, color="#0D4A70",label = "Average Results")
     # line3_handle = ax.fill_between(Area_log_Average, np.array(Result_average) - Result_Std, np.array(Result_average) + Result_Std, color="#0D4A70", alpha=0.2, label='Standard Deviation')
-    ax.fill_between([-10,10], 0, 104, color="#0D4A70", alpha=0.2, label='Specification Range')
+    ax.fill_between([-10,10], -10, 2, color="#0D4A70", alpha=0.2, label='Specification Range')
 
     plot.legend(ncol=1, loc = 'upper left')
     plot.xlabel('Max area settings',size=11)
-    plot.ylabel('Minimum Distance (%)',size=11)
+    plot.ylabel('Differences $\Delta$ (%)',size=11)
 
     ax.set_xticks(([-2.5, -2, -1.5, -1, -0.5, 0, 0.5])) 
     ax.set_xticklabels(['$10^{-2.5}$', '$10^{-2}$', '$10^{-1.5}$','$10^{-1}$', '$10^{-0.5}$', '$10^{ 0}$', '$10^{0.5}$']) 
     ax.set_xlim([-2.75,0.75])
-    ax.set_ylim([101.5,109.5])
+    ax.set_ylim([-0.5,3.5])
     plot.grid()
     plot.tight_layout()
 
 
 def plot_2_display():
-    fig = plot.figure("Mapping Area Vs Average STD",figsize=(9/2.54,9/2.54),dpi=200)
+    fig = plot.figure("Mapping Area Vs Average STD",figsize=(9/2.54,7/2.54),dpi=200)
     ax = fig.add_subplot(111)
 
     ax.plot(Area_log_Average, Result_Std, color="#0D4A70", label='Standard Deviation')
@@ -222,190 +245,142 @@ def plot_2_display():
     # plot.legend(ncol=3, loc = 'upper left')
     plot.legend(ncol=1, loc = 'upper left')
     plot.xlabel('Max area settings',size=11)
-    plot.ylabel('Minimum Distance (%)',size=11)
+    plot.ylabel('Differences $\Delta$ (%)',size=11)
 
     ax.set_xticks(([-2.5, -2, -1.5, -1, -0.5, 0, 0.5])) 
     ax.set_xticklabels(['$10^{-2.5}$', '$10^{-2}$', '$10^{-1.5}$','$10^{-1}$', '$10^{-0.5}$', '$10^{ 0}$', '$10^{0.5}$']) 
     ax.set_xlim([-2.75,0.75])
-    ax.set_ylim([-0.125,2])
+    ax.set_ylim([-0.125,0.75])
     plot.grid()
     plot.tight_layout()
 
 
 
-##### Plot 10
-def area_vs_total_log_fitting(x, a, b): # function for the fitting
-    return a*x + b
+##### Plot 3
+def area_vs_totalTime_log_fitting(x, a, b): # function for the fitting
+    return a * x + b
 
 angle_0_index = angle_data.index(0)
 angle_20_index = angle_data.index(20)
 area_small_0_index = [i for i, v in enumerate(Area_log[angle_0_index,:]) if v < 0]
-a,b = op.curve_fit(area_vs_total_log_fitting, Area_log[angle_0_index,area_small_0_index].T, TriangleTime_log[angle_0_index,area_small_0_index].T)[0]
-TriangleTime_log_fit = [area_vs_triangleTime_log_fitting(x,a,b) for x in Area_log[angle_0_index,:].T]
-a,b = op.curve_fit(area_vs_total_log_fitting, Area_log[angle_0_index,area_small_0_index].T, TriangleTime_log_conforming[angle_0_index,area_small_0_index].T)[0]
-TriangleTime_log_conforming_fit = [area_vs_triangleTime_log_fitting(x,a,b) for x in Area_log[angle_0_index,:].T]
+a,b = op.curve_fit(area_vs_totalTime_log_fitting, Area_log[angle_0_index,area_small_0_index].T, TotalTime_log[angle_0_index,area_small_0_index].T)[0]
+TotalTime_log_fit = [area_vs_totalTime_log_fitting(x,a,b) for x in Area_log[angle_0_index,:].T]
+TotalTime_log_fit_points_fun =  '$' +'{:.4}'.format(a)+"x " + '{:+.4}'.format(b) + "$"
+a,b = op.curve_fit(area_vs_totalTime_log_fitting, Area_log[angle_0_index,area_small_0_index].T, TotalTime_log_conforming[angle_0_index,area_small_0_index].T)[0]
+TotalTime_log_conforming_fit = [area_vs_totalTime_log_fitting(x,a,b) for x in Area_log[angle_0_index,:].T]
 # area_pointNum_fit_function = str((a))+"/x+" +str(b)
 # print("Mapping area vs point information:", area_pointNum_fit_function)
 
-def plot_10_display():
-    fig = plot.figure("Mapping Area Vs Triangle Time",figsize=(21/2.54,9/2.54),dpi=200)
+def plot_3_display():
+    fig = plot.figure("Mapping Area Vs Total Time",figsize=(9/2.54,7/2.54),dpi=200)
     ax = fig.add_subplot(111)
-    ax.scatter(Area_log[angle_0_index,:], TriangleTime_log[angle_0_index,:], label = "Without Conforming", color = "#6CB0D6", s = 1)
-    ax.plot(Area_log[angle_0_index,:], TriangleTime_log_fit, label = "Without Conforming Fitting", color = "#0D4A70")
+    ax.scatter(Area_log[angle_0_index,:], TotalTime_log[angle_0_index,:], label = "Test Results", color = "#6CB0D6", s = 1)
+    ax.plot(Area_log[angle_0_index,:], TotalTime_log_fit, color = "#0D4A70")
 
+    ax.fill_between([-10,10], 0, np.log10(1e5), color="#0D4A70", alpha=0.2, label='Specification Range')
 
-    ax.scatter(Area_log[angle_0_index,:], TriangleTime_log_conforming[angle_0_index,:], label = "With Conforming", color = "#FD8D3C", s = 1)
-    ax.plot(Area_log[angle_0_index,:], TriangleTime_log_conforming_fit, label = "With Conforming Fitting", color = "#810026")
     ax.legend()
 
     plot.xlabel('Max area settings',size=11)
-    plot.ylabel('Triangle Time ($dB \mu s$)',size=11)
+    plot.ylabel('Total Time ($dB \mu s$)',size=11)
 
     ax.set_xticks(([-2.5, -2, -1.5, -1, -0.5, 0, 0.5])) 
     ax.set_xticklabels(['$10^{-2.5}$', '$10^{-2}$', '$10^{-1.5}$','$10^{-1}$', '$10^{-0.5}$', '$10^{ 0}$', '$10^{0.5}$']) 
+    ax.set_xlim([-2.75,0.75])
+    ax.set_ylim([1.75,6.25])
     plot.grid()
     plot.tight_layout()
 
 
 
-##### Plot 11
-#TODO: add the code for angle settings vs triangle time
-def angle_vs_triangleTime_log_fitting(x, a, b): # function for the fitting
-    return a*x + b
 
-
-# area_data_0_3 = area_data.index(0.300201)
-a,b = op.curve_fit(angle_vs_triangleTime_log_fitting, Angle[:,area_data_0_3].T, TriangleTime_log[:,area_data_0_3].T)[0]
-TriangleTime_log_fit_angle = [angle_vs_triangleTime_log_fitting(x,a,b) for x in Angle[:,area_data_0_3].T]
-a,b = op.curve_fit(angle_vs_triangleTime_log_fitting, Angle[:,area_data_0_3].T, TriangleTime_log_conforming[:,area_data_0_3].T)[0]
-TriangleTime_log_conforming_fit_angle = [angle_vs_triangleTime_log_fitting(x,a,b) for x in Angle[:,area_data_0_3].T]
-
-def plot_11_display():
-    fig = plot.figure("Mapping Angle Vs Triangle Time",figsize=(21/2.54,9/2.54),dpi=200)
-    ax = fig.add_subplot(111)
-    ax.plot(Angle[:,area_data_0_3], TriangleTime_log[:,area_data_0_3], label = "Without Conforming", color = "#6CB0D6")#, s = 3)
-    # ax.plot(Angle[:,area_data_0_3], TriangleTime_log_fit_angle, label = "Without Conforming Fitting", color = "#0D4A70")
-
-    ax.plot(Angle[:,area_data_0_3], TriangleTime_log_conforming[:,area_data_0_3], label = "With Conforming", color = "#FD8D3C")#, s = 3)
-    # ax.plot(Angle[:,area_data_0_3], TriangleTime_log_conforming_fit_angle, label = "With Conforming Fitting", color = "#810026")
-    ax.legend()
-
-    plot.xlabel('Mapping Angle Settings',size=11)
-    plot.ylabel('Triangle Time ($dB \mu s$)',size=11)
-
-    plot.grid()
-    plot.tight_layout()
-
-
-######## Plot 12
+######## Plot 4
 # Triangle Time vs Point number
-def area_vs_triangleTime_log_fitting(x, a, b): # function for the fitting
-    return a*x + b
+# def pointsNum_vs_totalTime_fitting(x, a, b, c): # function for the fitting
+#     return a*x*np.log10(x) + b * x + c
+    # return a*x*x + b * x + c
+
+def pointsNum_vs_totalTime_fitting(x, a, b, c): # function for the fitting
+    # return a*x + b
+    return a*x*np.log10(x) + b * x  + c
+
+point_small_2_index = [i for i, v in enumerate(PointsNum[angle_0_index,:]) if v > 15000]
+a,b,c = op.curve_fit(pointsNum_vs_totalTime_fitting, PointsNum[angle_0_index,point_small_2_index].T, TotalTime[angle_0_index,point_small_2_index].T)[0]
+TotalTime_fit_points = [pointsNum_vs_totalTime_fitting(x,a,b,c) for x in PointsNum[angle_0_index,:].T]
+TotalTime_fit_points_fun =  '$' +'{:.2}'.format(a)+"xlog(x) " + '{:+.2}'.format(b) + "x" + '{:+.0f}'.format(c) + '$'
 
 
-point_small_2_index = [i for i, v in enumerate(PointsNum_log[angle_0_index,:]) if v > 3]
-a,b = op.curve_fit(area_vs_triangleTime_log_fitting, PointsNum_log[angle_0_index,point_small_2_index].T, TriangleTime_log[angle_0_index,point_small_2_index].T)[0]
-TriangleTime_log_fit_points_log = [area_vs_triangleTime_log_fitting(x,a,b) for x in PointsNum_log[angle_0_index,:].T]
-TriangleTime_log_fit_points_log_fun =  '$' +'{:.4}'.format(a)+"x " + '{:+.4}'.format(b)+ '$'
-a,b = op.curve_fit(area_vs_triangleTime_log_fitting, PointsNum_log[angle_0_index,point_small_2_index].T, TriangleTime_log_conforming[angle_0_index,point_small_2_index].T)[0]
-TriangleTime_log_conforming_fit_points_log = [area_vs_triangleTime_log_fitting(x,a,b) for x in PointsNum_log[angle_0_index,:].T]
+def plot_4_display():
+    print(TotalTime_fit_points_fun)
+
+    from matplotlib.ticker import ScalarFormatter
+
+    formatter = ScalarFormatter(useOffset=False)
+    formatter.set_scientific(True)
+    formatter.set_powerlimits((-5,5))
 
 
-
-def plot_12_display():
-    print(TriangleTime_log_fit_points_log_fun)
-
-    fig = plot.figure("Points Number Vs Triangle Time Log",figsize=(21/2.54,9/2.54),dpi=200)
+    fig = plot.figure("Points Number Vs Total Time",figsize=(9/2.54,7/2.54),dpi=200)
     ax = fig.add_subplot(111)
-    ax.scatter(PointsNum_log[angle_0_index,:], TriangleTime_log[angle_0_index,:], s= 1, label = "Without Conforming", color = "#6CB0D6")#, s = 3)
-    ax.plot(PointsNum_log[angle_0_index,:], TriangleTime_log_fit_points_log, label = "Without Conforming Fitting", color = "#0D4A70")
-    # ax.scatter(PointsNum_log[angle_20_index,:], TriangleTime_log[angle_20_index,:], s= 1, label = "Without Conforming", color = "#6CB0D6")#, s = 3)
- 
-    ax.scatter(PointsNum_log[angle_0_index,:], TriangleTime_log_conforming[angle_0_index,:],s= 1,  label = "With Conforming", color = "#FD8D3C")#, s = 3)
-    ax.plot(PointsNum_log[angle_0_index,:], TriangleTime_log_conforming_fit_points_log, label = "With Conforming Fitting", color = "#810026")
-    # ax.scatter(PointsNum_log[angle_20_index,:], TriangleTime_log_conforming[angle_20_index,:],s= 1,  label = "With Conforming", color = "#FD8D3C")#, s = 3)
-    
-    ax.legend()
-
-    plot.xlabel('Points number (dB)',size=11)
-    plot.ylabel('Triangle Time ($dB \mu s$)',size=11)
-
-    plot.grid()
-    plot.tight_layout()
-
-
-def plot_12_1_display():
-    fig = plot.figure("Points Number Vs Triangle Time (With and Without Conforming)",figsize=(21/2.54,9/2.54),dpi=200)
-    ax = fig.add_subplot(111)
-
-    for i in range(20):
-        
-        angle_i_index = angle_data.index(i)
-        ax.scatter(PointsNum_log[angle_i_index,:], TriangleTime_log[angle_i_index,:], s= 1, label = "Without Conforming", color = "#6CB0D6")#, s = 3)
-        ax.scatter(PointsNum_log[angle_i_index,:], TriangleTime_log_conforming[angle_i_index,:],s= 1,  label = "With Conforming", color = "#FD8D3C")#, s = 3)
-
-    
-    
-    # ax.legend()
-
-    plot.xlabel('Points number (dB)',size=11)
-    plot.ylabel('Triangle Time ($dB \mu s$)',size=11)
-
-    plot.grid()
-    plot.tight_layout()
-
-
-
-######## Plot 13
-# Triangle Time vs Point number
-def pointsNum_vs_triangleTime_fitting(x, a, b, c): # function for the fitting
-    return a*x*np.log10(x) + b * x + c
-
-
-# point_small_2_index = [i for i, v in enumerate(PointsNum_log[angle_0_index,:]) if v > 3]
-a,b,c = op.curve_fit(pointsNum_vs_triangleTime_fitting, PointsNum[angle_0_index,point_small_2_index].T, TriangleTime[angle_0_index,point_small_2_index].T)[0]
-TriangleTime_fit_points = [pointsNum_vs_triangleTime_fitting(x,a,b,c) for x in PointsNum[angle_0_index,:].T]
-TriangleTime_fit_points_fun =  '$' +'{:.4}'.format(a)+"x " + '{:+.4}'.format(b) + "x" + '{:+.4}'.format(c) + '$'
-a,b,c = op.curve_fit(pointsNum_vs_triangleTime_fitting, PointsNum[angle_0_index,point_small_2_index].T, TriangleTime_conforming[angle_0_index,point_small_2_index].T)[0]
-TriangleTime_conforming_fit_points = [pointsNum_vs_triangleTime_fitting(x,a,b,c) for x in PointsNum[angle_0_index,:].T]
-TriangleTime_conforming_fit_points_fun =  '$' +'{:.4}'.format(a)+"x " + '{:+.4}'.format(b) + "x" + '{:+.4}'.format(c) + '$'
-
-
-def plot_13_display():
-    print(TriangleTime_fit_points_fun)
-    print(TriangleTime_conforming_fit_points_fun)
-
-    fig = plot.figure("Points Number Vs Triangle Time",figsize=(21/2.54,9/2.54),dpi=200)
-    ax = fig.add_subplot(111)
-    ax.scatter(PointsNum[angle_0_index,:], TriangleTime[angle_0_index,:], s= 1, label = "Without Conforming", color = "#6CB0D6")#, s = 3)
+    ax.scatter(PointsNum[angle_0_index,:], TotalTime[angle_0_index,:], s= 1, label = "Total Time Cost", color = "#6CB0D6")#, s = 3)
     # ax.plot(PointsNum[angle_0_index,:], TriangleTime_fit_points, label = "Without Conforming Fitting", color = "#0D4A70")
-    ax.plot(PointsNum[angle_0_index,:], TriangleTime_fit_points, color = "#0D4A70")
+    ax.plot(PointsNum[angle_0_index,:], TotalTime_fit_points, label= TotalTime_fit_points_fun,color = "#0D4A70")
     # ax.scatter(PointsNum_log[angle_20_index,:], TriangleTime_log[angle_20_index,:], s= 1, label = "Without Conforming", color = "#6CB0D6")#, s = 3)
  
-    ax.scatter(PointsNum[angle_0_index,:], TriangleTime_conforming[angle_0_index,:],s= 1,  label = "With Conforming", color = "#FD8D3C")#, s = 3)
-    # ax.plot(PointsNum[angle_0_index,:], TriangleTime_conforming_fit_points, label = "With Conforming Fitting", color = "#810026")
-    ax.plot(PointsNum[angle_0_index,:], TriangleTime_conforming_fit_points, color = "#810026")
-    # ax.scatter(PointsNum_log[angle_20_index,:], TriangleTime_log_conforming[angle_20_index,:],s= 1,  label = "With Conforming", color = "#FD8D3C")#, s = 3)
-    
+    ax.fill_between([-1e5,1e6], 0, (1e5), color="#0D4A70", alpha=0.2, label='Specification Range')
+    ax.yaxis.set_major_formatter(formatter)
+
     ax.legend()
 
-    plot.xlabel('Points number',size=11)
-    plot.ylabel('Triangle Time ($ \mu s$)',size=11)
+    plot.xlabel('Points Number',size=11)
+    plot.ylabel('Total Time ($ \mu s$)',size=11)
+
+    plot.xlim([-0.5e4,1.3e5])
 
     plot.grid()
     plot.tight_layout()
+
+def plot_4_1_display():
+    fig = plot.figure("Points Number Vs Cost Time",figsize=(9/2.54,7/2.54),dpi=200)
+    ax = fig.add_subplot(111)
+
+    ax.scatter(PointsNum[angle_0_index,:], TriangleTime[angle_0_index,:], s= 1, label = "Without Conforming")
+    ax.scatter(PointsNum[angle_0_index,:], PathPlanningTime[angle_0_index,:], s= 1, label = "Without Conforming")
+    ax.scatter(PointsNum[angle_0_index,:], ConversionTime[angle_0_index,:], s= 1, label = "Without Conforming")
+
+
+    plot.grid()
+    plot.tight_layout()
+
+
+def plot_5_display():
+
+    setted_area_index = area_data.index(0.00303779)
+
+    # the pie plot 
+    fig = plot.figure("Time cost compare",figsize=(9/2.54,7/2.54),dpi=200)
+
+    print(ConversionTime[angle_0_index,setted_area_index])
+
+    label = ["Triangulation","Parallel Dijkstra's","Conversion"]
+    data = [TriangleTime[angle_0_index,setted_area_index],
+            PathPlanningTime[angle_0_index,setted_area_index],
+            ConversionTime[angle_0_index,setted_area_index]
+    ]
+    colors = ["#87CEEB","#FF7F50","#2E8B57"]
+
+    plot.pie(data, labels= label,autopct='%1.1f%%',colors=colors)
+
+    plot.tight_layout()
+
 
 if __name__ == "__main__":
     plot_1_display()
     plot_2_display()
-    # plot_3_display()
-    # plot_4_display()
-    # plot_5_display()
-    # plot_6_display()
-    # plot_7_display()
-    # plot_8_display()
-    # plot_9_display()
-    # plot_10_display()
-    # plot_11_display()
+    plot_3_display()
+    plot_4_display()
+    plot_5_display()
+
+    plot_4_1_display()
 
     plot.show()

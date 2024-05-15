@@ -16,6 +16,7 @@ from scipy.ndimage import gaussian_filter
 
 
 realDistance = 20*np.sqrt(2)
+map_area = 20*20
 
 # read the first set of data
 data_results = [pd.read_csv("../../tests/squareMapTest/V3_3_1_Code_Test.csv"),
@@ -189,16 +190,16 @@ def plot_1():
     # print(Datas[0]["result_average"])
 
     for i in range(len(data_results)):
-        plot.plot(Datas[i]["area_log_average_in_range"], Datas[i]["result_average_smoothed_in_range"], label = data_titles[i], color = data_colors[i])
+        plot.plot(Datas[i]["area_log_average_in_range"] - np.log10(map_area), Datas[i]["result_average_smoothed_in_range"], label = data_titles[i], color = data_colors[i])
 
     # plot.title('Average path length differences with different extra points',size=11)
-    plot.legend()
-    plot.xlabel('Max area settings',size=11)
+    plot.legend(loc=1)
+    plot.xlabel('Max area / Map area (dB)',size=11)
     plot.ylabel('Path Length Differences (%)',size=11)
     plot.grid()
 
-    ax.set_xticks(([-2.5, -2, -1.5, -1, -0.5, 0, 0.5])) 
-    ax.set_xticklabels(['$10^{-2.5}$', '$10^{-2}$', '$10^{-1.5}$','$10^{-1}$', '$10^{-0.5}$', '$10^{ 0}$', '$10^{0.5}$']) 
+    # ax.set_xticks(([-2.5, -2, -1.5, -1, -0.5, 0, 0.5])) 
+    # ax.set_xticklabels(['$10^{-2.5}$', '$10^{-2}$', '$10^{-1.5}$','$10^{-1}$', '$10^{-0.5}$', '$10^{ 0}$', '$10^{0.5}$']) 
 
     plot.tight_layout()
 
@@ -214,18 +215,18 @@ def plot_2():
     ax = fig.add_subplot(111)
 
     for i in range(len(data_results)):
-        plot.plot(Datas[i]["area_log_average_in_range"], Datas[i]["result_std_smoothed_in_range"], label = data_titles[i], color = data_colors[i])
+        plot.plot(Datas[i]["area_log_average_in_range"] - np.log10(map_area), Datas[i]["result_std_smoothed_in_range"], label = data_titles[i], color = data_colors[i])
 
     # plot.title('Area Settings Vs Performance Without Conforming',size=11)
     plot.legend()
-    plot.xlabel('Max area settings',size=11)
+    plot.xlabel('Max area / Map area (dB)',size=11)
     plot.ylabel('Path Length Differences (%)',size=11)
     plot.grid()
 
 
 
-    ax.set_xticks(([-2.5, -2, -1.5, -1, -0.5, 0, 0.5])) 
-    ax.set_xticklabels(['$10^{-2.5}$', '$10^{-2}$', '$10^{-1.5}$','$10^{-1}$', '$10^{-0.5}$', '$10^{ 0}$', '$10^{0.5}$']) 
+    # ax.set_xticks(([-2.5, -2, -1.5, -1, -0.5, 0, 0.5])) 
+    # ax.set_xticklabels(['$10^{-2.5}$', '$10^{-2}$', '$10^{-1.5}$','$10^{-1}$', '$10^{-0.5}$', '$10^{ 0}$', '$10^{0.5}$']) 
     # plot.xlim([0,6e5])
 
     plot.tight_layout()
@@ -239,11 +240,11 @@ def plot_3():
     plot.figure("Average of accuracy percentage with conforming",figsize=(21/2.54,9/2.54),dpi=200)
 
     for i in range(len(data_results)):
-        plot.plot(Datas[i]["area_log_average"], Datas[i]["result_average_conforming"], label = data_titles[i], color = data_colors[i])
+        plot.plot(Datas[i]["area_log_average"] - np.log10(map_area), Datas[i]["result_average_conforming"], label = data_titles[i], color = data_colors[i])
 
-    plot.title('Area Settings Vs Performance With Conforming',size=11)
+    # plot.title('Area Settings Vs Performance With Conforming',size=11)
     plot.legend()
-    plot.xlabel('Area Settings (dB)',size=11)
+    plot.xlabel('Max area / Map area (dB)',size=11)
     plot.ylabel('Path Length Differences (%)',size=11)
     plot.grid()
     # plot.xlim([0,6e5])

@@ -139,7 +139,7 @@ def read_poly_file(file_path):
             parts = line.strip().split()
 
             hole_index = int(parts[0])
-            hole_coordinates = list([int(parts[1]), int(parts[2])])
+            hole_coordinates = list([float(parts[1]), float(parts[2])])
             holes.append((hole_index, hole_coordinates))
 
     return vertices, segments, holes
